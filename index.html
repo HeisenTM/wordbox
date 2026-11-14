@@ -40,7 +40,6 @@ section{flex:1;min-height:0;display:flex;flex-direction:column}
 .stat span{font-size:12px;color:var(--mut)}
 .stat.pop b{animation:pop .5s ease-out;color:var(--g)}
 .tag{text-align:center;color:var(--mut);font-size:13.5px;padding:10px 8px 0}
-.tile.cr{border-color:#7ee2ab}
 .tile{cursor:default}
 #cf{position:fixed;inset:0;pointer-events:none;z-index:9}
 .lnk{display:block;margin:12px auto 0;color:var(--mut);font-weight:700;padding:6px 12px;border-radius:8px}.lnk:hover{color:var(--text)}
@@ -59,6 +58,9 @@ section{flex:1;min-height:0;display:flex;flex-direction:column}
 .row{display:grid;grid-template-columns:repeat(var(--L),var(--t));gap:4px}
 .tile{width:var(--t);height:var(--t);border:2px solid var(--line);border-radius:calc(var(--t)*.18);display:grid;place-items:center;font-weight:800;font-size:calc(var(--t)*.5);text-transform:uppercase;transition:border-color .1s}
 .tile.f{border-color:#565d6b;animation:pop .13s ease-out}
+.tile.ed{cursor:pointer}
+.tile.ed:hover{border-color:#7a8191}
+.tile.ed.cr,.tile.ed.cr:hover{border-color:#7ee2ab}
 .tile.g,.tile.y,.tile.a{border-color:transparent;color:#fff}
 .tile.g{background:var(--g)}.tile.y{background:var(--y)}.tile.a{background:var(--a);color:var(--mut)}
 .tile.flip{animation:flip .55s ease both;animation-delay:calc(var(--i)*.13s)}
@@ -216,13 +218,13 @@ function render(){
 
 function paint(b,r,g,anim){
   const ev=evaluate(g,S.ans[b]);
-  for(let c=0;c<S.L;c++){const t=tile(b,r,c);t.textContent=g[c];t.classList.remove('f','cr');
+  for(let c=0;c<S.L;c++){const t=tile(b,r,c);t.textContent=g[c];t.classList.remove('f','cr','ed');
     if(anim){t.style.setProperty('--i',c);t.classList.add('flip');setTimeout(()=>t.classList.add(ev[c]),c*130+275)}
     else t.classList.add(ev[c])}
 }
 function showCur(){
   const r=S.gs.length;if(r>=S.G)return;
-  act().forEach(b=>{for(let c=0;c<S.L;c++){const t=tile(b,r,c);t.textContent=S.cur[c];t.classList.toggle('f',!!S.cur[c]);t.classList.toggle('cr',c==S.pos&&!S.over)}})}
+  act().forEach(b=>{for(let c=0;c<S.L;c++){const t=tile(b,r,c);t.textContent=S.cur[c];t.classList.add('ed');t.classList.toggle('f',!!S.cur[c]);t.classList.toggle('cr',c==S.pos&&!S.over)}})}
 function setPos(p){if(busy||S.over)return;S.pos=Math.max(0,Math.min(S.L,p));showCur()}
 
 function fit(){
