@@ -96,12 +96,17 @@ section{flex:1;min-height:0;display:flex;flex-direction:column}
 .note{color:var(--mut);font-size:13px;min-height:19px}
 .note.err{color:#ef7b7b}
 ol{list-style:none;margin-top:14px}
-li{display:grid;grid-template-columns:34px 1fr auto;align-items:center;padding:11px 12px;border-bottom:1px solid var(--line);border-radius:0}
+li{display:grid;grid-template-columns:34px 1fr 64px 64px;align-items:center;padding:11px 12px;border-bottom:1px solid var(--line);border-radius:0}
 li.me{background:var(--panel);border-radius:11px;border-color:transparent}
 li.hd{color:var(--mut);font-size:12px;padding:4px 12px}
 li .r{color:var(--mut);font-weight:700}
 li:nth-child(n+2):nth-child(-n+4) .r{color:var(--y)}
-li b{font-size:17px}
+li b{font-size:17px;text-align:right;color:var(--mut)}
+li b.hl{color:var(--text)}
+li.hd span:nth-child(n+3){text-align:right}
+.tabs{display:flex;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:3px;margin-top:16px;width:max-content}
+.tabs button{padding:7px 14px;border-radius:8px;color:var(--mut);font-weight:700;transition:background .15s,color .15s}
+.tabs button.on{background:var(--key);color:var(--text)}
 @media(max-height:700px){.tag{display:none}}
 @media(max-height:620px){.k{height:44px}.bar{padding:6px 0 2px}}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-delay:0s!important}}
@@ -133,6 +138,7 @@ li b{font-size:17px}
       <button class="btn" type="submit">Join</button>
     </form>
     <p class="note" id="msg"></p>
+    <div class="tabs" id="tabs"><button data-s="best" class="on">Best streak</button><button data-s="wins">Most wins</button></div>
     <ol id="list"></ol>
   </div></div>
 </section>
@@ -160,7 +166,9 @@ const DICT={4:'aahs aals abas abba abbe abed abet able ably abos abri abut abye 
 const $=s=>document.querySelector(s), sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const LS={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}},del(k){try{localStorage.removeItem(k)}catch{}}};
 const lists={};for(const l in WORDS)lists[l]=[...new Set(WORDS[l].split(' ').filter(w=>w.length==l&&/^[a-z]+$/.test(w)))];
-let P=Object.assign({streak:0,best:0,L:5,N:1,name:''},LS.get('wb_p',{}));
+let P=Object.assign({streak:0,best:0,wins:0,L:5,N:1,name:''},LS.get('wb_p',{}));
+if(P.wins<P.best)P.wins=P.best;
+let sortBy='best';
 let S=null,busy=false,dict=null;
 const save=()=>LS.set('wb_p',P);
 
@@ -276,7 +284,7 @@ async function finish(won,g,A){
   S.over=true;persist();
   S.ans.forEach((a,b)=>boardEl(b).classList.toggle('done',solveIdx(b)>=0));
   A.filter(b=>S.ans[b]==g).forEach(b=>{for(let c=0;c<S.L;c++){const t=tile(b,S.gs.length-1,c);t.style.setProperty('--i',c);t.classList.remove('flip');t.classList.add('bounce')}});
-  if(won){P.streak++;if(P.streak>P.best)P.best=P.streak;pushScore();confetti()}else P.streak=0;
+  if(won){P.streak++;P.wins++;if(P.streak>P.best)P.best=P.streak;pushScore();confetti()}else P.streak=0;
   save();stats();
   if(won){const e=$('#stc');e.classList.remove('pop');void e.offsetWidth;e.classList.add('pop')}
   await sleep(won?900:500);
@@ -355,7 +363,7 @@ $('#nL').onclick=()=>{location.hash='leaderboard';view('leaderboard')};
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function pushScore(){
   if(!DB||!P.name)return;
-  fetch(`${DB}/scores/${P.name.toLowerCase()}.json`,{method:'PUT',body:JSON.stringify({name:P.name,best:P.best,t:Date.now()})}).catch(()=>{});
+  fetch(`${DB}/scores/${P.name.toLowerCase()}.json`,{method:'PUT',body:JSON.stringify({name:P.name,best:P.best,wins:P.wins,t:Date.now()})}).catch(()=>{});
 }
 async function loadLB(){
   const joined=!!P.name;
@@ -364,15 +372,16 @@ async function loadLB(){
   const list=$('#list');
   if(!DB){
     $('#msg').textContent='Online board is not connected yet. Set the DB url in index.html.';
-    list.innerHTML=joined?`<li class="me"><span class="r">-</span><span>${esc(P.name)}</span><b>${P.best}</b></li>`:'';
+    list.innerHTML=joined?`<li class="me"><span class="r">-</span><span>${esc(P.name)}</span><b class="hl">${P.best}</b><b>${P.wins}</b></li>`:'';
     return}
   list.innerHTML='<li><span></span><span class="note">Loading...</span></li>';
   try{
-    const r=await fetch(`${DB}/scores.json?orderBy="best"&limitToLast=50`);
+    let r=await fetch(`${DB}/scores.json?orderBy="${sortBy}"&limitToLast=50`);
+    if(!r.ok&&sortBy=='wins')r=await fetch(`${DB}/scores.json?orderBy="best"&limitToLast=200`);
     if(!r.ok)throw 0;
-    const d=await r.json()||{};
-    const rows=Object.values(d).filter(x=>x&&typeof x.best=='number').sort((a,b)=>b.best-a.best||a.t-b.t);
-    list.innerHTML=rows.length?'<li class="hd"><span></span><span>Player</span><span>Best streak</span></li>'+rows.map((x,i)=>`<li class="${x.name==P.name?'me':''}"><span class="r">${i+1}</span><span>${esc(x.name)}</span><b>${x.best}</b></li>`).join(''):'<li><span></span><span class="note">No streaks yet. Be the first.</span></li>';
+    const d=await r.json()||{},k=sortBy,o=k=='best'?'wins':'best';
+    const rows=Object.values(d).filter(x=>x&&typeof x.best=='number').sort((a,b)=>(b[k]||0)-(a[k]||0)||(b[o]||0)-(a[o]||0)||a.t-b.t).slice(0,50);
+    list.innerHTML=rows.length?'<li class="hd"><span></span><span>Player</span><span>Streak</span><span>Wins</span></li>'+rows.map((x,i)=>`<li class="${x.name==P.name?'me':''}"><span class="r">${i+1}</span><span>${esc(x.name)}</span><b class="${k=='best'?'hl':''}">${x.best}</b><b class="${k=='wins'?'hl':''}">${x.wins||0}</b></li>`).join(''):'<li><span></span><span class="note">No players yet. Be the first.</span></li>';
   }catch{list.innerHTML='<li><span></span><span class="note err">Could not load the board. Try again later.</span></li>'}
 }
 $('#jf').addEventListener('submit',async e=>{
@@ -393,6 +402,9 @@ $('#jf').addEventListener('submit',async e=>{
     P.name=name;save();pushScore();msg.textContent='';loadLB();
   }catch{msg.className='note err';msg.textContent='Could not reach the board. Try again.'}
 });
+
+$('#tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.dataset.s==sortBy)return;sortBy=b.dataset.s;
+  document.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('on',x==b));loadLB()});
 
 // ---- start ----
 (function init(){
