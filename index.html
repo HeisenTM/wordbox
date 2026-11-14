@@ -43,6 +43,8 @@ section{flex:1;min-height:0;display:flex;flex-direction:column}
 .tile.cr{border-color:#7ee2ab}
 .tile{cursor:default}
 #cf{position:fixed;inset:0;pointer-events:none;z-index:9}
+.lnk{display:block;margin:12px auto 0;color:var(--mut);font-weight:700;padding:6px 12px;border-radius:8px}.lnk:hover{color:var(--text)}
+#after{padding:8px 0 14px}
 .btns{display:flex;gap:8px}.btns .btn{flex:1}
 #nH{width:34px;height:34px;padding:0;border-radius:50%;border:1px solid var(--line);color:var(--mut);font-weight:800;margin-left:4px}
 #nH:hover{color:var(--text)}
@@ -53,7 +55,7 @@ section{flex:1;min-height:0;display:flex;flex-direction:column}
 .card.how{text-align:left}.how h2{text-align:center}.how ul{list-style:none;margin:16px 0 14px;padding:0}.how li{display:block;position:relative;border:0;border-radius:0;padding:6px 0 6px 18px;color:var(--mut)}.how li:before{content:'';position:absolute;left:0;top:.9em;width:7px;height:7px;border-radius:2px;background:var(--g)}.how b{color:var(--text)}
 #boards{flex:1;min-height:0;display:grid;gap:14px;justify-content:center;align-content:center;align-content:safe center;padding:4px 0;overflow:auto}
 .board{display:grid;gap:4px;align-content:start;transition:opacity .4s}
-.board.done{opacity:.62}
+.board.done{opacity:1}
 .row{display:grid;grid-template-columns:repeat(var(--L),var(--t));gap:4px}
 .tile{width:var(--t);height:var(--t);border:2px solid var(--line);border-radius:calc(var(--t)*.18);display:grid;place-items:center;font-weight:800;font-size:calc(var(--t)*.5);text-transform:uppercase;transition:border-color .1s}
 .tile.f{border-color:#565d6b;animation:pop .13s ease-out}
@@ -119,6 +121,7 @@ li b{font-size:17px}
   </div>
   <div id="boards"></div>
   <div id="kb"></div>
+  <div id="after" class="btns" hidden><button class="btn alt" id="aShare">Share</button><button class="btn" id="aNext">Next word</button></div>
 </section>
 
 <section id="lbs" hidden>
@@ -135,7 +138,7 @@ li b{font-size:17px}
 </section>
 </div>
 <div id="toast"></div>
-<div id="end" hidden><div class="card"><h2 id="eT"></h2><p id="eS"></p><div class="words" id="eW"></div><div class="btns"><button class="btn alt" id="eShare">Share</button><button class="btn" id="eB"></button></div></div></div>
+<div id="end" hidden><div class="card"><h2 id="eT"></h2><p id="eS"></p><div class="words" id="eW"></div><div class="btns"><button class="btn alt" id="eShare">Share</button><button class="btn" id="eB"></button></div><button class="lnk" id="eView">View board</button></div></div>
 <div id="how" hidden><div class="card how"><h2>How to play</h2><ul><li>Guess the hidden word. You get <b>letters + 1</b> tries.</li><li>Each guess must be a real word. Press <b>Enter</b> to submit.</li><li><b>Click any box</b> in your current row to change just that letter.</li><li>Win to grow your streak. Miss and it resets to 0.</li><li>Join the <b>Leaderboard</b> with a unique name to compete.</li></ul><div class="ex"><i class="g">W</i><i>O</i><i class="y">R</i><i>D</i><i>S</i></div><p style="text-align:center;font-size:13px;margin:6px 0 18px"><b style="color:var(--g)">Green</b>: right spot. <b style="color:var(--y)">Yellow</b>: in the word, wrong spot. Gray: not in the word.</p><button class="btn" id="hB" style="width:100%">Got it</button></div></div>
 <canvas id="cf"></canvas>
 
@@ -284,7 +287,10 @@ async function finish(won,g,A){
   $('#eB').textContent=won?'Next word':'Try again';
   $('#end').hidden=false;$('#eB').focus();
 }
-function next(){$('#end').hidden=true;newGame()}
+function next(){$('#end').hidden=true;$('#after').hidden=true;$('#kb').hidden=false;newGame()}
+function viewBoard(){$('#end').hidden=true;$('#kb').hidden=true;$('#after').hidden=false;$('#aNext').textContent=$('#eB').textContent;fit();$('#aNext').focus()}
+$('#eView').onclick=viewBoard;$('#aNext').onclick=next;
+$('#end').addEventListener('click',e=>{if(e.target.id=='end')viewBoard()});
 $('#eB').onclick=next;
 
 // ---- controls ----
@@ -313,6 +319,7 @@ $('#kb').addEventListener('pointerdown',e=>{
 addEventListener('keydown',e=>{
   if(e.ctrlKey||e.metaKey||e.altKey)return;
   if(!$('#how').hidden){if(e.key=='Escape'||e.key=='Enter'){e.preventDefault();closeHow()}return}
+  if(!$('#after').hidden&&e.key=='Enter'){e.preventDefault();next();return}
   if(!$('#end').hidden){if(e.key=='Enter'){e.preventDefault();next()}return}
   if(!$('#lbs').hidden||document.activeElement.tagName=='INPUT')return;
   let k=null;
@@ -329,7 +336,7 @@ function shareText(){
   const won=S.gs.includes(S.ans[0]),E={g:'\u{1F7E9}',y:'\u{1F7E8}',a:'\u2B1B'};
   const grid=S.gs.map(w=>evaluate(w,S.ans[0]).map(s=>E[s]).join('')).join('\n');
   return `wordbox ${S.L} letters ${won?S.gs.length:'X'}/${S.G}`+(won&&P.streak>1?` \u{1F525}${P.streak}`:'')+`\n\n${grid}\n\n${location.origin+location.pathname}`}
-$('#eShare').onclick=async()=>{const t=shareText();try{if(navigator.share){await navigator.share({text:t});return}await navigator.clipboard.writeText(t);toast('Result copied')}catch{}};
+$('#eShare').onclick=$('#aShare').onclick=async()=>{const t=shareText();try{if(navigator.share){await navigator.share({text:t});return}await navigator.clipboard.writeText(t);toast('Result copied')}catch{}};
 const openHow=()=>{$('#how').hidden=false;$('#hB').focus()},closeHow=()=>{$('#how').hidden=true;LS.set('wb_seen',1)};
 $('#nH').onclick=openHow;$('#how').addEventListener('click',e=>{if(e.target.id=='how')closeHow()});$('#hB').onclick=closeHow;
 $('#lg').onclick=()=>{location.hash='';view('play')};
