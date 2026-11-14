@@ -21,7 +21,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:12p
 .logo{font-family:Goldman,system-ui,sans-serif;font-weight:700;font-size:24px;letter-spacing:.01em;display:flex;align-items:center;gap:9px}
 .logo i{width:21px;height:21px;border-radius:6px;background:var(--g);display:grid;place-items:center}
 .logo i:after{content:"";width:9px;height:9px;border-radius:2px;background:var(--bg)}
-nav{display:flex;gap:4px}
+nav{display:flex;gap:4px;margin-left:auto}
 nav button{padding:7px 13px;border-radius:9px;color:var(--mut);font-weight:700}
 nav button.on{background:var(--panel);color:var(--text)}
 section{flex:1;min-height:0;display:flex;flex-direction:column}
@@ -45,7 +45,10 @@ section{flex:1;min-height:0;display:flex;flex-direction:column}
 .lnk{display:block;margin:12px auto 0;color:var(--mut);font-weight:700;padding:6px 12px;border-radius:8px}.lnk:hover{color:var(--text)}
 #after{padding:8px 0 14px}
 .btns{display:flex;gap:8px}.btns .btn{flex:1}
-#nH{width:34px;height:34px;padding:0;border-radius:50%;border:1px solid var(--line);color:var(--mut);font-weight:800;margin-left:4px}
+#nH,#nS{width:34px;height:34px;padding:0;border-radius:50%;border:1px solid var(--line);color:var(--mut);font-weight:800;display:grid;place-items:center}
+#nS:hover{color:var(--text)}
+.tools{display:flex;gap:6px;margin-left:10px}
+#nPr{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #nH:hover{color:var(--text)}
 .logo{background:none;color:var(--text)}
 .ex{display:flex;gap:5px;justify-content:center;margin:8px 0 2px}
@@ -90,7 +93,7 @@ section{flex:1;min-height:0;display:flex;flex-direction:column}
 .btn{background:var(--g);color:#06150d;font-weight:800;padding:12px 20px;border-radius:11px;transition:transform .08s,filter .15s}
 .btn:hover{filter:brightness(1.08)}.btn:active{transform:scale(.97)}
 .btn.alt{background:var(--key);color:var(--text)}
-#lb{overflow:auto;padding:18px 2px 24px}
+#lb,#pf{overflow:auto;padding:18px 2px 24px}
 .lbw{max-width:480px;margin:auto}
 .lbw h1{font-size:24px;letter-spacing:-.02em}
 .join{display:flex;gap:8px;margin:14px 0 6px}
@@ -105,6 +108,15 @@ li.me{background:var(--panel);border-radius:11px;border-color:transparent}
 .rc{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}.rc p{color:var(--mut);font-size:13px;margin-bottom:10px}
 .rcr{display:flex;gap:8px;align-items:center}.rcr code{flex:1;font:700 21px Goldman,monospace;letter-spacing:.06em;color:var(--g)}
 #rf{flex-wrap:wrap}#rf input{flex:1 1 140px}
+.cta{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:14px}
+.cta div{display:grid;gap:2px}.cta b{font-size:15px}.cta span{color:var(--mut);font-size:13px}.cta .btn{white-space:nowrap;padding:10px 16px}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(86px,1fr));gap:8px;margin-top:16px}.sg .stat{min-width:0}
+.sh{font-size:13px;color:var(--mut);margin:22px 0 8px;font-weight:600}
+.db{display:grid;grid-template-columns:14px 1fr;gap:8px;align-items:center;margin:4px 0;font-size:13px;color:var(--mut)}
+.db i{display:block;height:22px;background:var(--key);border-radius:6px;color:var(--text);font-style:normal;font-weight:700;padding:0 8px;line-height:22px;font-size:12px;text-align:right}
+.db i.on{background:var(--g);color:#06150d}
+#pAcc{margin-top:16px}
+@media(max-width:560px){header{flex-wrap:wrap;row-gap:8px;padding:10px 2px 8px}.logo{order:1}.tools{order:2;margin-left:auto}nav{order:3;flex-basis:100%;margin-left:0}nav button{flex:1;padding:7px 4px;text-align:center}#nPr{max-width:none}}
 li.hd{color:var(--mut);font-size:12px;padding:4px 12px}
 li .r{color:var(--mut);font-weight:700}
 li:nth-child(n+2):nth-child(-n+4) .r{color:var(--y)}
@@ -123,7 +135,8 @@ li.hd span:nth-child(n+3){text-align:right}
 <div id="app">
 <header>
   <button class="logo" id="lg" aria-label="wordbox home"><i></i>wordbox</button>
-  <nav><button id="nP" class="on">Play</button><button id="nL">Leaderboard</button><button id="nH" aria-label="How to play">?</button></nav>
+  <nav><button id="nP" class="on">Play</button><button id="nL">Leaderboard</button><button id="nPr">Profile</button></nav>
+  <div class="tools"><button id="nS" aria-label="Sound"></button><button id="nH" aria-label="How to play">?</button></div>
 </header>
 
 <section id="play">
@@ -140,6 +153,16 @@ li.hd span:nth-child(n+3){text-align:right}
   <div id="lb"><div class="lbw">
     <h1>Leaderboard</h1>
     <p class="note" id="who">Ranked by best streak.</p>
+    <div class="cta" id="cta"><div><b>Want to be on the board?</b><span>Create a profile with a unique name to compete.</span></div><button class="btn" id="cb" type="button">Create profile</button></div>
+    <button class="lnk2" id="vp" type="button" hidden>View your profile</button>
+    <div class="tabs" id="tabs"><button data-s="best" class="on">Best streak</button><button data-s="wins">Most wins</button></div>
+    <ol id="list"></ol>
+  </div></div>
+</section>
+<section id="prs" hidden>
+  <div id="pf"><div class="lbw">
+    <h1 id="pT">Profile</h1>
+    <p class="note" id="pSub">Pick a unique name to join the leaderboard.</p>
     <form class="join" id="jf" autocomplete="off">
       <input id="nm" maxlength="16" placeholder="Pick a unique name" aria-label="Name">
       <button class="btn" type="submit">Join</button>
@@ -147,11 +170,13 @@ li.hd span:nth-child(n+3){text-align:right}
     <label class="chk" id="rcl"><input type="checkbox" id="rcb" checked> Get a recovery code, so I can restore this name if I lose my data</label>
     <p class="note" id="msg"></p>
     <div class="rc" id="rc" hidden><p>Your recovery code. Save it now, it will not be shown again.</p><div class="rcr"><code id="rcv"></code><button class="btn alt" id="rcc" type="button">Copy</button></div></div>
-    <button class="lnk2" id="mk" type="button" hidden>Create a recovery code for this name</button>
     <button class="lnk2" id="rl" type="button">Lost your data? Restore your name</button>
     <form class="join" id="rf" hidden autocomplete="off"><input id="rn" maxlength="16" placeholder="Your name" aria-label="Name"><input id="rk" maxlength="20" placeholder="Recovery code" aria-label="Recovery code" autocapitalize="characters"><button class="btn" type="submit">Restore</button></form>
-    <div class="tabs" id="tabs"><button data-s="best" class="on">Best streak</button><button data-s="wins">Most wins</button></div>
-    <ol id="list"></ol>
+    <div class="tabs" id="ptabs" hidden><button data-p="stats" class="on">Stats</button><button data-p="acc">Account</button></div>
+    <div id="pStats" hidden></div>
+    <div id="pAcc" hidden><p class="note" id="accT"></p>
+    <button class="lnk2" id="mk" type="button" hidden>Create a recovery code for this name</button>
+    </div>
   </div></div>
 </section>
 </div>
@@ -178,8 +203,9 @@ const DICT={4:'aahs aals abas abba abbe abed abet able ably abos abri abut abye 
 const $=s=>document.querySelector(s), sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const LS={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}},del(k){try{localStorage.removeItem(k)}catch{}}};
 const lists={};for(const l in WORDS)lists[l]=[...new Set(WORDS[l].split(' ').filter(w=>w.length==l&&/^[a-z]+$/.test(w)))];
-let P=Object.assign({streak:0,best:0,wins:0,rc:0,L:5,N:1,name:''},LS.get('wb_p',{}));
+let P=Object.assign({streak:0,best:0,wins:0,games:0,dist:{},rc:0,L:5,N:1,name:''},LS.get('wb_p',{}));
 if(P.wins<P.best)P.wins=P.best;
+if(P.games<P.wins)P.games=P.wins;
 let sortBy='best';
 let S=null,busy=false,dict=null;
 const save=()=>LS.set('wb_p',P);
@@ -229,7 +255,7 @@ function render(){
 function paint(b,r,g,anim){
   const ev=evaluate(g,S.ans[b]);
   for(let c=0;c<S.L;c++){const t=tile(b,r,c);t.textContent=g[c];t.classList.remove('f','cr','ed');
-    if(anim){t.style.setProperty('--i',c);t.classList.add('flip');setTimeout(()=>t.classList.add(ev[c]),c*130+275)}
+    if(anim){t.style.setProperty('--i',c);t.classList.add('flip');setTimeout(()=>{t.classList.add(ev[c]);SFX.flip(ev[c],c)},c*130+275)}
     else t.classList.add(ev[c])}
 }
 function showCur(){
@@ -254,18 +280,18 @@ function keys(){
 function stats(){$('#st').textContent=P.streak;$('#bs').textContent=P.best}
 
 function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('s');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('s'),1200)}
-function bad(msg){toast(msg);navigator.vibrate&&navigator.vibrate(20);const r=S.gs.length;
+function bad(msg){SFX.bad();toast(msg);navigator.vibrate&&navigator.vibrate(20);const r=S.gs.length;
   act().forEach(b=>{const row=boardEl(b).children[r];row.classList.remove('shake');void row.offsetWidth;row.classList.add('shake')})}
 
 function type(ch){
   if(busy||S.over||S.pos>=S.L)return;
-  const c=S.pos,r=S.gs.length;S.cur[c]=ch;navigator.vibrate&&navigator.vibrate(6);
+  const c=S.pos,r=S.gs.length;S.cur[c]=ch;SFX.key();navigator.vibrate&&navigator.vibrate(6);
   let n=c+1;while(n<S.L&&S.cur[n])n++;S.pos=n;showCur();
   act().forEach(b=>{const t=tile(b,r,c);t.classList.remove('f');void t.offsetWidth;t.classList.add('f')})}
 function del(){
   if(busy||S.over)return;
   let c=S.pos;if(!(c<S.L&&S.cur[c])){c--;if(c<0)return}
-  S.cur[c]='';S.pos=c;showCur()}
+  S.cur[c]='';S.pos=c;SFX.del();showCur()}
 
 async function submit(){
   if(busy||S.over)return;
@@ -296,7 +322,8 @@ async function finish(won,g,A){
   S.over=true;persist();
   S.ans.forEach((a,b)=>boardEl(b).classList.toggle('done',solveIdx(b)>=0));
   A.filter(b=>S.ans[b]==g).forEach(b=>{for(let c=0;c<S.L;c++){const t=tile(b,S.gs.length-1,c);t.style.setProperty('--i',c);t.classList.remove('flip');t.classList.add('bounce')}});
-  if(won){P.streak++;P.wins++;if(P.streak>P.best)P.best=P.streak;pushScore();confetti()}else P.streak=0;
+  P.games++;
+  if(won){P.streak++;P.wins++;P.dist[S.gs.length]=(P.dist[S.gs.length]||0)+1;if(P.streak>P.best)P.best=P.streak;pushScore();confetti();SFX.win()}else{P.streak=0;SFX.lose()}
   save();stats();
   if(won){const e=$('#stc');e.classList.remove('pop');void e.offsetWidth;e.classList.add('pop')}
   await sleep(won?900:500);
@@ -341,7 +368,7 @@ addEventListener('keydown',e=>{
   if(!$('#how').hidden){if(e.key=='Escape'||e.key=='Enter'){e.preventDefault();closeHow()}return}
   if(!$('#after').hidden&&e.key=='Enter'){e.preventDefault();next();return}
   if(!$('#end').hidden){if(e.key=='Enter'){e.preventDefault();next()}return}
-  if(!$('#lbs').hidden||document.activeElement.tagName=='INPUT')return;
+  if($('#play').hidden||document.activeElement.tagName=='INPUT')return;
   let k=null;
   if(e.key=='Enter'){e.preventDefault();submit();k='[data-a=e]'}
   else if(e.key=='ArrowLeft')setPos(S.pos-1);
@@ -361,15 +388,36 @@ const openHow=()=>{$('#how').hidden=false;$('#hB').focus()},closeHow=()=>{$('#ho
 $('#nH').onclick=openHow;$('#how').addEventListener('click',e=>{if(e.target.id=='how')closeHow()});$('#hB').onclick=closeHow;
 $('#lg').onclick=()=>{location.hash='';view('play')};
 
+// ---- sound ----
+let AC=null;
+function ac(){if(P.snd===0)return null;if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)()}catch{return null}}if(AC.state=='suspended')AC.resume();return AC}
+function tone(f,t0,d,type,v,f2){const a=ac();if(!a)return;const t=a.currentTime+t0,o=a.createOscillator(),g=a.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+d);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v||.07,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+d+.03)}
+const SC=[523.25,587.33,659.25,783.99,880,987.77,1174.66];
+const SFX={
+  key(){tone(640+Math.random()*80,0,.05,'triangle',.07,420);tone(110,0,.06,'sine',.06,70)},
+  del(){tone(360,0,.06,'triangle',.05,230)},
+  bad(){tone(190,0,.14,'square',.035,150);tone(160,.11,.16,'square',.035,120)},
+  flip(s,i){if(s=='g')tone(SC[Math.min(i,6)],0,.22,'sine',.07);else if(s=='y')tone(440,0,.14,'triangle',.05);else tone(210,0,.07,'triangle',.04,170)},
+  win(){[0,2,4,6].forEach((n,i)=>{tone(SC[n],i*.09,.45,'sine',.07);tone(SC[n]*2,i*.09+.02,.3,'triangle',.025)});tone(1567.98,.4,.6,'sine',.04)},
+  lose(){[392,349.23,293.66].forEach((f,i)=>tone(f,i*.16,.3,'triangle',.06))}
+};
+function sndIcon(){const on=P.snd!==0,b=$('#nS');
+  b.innerHTML='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/>'+(on?'<path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/>':'<path d="M16 9l5 6M21 9l-5 6"/>')+'</svg>';
+  b.setAttribute('aria-label',on?'Sound on':'Sound off');b.setAttribute('aria-pressed',on)}
+$('#nS').onclick=()=>{P.snd=P.snd===0?1:0;save();sndIcon();if(P.snd!==0){SFX.flip('g',2);setTimeout(()=>SFX.flip('g',4),90)}};
+
 // ---- views ----
 function view(v){
-  const lb=v=='leaderboard';$('#rc').hidden=true;
-  $('#play').hidden=lb;$('#lbs').hidden=!lb;
-  $('#nP').classList.toggle('on',!lb);$('#nL').classList.toggle('on',lb);
-  if(lb)loadLB();else fit();
+  const pg={play:'#play',leaderboard:'#lbs',profile:'#prs'};
+  $('#rc').hidden=true;
+  for(const k in pg)$(pg[k]).hidden=k!=v;
+  $('#nP').classList.toggle('on',v=='play');$('#nL').classList.toggle('on',v=='leaderboard');$('#nPr').classList.toggle('on',v=='profile');
+  if(v=='leaderboard')loadLB();else if(v=='profile')renderProfile();else fit();
 }
 $('#nP').onclick=()=>{location.hash='';view('play')};
 $('#nL').onclick=()=>{location.hash='leaderboard';view('leaderboard')};
+const goProfile=()=>{location.hash='profile';view('profile')};
+$('#nPr').onclick=goProfile;$('#cb').onclick=goProfile;$('#vp').onclick=goProfile;
 
 // ---- leaderboard ----
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -386,7 +434,7 @@ async function saveCode(){
   P.rc=1;save();$('#rcv').textContent=c.match(/.{4}/g).join('-');$('#rc').hidden=false;return true}
 $('#rcc').onclick=()=>{navigator.clipboard.writeText($('#rcv').textContent).then(()=>toast('Code copied')).catch(()=>{})};
 $('#mk').onclick=async()=>{const m=$('#msg');m.className='note';m.textContent='';
-  try{if(await saveCode())loadLB();else{m.className='note err';m.textContent='Could not create a code. Check the database rules.'}}catch{m.className='note err';m.textContent='Could not reach the board. Try again.'}};
+  try{if(await saveCode())renderProfile();else{m.className='note err';m.textContent='Could not create a code. Check the database rules.'}}catch{m.className='note err';m.textContent='Could not reach the board. Try again.'}};
 $('#rl').onclick=()=>{$('#rf').hidden=!$('#rf').hidden};
 $('#rf').addEventListener('submit',async e=>{
   e.preventDefault();const m=$('#msg'),n=$('#rn').value.trim(),c=normCode($('#rk').value),bad=t=>{m.className='note err';m.textContent=t};
@@ -403,12 +451,30 @@ $('#rf').addEventListener('submit',async e=>{
     P.name=(s&&s.name)||n;P.rc=1;
     if(s&&s.best>P.best)P.best=s.best;
     P.wins=Math.max(P.wins,(s&&s.wins)||0,P.best);
-    save();stats();pushScore();$('#rf').hidden=true;m.textContent='Welcome back, '+P.name+'.';loadLB();
+    save();stats();pushScore();$('#rf').hidden=true;m.textContent='Welcome back, '+P.name+'.';renderProfile();
   }catch{bad('Could not reach the board. Try again.')}});
+let pTab='stats';
+const navLabel=()=>{$('#nPr').textContent=P.name||'Profile'};
+function renderProfile(){
+  const j=!!P.name;navLabel();
+  $('#pT').textContent=j?P.name:'Profile';$('#pSub').hidden=j;
+  $('#jf').hidden=j;$('#rcl').hidden=j;$('#rl').hidden=j||!DB;if(j)$('#rf').hidden=true;
+  $('#ptabs').hidden=!j;
+  document.querySelectorAll('#ptabs button').forEach(b=>b.classList.toggle('on',b.dataset.p==pTab));
+  $('#pStats').hidden=!(j&&pTab=='stats');$('#pAcc').hidden=!(j&&pTab=='acc');
+  $('#mk').hidden=!(j&&DB&&!P.rc);
+  $('#accT').textContent=P.rc?'Recovery code created. Keep it safe, it can restore this name on any device.':(DB?'No recovery code yet. Create one so you can restore this name if you lose your data.':'');
+  if(j&&pTab=='stats'){
+    const g=P.games,w=P.wins,top=Math.max(6,...Object.keys(P.dist).map(Number)),mx=Math.max(1,...Object.values(P.dist));
+    let h='<div class="sg">'+[[g,'Games'],[w,'Wins'],[g?Math.round(w/g*100)+'%':'0%','Win rate'],[P.streak,'Streak'],[P.best,'Best']].map(([a,b])=>`<div class="stat"><b>${a}</b><span>${b}</span></div>`).join('')+'</div><h3 class="sh">Guesses per win</h3>';
+    for(let i=1;i<=top;i++){const n=P.dist[i]||0;h+=`<div class="db"><span>${i}</span><i class="${n?'on':''}" style="width:${n?Math.max(10,n/mx*100):6}%">${n||''}</i></div>`}
+    $('#pStats').innerHTML=h}
+}
+$('#ptabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;pTab=b.dataset.p;renderProfile()});
 async function loadLB(){
   const joined=!!P.name;
-  $('#jf').hidden=joined;$('#rcl').hidden=joined;$('#rl').hidden=joined||!DB;if(joined)$('#rf').hidden=true;$('#mk').hidden=!(joined&&DB&&!P.rc);
-  $('#who').textContent=joined?`Playing as ${P.name}. Ranked by best streak.`:'Ranked by best streak. Join with a unique name to get on the board.';
+  $('#cta').hidden=joined;$('#vp').hidden=!joined;
+  $('#who').textContent=joined?`Playing as ${P.name}. Ranked by best streak.`:'Ranked by best streak.';
   const list=$('#list');
   if(!DB){
     $('#msg').textContent='Online board is not connected yet. Set the DB url in index.html.';
@@ -439,7 +505,7 @@ $('#jf').addEventListener('submit',async e=>{
     const r=await fetch(url,{method:'PUT',body:'1'});
     if(r.status==401||r.status==403)return err('That name was just taken. Try another.');
     if(!r.ok)throw 0;
-    P.name=name;save();pushScore();msg.textContent='';if($('#rcb').checked)await saveCode().catch(()=>{});loadLB();
+    P.name=name;save();pushScore();msg.textContent='';if($('#rcb').checked)await saveCode().catch(()=>{});renderProfile();
   }catch{msg.className='note err';msg.textContent='Could not reach the board. Try again.'}
 });
 
@@ -451,7 +517,8 @@ $('#tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b
   P.N=1;if(![4,5,6].includes(+P.L))P.L=5;
   const g=LS.get('wb_g',null);
   if(g&&g.ans&&g.L==P.L&&g.N==1&&g.G==g.L+1&&g.ans.every(a=>a.length==g.L)){g.cur=Array(g.L).fill('');g.pos=0;S=g;render()}else newGame();
-  if(location.hash=='#leaderboard')view('leaderboard');
+  navLabel();sndIcon();
+  if(location.hash=='#leaderboard')view('leaderboard');else if(location.hash=='#profile')view('profile');
   if(P.name)pushScore();
 })();
 </script>
