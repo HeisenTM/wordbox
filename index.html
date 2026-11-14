@@ -100,6 +100,11 @@ section{flex:1;min-height:0;display:flex;flex-direction:column}
 ol{list-style:none;margin-top:14px}
 li{display:grid;grid-template-columns:34px 1fr 64px 64px;align-items:center;padding:11px 12px;border-bottom:1px solid var(--line);border-radius:0}
 li.me{background:var(--panel);border-radius:11px;border-color:transparent}
+.chk{display:flex;gap:8px;align-items:center;color:var(--mut);font-size:13px;margin:8px 0 2px}.chk input{accent-color:var(--g)}
+.lnk2{display:block;color:var(--mut);font-size:13px;text-decoration:underline;padding:5px 0}.lnk2:hover{color:var(--text)}
+.rc{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}.rc p{color:var(--mut);font-size:13px;margin-bottom:10px}
+.rcr{display:flex;gap:8px;align-items:center}.rcr code{flex:1;font:700 21px Goldman,monospace;letter-spacing:.06em;color:var(--g)}
+#rf{flex-wrap:wrap}#rf input{flex:1 1 140px}
 li.hd{color:var(--mut);font-size:12px;padding:4px 12px}
 li .r{color:var(--mut);font-weight:700}
 li:nth-child(n+2):nth-child(-n+4) .r{color:var(--y)}
@@ -139,7 +144,12 @@ li.hd span:nth-child(n+3){text-align:right}
       <input id="nm" maxlength="16" placeholder="Pick a unique name" aria-label="Name">
       <button class="btn" type="submit">Join</button>
     </form>
+    <label class="chk" id="rcl"><input type="checkbox" id="rcb" checked> Get a recovery code, so I can restore this name if I lose my data</label>
     <p class="note" id="msg"></p>
+    <div class="rc" id="rc" hidden><p>Your recovery code. Save it now, it will not be shown again.</p><div class="rcr"><code id="rcv"></code><button class="btn alt" id="rcc" type="button">Copy</button></div></div>
+    <button class="lnk2" id="mk" type="button" hidden>Create a recovery code for this name</button>
+    <button class="lnk2" id="rl" type="button">Lost your data? Restore your name</button>
+    <form class="join" id="rf" hidden autocomplete="off"><input id="rn" maxlength="16" placeholder="Your name" aria-label="Name"><input id="rk" maxlength="20" placeholder="Recovery code" aria-label="Recovery code" autocapitalize="characters"><button class="btn" type="submit">Restore</button></form>
     <div class="tabs" id="tabs"><button data-s="best" class="on">Best streak</button><button data-s="wins">Most wins</button></div>
     <ol id="list"></ol>
   </div></div>
@@ -168,7 +178,7 @@ const DICT={4:'aahs aals abas abba abbe abed abet able ably abos abri abut abye 
 const $=s=>document.querySelector(s), sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const LS={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}},del(k){try{localStorage.removeItem(k)}catch{}}};
 const lists={};for(const l in WORDS)lists[l]=[...new Set(WORDS[l].split(' ').filter(w=>w.length==l&&/^[a-z]+$/.test(w)))];
-let P=Object.assign({streak:0,best:0,wins:0,L:5,N:1,name:''},LS.get('wb_p',{}));
+let P=Object.assign({streak:0,best:0,wins:0,rc:0,L:5,N:1,name:''},LS.get('wb_p',{}));
 if(P.wins<P.best)P.wins=P.best;
 let sortBy='best';
 let S=null,busy=false,dict=null;
@@ -353,7 +363,7 @@ $('#lg').onclick=()=>{location.hash='';view('play')};
 
 // ---- views ----
 function view(v){
-  const lb=v=='leaderboard';
+  const lb=v=='leaderboard';$('#rc').hidden=true;
   $('#play').hidden=lb;$('#lbs').hidden=!lb;
   $('#nP').classList.toggle('on',!lb);$('#nL').classList.toggle('on',lb);
   if(lb)loadLB();else fit();
@@ -367,9 +377,37 @@ function pushScore(){
   if(!DB||!P.name)return;
   fetch(`${DB}/scores/${P.name.toLowerCase()}.json`,{method:'PUT',body:JSON.stringify({name:P.name,best:P.best,wins:P.wins,t:Date.now()})}).catch(()=>{});
 }
+const mkCode=()=>{const a='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';return [...crypto.getRandomValues(new Uint8Array(12))].map(x=>a[x%32]).join('')};
+const normCode=c=>c.toUpperCase().replace(/[^A-Z0-9]/g,'');
+async function saveCode(){
+  const c=mkCode();
+  const r=await fetch(`${DB}/keys/${P.name.toLowerCase()}/${c}.json`,{method:'PUT',body:'true'});
+  if(!r.ok)return false;
+  P.rc=1;save();$('#rcv').textContent=c.match(/.{4}/g).join('-');$('#rc').hidden=false;return true}
+$('#rcc').onclick=()=>{navigator.clipboard.writeText($('#rcv').textContent).then(()=>toast('Code copied')).catch(()=>{})};
+$('#mk').onclick=async()=>{const m=$('#msg');m.className='note';m.textContent='';
+  try{if(await saveCode())loadLB();else{m.className='note err';m.textContent='Could not create a code. Check the database rules.'}}catch{m.className='note err';m.textContent='Could not reach the board. Try again.'}};
+$('#rl').onclick=()=>{$('#rf').hidden=!$('#rf').hidden};
+$('#rf').addEventListener('submit',async e=>{
+  e.preventDefault();const m=$('#msg'),n=$('#rn').value.trim(),c=normCode($('#rk').value),bad=t=>{m.className='note err';m.textContent=t};
+  m.className='note';
+  if(!DB)return bad('Online board is not connected yet.');
+  if(!/^[A-Za-z0-9_]{3,16}$/.test(n)||c.length!=12)return bad('Enter your name and the 12-character code.');
+  m.textContent='Checking...';
+  try{
+    const k=n.toLowerCase(),r=await fetch(`${DB}/keys/${k}/${c}.json`);
+    if(r.status==401||r.status==403)return bad('Recovery is not enabled yet. Update the database rules.');
+    if(!r.ok)throw 0;
+    if(await r.json()!==true)return bad('That name and code do not match.');
+    const s=await(await fetch(`${DB}/scores/${k}.json`)).json();
+    P.name=(s&&s.name)||n;P.rc=1;
+    if(s&&s.best>P.best)P.best=s.best;
+    P.wins=Math.max(P.wins,(s&&s.wins)||0,P.best);
+    save();stats();pushScore();$('#rf').hidden=true;m.textContent='Welcome back, '+P.name+'.';loadLB();
+  }catch{bad('Could not reach the board. Try again.')}});
 async function loadLB(){
   const joined=!!P.name;
-  $('#jf').hidden=joined;
+  $('#jf').hidden=joined;$('#rcl').hidden=joined;$('#rl').hidden=joined||!DB;if(joined)$('#rf').hidden=true;$('#mk').hidden=!(joined&&DB&&!P.rc);
   $('#who').textContent=joined?`Playing as ${P.name}. Ranked by best streak.`:'Ranked by best streak. Join with a unique name to get on the board.';
   const list=$('#list');
   if(!DB){
@@ -401,7 +439,7 @@ $('#jf').addEventListener('submit',async e=>{
     const r=await fetch(url,{method:'PUT',body:'1'});
     if(r.status==401||r.status==403)return err('That name was just taken. Try another.');
     if(!r.ok)throw 0;
-    P.name=name;save();pushScore();msg.textContent='';loadLB();
+    P.name=name;save();pushScore();msg.textContent='';if($('#rcb').checked)await saveCode().catch(()=>{});loadLB();
   }catch{msg.className='note err';msg.textContent='Could not reach the board. Try again.'}
 });
 
