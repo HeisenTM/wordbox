@@ -118,7 +118,7 @@ li b{font-size:17px}
 <script>
 // ---- Leaderboard setup: paste your Firebase Realtime Database URL here ----
 // Example: 'https://your-project-default-rtdb.firebaseio.com'
-const DB = 'https://wordbox-43586-default-rtdb.europe-west1.firebasedatabase.app/';
+const DB = 'https://wordbox-43586-default-rtdb.europe-west1.firebasedatabase.app';
 
 // Answer words: everyday words only (filtered by usage frequency). Guesses are checked against DICT below.
 const WORDS = {
@@ -326,7 +326,8 @@ $('#jf').addEventListener('submit',async e=>{
   msg.textContent='Checking...';
   try{
     const r=await fetch(`${DB}/names/${name.toLowerCase()}.json`,{method:'PUT',headers:{'if-match':'null_etag'},body:'1'});
-    if([401,403,412].includes(r.status)){msg.className='note err';msg.textContent='That name is taken. Try another.';return}
+    if(r.status==412){msg.className='note err';msg.textContent='That name is taken. Try another.';return}
+    if(r.status==401||r.status==403){msg.className='note err';msg.textContent='Database blocked this. Publish the rules in Firebase (Realtime Database > Rules).';return}
     if(!r.ok)throw 0;
     P.name=name;save();pushScore();msg.textContent='';loadLB();
   }catch{msg.className='note err';msg.textContent='Could not reach the board. Try again.'}
