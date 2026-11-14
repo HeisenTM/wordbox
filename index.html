@@ -325,9 +325,13 @@ $('#jf').addEventListener('submit',async e=>{
   if(!DB){msg.className='note err';msg.textContent='Online board is not connected yet.';return}
   msg.textContent='Checking...';
   try{
-    const r=await fetch(`${DB}/names/${name.toLowerCase()}.json`,{method:'PUT',headers:{'if-match':'null_etag'},body:'1'});
-    if(r.status==412){msg.className='note err';msg.textContent='That name is taken. Try another.';return}
-    if(r.status==401||r.status==403){msg.className='note err';msg.textContent='Database blocked this. Publish the rules in Firebase (Realtime Database > Rules).';return}
+    const url=`${DB}/names/${name.toLowerCase()}.json`,err=t=>{msg.className='note err';msg.textContent=t};
+    const g=await fetch(url);
+    if(g.status==401||g.status==403)return err('Database blocked this ('+g.status+'). Publish the rules in Firebase (Realtime Database > Rules).');
+    if(!g.ok)throw 0;
+    if(await g.json()!==null)return err('That name is taken. Try another.');
+    const r=await fetch(url,{method:'PUT',body:'1'});
+    if(r.status==401||r.status==403)return err('That name was just taken. Try another.');
     if(!r.ok)throw 0;
     P.name=name;save();pushScore();msg.textContent='';loadLB();
   }catch{msg.className='note err';msg.textContent='Could not reach the board. Try again.'}
