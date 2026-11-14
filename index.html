@@ -379,9 +379,9 @@ async function loadLB(){
     let r=await fetch(`${DB}/scores.json?orderBy="${sortBy}"&limitToLast=50`);
     if(!r.ok&&sortBy=='wins')r=await fetch(`${DB}/scores.json?orderBy="best"&limitToLast=200`);
     if(!r.ok)throw 0;
-    const d=await r.json()||{},k=sortBy,o=k=='best'?'wins':'best';
-    const rows=Object.values(d).filter(x=>x&&typeof x.best=='number').sort((a,b)=>(b[k]||0)-(a[k]||0)||(b[o]||0)-(a[o]||0)||a.t-b.t).slice(0,50);
-    list.innerHTML=rows.length?'<li class="hd"><span></span><span>Player</span><span>Streak</span><span>Wins</span></li>'+rows.map((x,i)=>`<li class="${x.name==P.name?'me':''}"><span class="r">${i+1}</span><span>${esc(x.name)}</span><b class="${k=='best'?'hl':''}">${x.best}</b><b class="${k=='wins'?'hl':''}">${x.wins||0}</b></li>`).join(''):'<li><span></span><span class="note">No players yet. Be the first.</span></li>';
+    const d=await r.json()||{},k=sortBy,o=k=='best'?'wins':'best',V=(x,f)=>f=='wins'?Math.max(x.wins||0,x.best):x.best;
+    const rows=Object.values(d).filter(x=>x&&typeof x.best=='number').sort((a,b)=>V(b,k)-V(a,k)||V(b,o)-V(a,o)||a.t-b.t).slice(0,50);
+    list.innerHTML=rows.length?'<li class="hd"><span></span><span>Player</span><span>Streak</span><span>Wins</span></li>'+rows.map((x,i)=>`<li class="${x.name==P.name?'me':''}"><span class="r">${i+1}</span><span>${esc(x.name)}</span><b class="${k=='best'?'hl':''}">${x.best}</b><b class="${k=='wins'?'hl':''}">${V(x,'wins')}</b></li>`).join(''):'<li><span></span><span class="note">No players yet. Be the first.</span></li>';
   }catch{list.innerHTML='<li><span></span><span class="note err">Could not load the board. Try again later.</span></li>'}
 }
 $('#jf').addEventListener('submit',async e=>{
