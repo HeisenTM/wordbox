@@ -517,8 +517,8 @@ function renderProfile(){
   if(j&&pTab=='stats'){
     const g=P.games,w=P.wins,top=Math.max(6,...Object.keys(P.dist).map(Number)),mx=Math.max(1,...Object.values(P.dist));
     let h='<div class="sg">'+[[g,'Games'],[w,'Wins'],[g?Math.round(w/g*100)+'%':'0%','Win rate'],[P.streak,'Streak'],[P.best,'Best']].map(([a,b])=>`<div class="stat"><b>${a}</b><span>${b}</span></div>`).join('')+'</div><h3 class="sh">Guesses per win</h3>';
-    const BC=['#f2c14e','#35b777','#2fb5a6','#4aa3e0','#8b7be0','#c26ad6','#e0697a'];
-    for(let i=1;i<=top;i++){const n=P.dist[i]||0;h+=`<div class="db"><span>${i}</span><i class="${n?'on':''}" style="width:${n?Math.max(10,n/mx*100):6}%${n?';background:'+BC[i-1]+';color:#0e0f12':''}">${n||''}</i></div>`}
+    const BC=['#f2c14e','#c5d24a','#8fcf55','#35b777','#2a9d68','#228657','#1b7048'];
+    for(let i=1;i<=top;i++){const n=P.dist[i]||0;h+=`<div class="db"><span>${i}</span><i class="${n?'on':''}" style="width:${n?Math.max(10,n/mx*100):6}%${n?';background:'+BC[i-1]+';color:'+(i>=6?'#fff':'#0e0f12'):''}">${n||''}</i></div>`}
     $('#pStats').innerHTML=h}
 }
 $('#ptabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;pTab=b.dataset.p;renderProfile()});
