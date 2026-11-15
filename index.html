@@ -44,7 +44,9 @@ section{flex:1;min-height:0;display:flex;flex-direction:column}
 #cf{position:fixed;inset:0;pointer-events:none;z-index:9}
 .lnk{display:block;margin:12px auto 0;color:var(--mut);font-weight:700;padding:6px 12px;border-radius:8px}.lnk:hover{color:var(--text)}
 #after{padding:8px 0 14px}
-.btns{display:flex;gap:8px}.btns .btn{flex:1}
+.btns{display:flex;gap:8px}
+#shr{z-index:10}.shc{width:min(400px,100%)}.shc img{display:block;max-width:100%;max-height:58dvh;width:auto;margin:0 auto 16px;border-radius:12px;background:var(--bg)}
+.btn:disabled{opacity:.5;pointer-events:none}.btns .btn{flex:1}
 #nH,#nS{width:34px;height:34px;padding:0;border-radius:50%;border:1px solid var(--line);color:var(--mut);font-weight:800;display:grid;place-items:center}
 #nS:hover{color:var(--text)}
 .tools{display:flex;gap:6px;margin-left:10px}
@@ -80,9 +82,9 @@ section{flex:1;min-height:0;display:flex;flex-direction:column}
 .k.w{flex:1.6;max-width:74px;font-size:12px}
 .k.p{transform:scale(.92);background:#3b414c}
 .k.g{background:var(--g)}.k.y{background:var(--y)}.k.a{background:#1d2026;color:#5b606b}
-#toast{position:fixed;top:68px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:9px 15px;border-radius:9px;font-weight:700;opacity:0;pointer-events:none;transition:opacity .15s;z-index:9}
+#toast{position:fixed;top:68px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:9px 15px;border-radius:9px;font-weight:700;opacity:0;pointer-events:none;transition:opacity .15s;z-index:12}
 #toast.s{opacity:1}
-#end,#how{position:fixed;inset:0;display:grid;place-items:center;background:rgba(10,11,14,.72);backdrop-filter:blur(4px);z-index:8;padding:16px}
+#end,#how,#shr{position:fixed;inset:0;display:grid;place-items:center;background:rgba(10,11,14,.72);backdrop-filter:blur(4px);z-index:8;padding:16px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px 24px;width:min(380px,100%);text-align:center;animation:rise .25s ease-out}
 .card{max-height:92dvh;overflow:auto}
 .card h2{font-size:24px;letter-spacing:-.02em}
@@ -183,6 +185,7 @@ li.hd span:nth-child(n+3){text-align:right}
 <div id="toast"></div>
 <div id="end" hidden><div class="card"><h2 id="eT"></h2><p id="eS"></p><div class="words" id="eW"></div><div class="btns"><button class="btn alt" id="eShare">Share</button><button class="btn" id="eB"></button></div><button class="lnk" id="eView">View board</button></div></div>
 <div id="how" hidden><div class="card how"><h2>How to play</h2><ul><li>Guess the hidden word. You get <b>letters + 1</b> tries.</li><li>Each guess must be a real word. Press <b>Enter</b> to submit.</li><li><b>Click any box</b> in your current row to change just that letter.</li><li>Win to grow your streak. Miss and it resets to 0.</li><li>Join the <b>Leaderboard</b> with a unique name to compete.</li></ul><div class="ex"><i class="g">W</i><i>O</i><i class="y">R</i><i>D</i><i>S</i></div><p style="text-align:center;font-size:13px;margin:6px 0 18px"><b style="color:var(--g)">Green</b>: right spot. <b style="color:var(--y)">Yellow</b>: in the word, wrong spot. Gray: not in the word.</p><button class="btn" id="hB" style="width:100%">Got it</button></div></div>
+<div id="shr" hidden><div class="card shc"><img id="shi" alt="Your wordbox result card"><div class="btns"><button class="btn alt" id="shT" type="button">Copy text</button><button class="btn" id="shB" type="button" disabled>Share image</button></div><button class="lnk" id="shX" type="button">Close</button></div></div>
 <canvas id="cf"></canvas>
 
 <script>
@@ -365,6 +368,7 @@ $('#kb').addEventListener('pointerdown',e=>{
   if(k.dataset.a=='e')submit();else if(k.dataset.a=='d')del();else type(k.dataset.k)});
 addEventListener('keydown',e=>{
   if(e.ctrlKey||e.metaKey||e.altKey)return;
+  if(!$('#shr').hidden){if(e.key=='Escape'||e.key=='Enter'){e.preventDefault();closeShare()}return}
   if(!$('#how').hidden){if(e.key=='Escape'||e.key=='Enter'){e.preventDefault();closeHow()}return}
   if(!$('#after').hidden&&e.key=='Enter'){e.preventDefault();next();return}
   if(!$('#end').hidden){if(e.key=='Enter'){e.preventDefault();next()}return}
@@ -383,7 +387,49 @@ function shareText(){
   const won=S.gs.includes(S.ans[0]),E={g:'\u{1F7E9}',y:'\u{1F7E8}',a:'\u2B1B'};
   const grid=S.gs.map(w=>evaluate(w,S.ans[0]).map(s=>E[s]).join('')).join('\n');
   return `wordbox ${S.L} letters ${won?S.gs.length:'X'}/${S.G}`+(won&&P.streak>1?` \u{1F525}${P.streak}`:'')+`\n\n${grid}\n\n${location.origin+location.pathname}`}
-$('#eShare').onclick=$('#aShare').onclick=async()=>{const t=shareText();try{if(navigator.share){await navigator.share({text:t});return}await navigator.clipboard.writeText(t);toast('Result copied')}catch{}};
+function rr(x,a,b,w,h,r,f){x.beginPath();x.moveTo(a+r,b);x.arcTo(a+w,b,a+w,b+h,r);x.arcTo(a+w,b+h,a,b+h,r);x.arcTo(a,b+h,a,b,r);x.arcTo(a,b,a+w,b,r);x.closePath();x.fillStyle=f;x.fill()}
+async function drawCard(){
+  try{await document.fonts.load('700 40px Goldman')}catch{}
+  const W=1080,H=1350,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
+  const won=S.gs.includes(S.ans[0]),n=S.gs.length,col={g:'#35b777',y:'#e0ad1f',a:'#262a32'};
+  x.fillStyle='#13151a';x.fillRect(0,0,W,H);
+  const gr=x.createRadialGradient(W/2,-80,0,W/2,-80,950);gr.addColorStop(0,won?'rgba(53,183,119,.26)':'rgba(224,173,31,.14)');gr.addColorStop(1,'rgba(19,21,26,0)');x.fillStyle=gr;x.fillRect(0,0,W,H);
+  x.textAlign='left';x.textBaseline='alphabetic';x.font='700 64px Goldman, system-ui, sans-serif';
+  const tw=x.measureText('wordbox').width,lx=(W-(54+18+tw))/2;
+  rr(x,lx,82,54,54,15,'#35b777');rr(x,lx+16,98,22,22,5,'#13151a');
+  x.fillStyle='#e9ebf0';x.fillText('wordbox',lx+72,134);
+  x.textAlign='center';x.fillStyle='#868c99';x.font='700 34px system-ui, sans-serif';x.fillText(won?'SOLVED IN':'OUT OF GUESSES',W/2,262);
+  x.fillStyle=won?'#35b777':'#e9ebf0';x.font='700 170px Goldman, system-ui, sans-serif';x.fillText((won?n:'X')+'/'+S.G,W/2,420);
+  x.fillStyle='#868c99';x.font='500 36px system-ui, sans-serif';x.fillText(S.L+'-letter word',W/2,482);
+  const top=520,area=580,gap=12,t=Math.floor(Math.min(120,(W-240-(S.L-1)*gap)/S.L,(area-(n-1)*gap)/n)),gh=n*t+(n-1)*gap,gw=S.L*t+(S.L-1)*gap;
+  const gx=(W-gw)/2,gy=top+(area-gh)/2;
+  S.gs.forEach((w,r)=>evaluate(w,S.ans[0]).forEach((s2,i)=>rr(x,gx+i*(t+gap),gy+r*(t+gap),t,t,t*.18,col[s2])));
+  const chips=[['Streak',P.streak],['Best',P.best],['Wins',P.wins]],cw=260,cg=24,cx=(W-(3*cw+2*cg))/2;
+  chips.forEach(([l,v],i)=>{const a=cx+i*(cw+cg);rr(x,a,1150,cw,112,22,'#1b1e25');x.strokeStyle='#2b2f38';x.lineWidth=2;x.stroke();
+    x.fillStyle='#e9ebf0';x.font='700 54px Goldman, system-ui, sans-serif';x.fillText(String(v),a+cw/2,1208);
+    x.fillStyle='#868c99';x.font='500 26px system-ui, sans-serif';x.fillText(l,a+cw/2,1245)});
+  x.fillStyle='#868c99';x.font='500 30px system-ui, sans-serif';
+  x.fillText(((location.host||'wordbox')+location.pathname.replace(/index\.html$/,'')).replace(/\/$/,''),W/2,1316);
+  return c}
+let shUrl=null,shFile=null;
+async function openShare(){
+  $('#shr').hidden=false;$('#shi').removeAttribute('src');$('#shB').disabled=true;
+  try{
+    const c=await drawCard(),blob=await new Promise(r=>c.toBlob(r,'image/png'));
+    shFile=new File([blob],'wordbox-result.png',{type:'image/png'});
+    if(shUrl)URL.revokeObjectURL(shUrl);shUrl=URL.createObjectURL(blob);$('#shi').src=shUrl;
+    const can=!!(navigator.canShare&&navigator.canShare({files:[shFile]}));
+    $('#shB').textContent=can?'Share image':'Save image';$('#shB').dataset.can=can?'1':'';$('#shB').disabled=false;
+  }catch{toast('Could not make the image');closeShare()}
+}
+const closeShare=()=>{$('#shr').hidden=true};
+$('#shB').onclick=async()=>{
+  if(!shFile)return;
+  if($('#shB').dataset.can){try{await navigator.share({files:[shFile],text:shareText()})}catch{}return}
+  const a=document.createElement('a');a.href=shUrl;a.download='wordbox-result.png';document.body.appendChild(a);a.click();a.remove();toast('Image saved')};
+$('#shT').onclick=async()=>{try{await navigator.clipboard.writeText(shareText());toast('Text copied')}catch{}};
+$('#shX').onclick=closeShare;$('#shr').addEventListener('click',e=>{if(e.target.id=='shr')closeShare()});
+$('#eShare').onclick=$('#aShare').onclick=openShare;
 const openHow=()=>{$('#how').hidden=false;$('#hB').focus()},closeHow=()=>{$('#how').hidden=true;LS.set('wb_seen',1)};
 $('#nH').onclick=openHow;$('#how').addEventListener('click',e=>{if(e.target.id=='how')closeHow()});$('#hB').onclick=closeHow;
 $('#lg').onclick=()=>{location.hash='';view('play')};
