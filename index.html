@@ -28,7 +28,7 @@ section{flex:1;min-height:0;display:flex;flex-direction:column}
 .bar{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;padding:12px 2px 8px}
 .stats{display:flex;gap:8px;grid-column:3;grid-row:1;justify-self:end}
 .seg{grid-column:2;grid-row:1}
-@media(max-width:620px){.bar{grid-template-columns:1fr}.seg{grid-column:1;justify-self:center}.stats{grid-column:1;grid-row:2;justify-self:end}}
+@media(max-width:620px){.bar{grid-template-columns:1fr auto}.seg{grid-column:1/-1;grid-row:1;justify-self:center}.lvc{grid-column:1;grid-row:2}.stats{grid-column:2;grid-row:2;justify-self:end}}
 .seg{display:flex;align-items:center;gap:10px;color:var(--mut);font:700 15px Goldman,system-ui,sans-serif}
 .seg div{display:flex;gap:2px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:4px}
 .seg button{min-width:42px;height:36px;border-radius:9px;font:700 18px Goldman,system-ui,sans-serif;color:var(--mut);transition:background .15s,color .15s,transform .08s}
@@ -41,14 +41,22 @@ section{flex:1;min-height:0;display:flex;flex-direction:column}
 .stat.pop b{animation:pop .5s ease-out;color:var(--g)}
 .tag{text-align:center;color:var(--mut);font-size:13.5px;padding:10px 8px 0}
 .tile{cursor:default}
-#cf{position:fixed;inset:0;pointer-events:none;z-index:9}
+#cf{position:fixed;inset:0;pointer-events:none;z-index:11}
 .lnk{display:block;margin:12px auto 0;color:var(--mut);font-weight:700;padding:6px 12px;border-radius:8px}.lnk:hover{color:var(--text)}
 #after{padding:8px 0 14px}
 .btns{display:flex;gap:8px}
-#shr{z-index:10}.shc{width:min(400px,100%)}.shc img{display:block;max-width:100%;max-height:58dvh;width:auto;margin:0 auto 16px;border-radius:12px;background:var(--bg)}
+#shr,#spn{z-index:10}.shc{width:min(400px,100%)}.shc img{display:block;max-width:100%;max-height:58dvh;width:auto;margin:0 auto 16px;border-radius:12px;background:var(--bg)}
 .btn:disabled{opacity:.5;pointer-events:none}.btns .btn{flex:1}
-#nH,#nS{width:34px;height:34px;padding:0;border-radius:50%;border:1px solid var(--line);color:var(--mut);font-weight:800;display:grid;place-items:center}
-#nS:hover{color:var(--text)}
+#nH,#nS,#nD{width:34px;height:34px;padding:0;border-radius:50%;border:1px solid var(--line);color:var(--mut);font-weight:800;display:grid;place-items:center}
+#nS:hover,#nD:hover{color:var(--text)}
+#nD{position:relative}
+#nD .dot{position:absolute;top:1px;right:1px;width:10px;height:10px;border-radius:50%;background:var(--g);border:2px solid var(--bg)}
+.spc{width:min(360px,100%)}
+#spc{display:block;margin:10px auto 4px;width:280px;max-width:100%;height:auto;aspect-ratio:1}
+.spr{min-height:64px;margin:6px 0 12px}
+.spr b{font:700 32px Goldman,system-ui,sans-serif;color:var(--g)}
+.spr b.gold{color:#f2c14e}
+.spo{color:var(--mut);font-size:11.5px;line-height:1.5;margin-top:10px}
 .tools{display:flex;gap:6px;margin-left:10px}
 #nPr{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #nH:hover{color:var(--text)}
@@ -84,7 +92,7 @@ section{flex:1;min-height:0;display:flex;flex-direction:column}
 .k.g{background:var(--g)}.k.y{background:var(--y)}.k.a{background:#1d2026;color:#5b606b}
 #toast{position:fixed;top:68px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:9px 15px;border-radius:9px;font-weight:700;opacity:0;pointer-events:none;transition:opacity .15s;z-index:12}
 #toast.s{opacity:1}
-#end,#how,#shr{position:fixed;inset:0;display:grid;place-items:center;background:rgba(10,11,14,.72);backdrop-filter:blur(4px);z-index:8;padding:16px}
+#end,#how,#shr,#spn{position:fixed;inset:0;display:grid;place-items:center;background:rgba(10,11,14,.72);backdrop-filter:blur(4px);z-index:8;padding:16px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px 24px;width:min(380px,100%);text-align:center;animation:rise .25s ease-out}
 .card{max-height:92dvh;overflow:auto}
 .card h2{font-size:24px;letter-spacing:-.02em}
@@ -119,6 +127,40 @@ li.me{background:var(--panel);border-radius:11px;border-color:transparent}
 .db i.on{background:var(--g);color:#06150d}
 #pAcc{margin-top:16px}
 @media(max-width:560px){header{flex-wrap:wrap;row-gap:8px;padding:10px 2px 8px}.logo{order:1}.tools{order:2;margin-left:auto}nav{order:3;flex-basis:100%;margin-left:0}nav button{flex:1;padding:7px 4px;text-align:center}#nPr{max-width:none}}
+
+.lvc{grid-column:1;grid-row:1;justify-self:start;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:7px 12px 9px;min-width:116px;text-align:left;line-height:1.1;transition:border-color .15s}
+.lvc:hover{border-color:#3d4350}
+.lvt{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:7px}
+.lvt b{font:700 18px Goldman,system-ui,sans-serif}
+.lvt em{font-style:normal;font-size:11px;color:var(--mut)}
+.xbar{display:block;height:6px;background:var(--a);border-radius:6px;overflow:hidden}
+.xbar i{display:block;height:100%;width:0;background:var(--g);border-radius:6px;transition:width .6s ease}
+.xbar.sm{height:5px;margin-top:6px}
+#eX{margin:0 0 18px;text-align:left}
+.xpl{display:flex;justify-content:space-between;align-items:baseline;margin:2px 0 10px}
+.xpl b{font:700 28px Goldman,system-ui,sans-serif;color:var(--g)}
+.xpl span{font-size:12px;color:var(--mut)}
+.xlv{display:flex;justify-content:space-between;font-size:13px;color:var(--mut);margin:4px 0 6px}
+.xlv b{color:var(--text)}
+.lvup{color:var(--y);font-weight:700;margin-top:8px}
+.au{display:flex;justify-content:space-between;gap:10px;background:var(--a);border-radius:10px;padding:8px 12px;margin-top:8px;font-size:14px}
+.au b{color:var(--g);white-space:nowrap}
+.lvb{font-style:normal;display:inline-block;background:var(--a);color:var(--mut);font-size:11px;font-weight:700;border-radius:6px;padding:1px 6px;margin-left:8px;vertical-align:middle}
+.lvb.on{background:var(--g);color:#06150d}
+.ph{display:flex;align-items:center;gap:10px}.ph h1{min-width:0;overflow:hidden;text-overflow:ellipsis}
+#pLv{font-size:13px;padding:3px 9px;margin:0}
+#pX{margin-top:14px}
+.lrow{display:flex;align-items:center;gap:10px;margin-top:14px;color:var(--mut);font-size:13px}.lrow .tabs{margin-top:0}
+li[data-k]{cursor:pointer}li[data-k]:hover{background:var(--panel);border-radius:11px}
+.ac{display:grid;grid-template-columns:26px 1fr auto;gap:12px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:12px;margin:6px 0;background:var(--panel);opacity:.55}
+.ac.on{opacity:1}
+.ai{width:24px;height:24px;border-radius:7px;background:var(--a);display:grid;place-items:center;font-weight:800;color:#06150d;font-size:14px}
+.ac.on .ai{background:var(--g)}
+.ac b{display:block}
+.ac div span{display:block;color:var(--mut);font-size:13px}
+.ac small{color:var(--mut);font-size:12px}
+.ac em{font-style:normal;color:var(--mut);font-weight:700;font-size:13px;white-space:nowrap}
+.ac.on em{color:var(--g)}
 li.hd{color:var(--mut);font-size:12px;padding:4px 12px}
 li .r{color:var(--mut);font-weight:700}
 li:nth-child(n+2):nth-child(-n+4) .r{color:var(--y)}
@@ -131,6 +173,7 @@ li.hd span:nth-child(n+3){text-align:right}
 @media(max-height:700px){.tag{display:none}}
 @media(max-height:620px){.k{height:44px}.bar{padding:6px 0 2px}}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-delay:0s!important}}
+@media(max-width:620px){.lvc{grid-column:1;grid-row:2}}
 </style>
 </head>
 <body>
@@ -138,11 +181,12 @@ li.hd span:nth-child(n+3){text-align:right}
 <header>
   <button class="logo" id="lg" aria-label="wordbox home"><i></i>wordbox</button>
   <nav><button id="nP" class="on">Play</button><button id="nL">Leaderboard</button><button id="nPr">Profile</button></nav>
-  <div class="tools"><button id="nS" aria-label="Sound"></button><button id="nH" aria-label="How to play">?</button></div>
+  <div class="tools"><button id="nD" aria-label="Daily spin"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4"/></svg><i class="dot" hidden></i></button><button id="nS" aria-label="Sound"></button><button id="nH" aria-label="How to play">?</button></div>
 </header>
 
 <section id="play">
   <div class="bar">
+    <button class="lvc" id="lvc" type="button" aria-label="Open profile"><span class="lvt"><b id="lvn">Lv 1</b><em id="lvx">0 / 80</em></span><span class="xbar"><i id="lvf"></i></span></button>
     <div class="seg"><div id="sL" role="group" aria-label="Word length"></div></div>
     <div class="stats"><div class="stat" id="stc"><b id="st">0</b><span>Streak</span></div><div class="stat"><b id="bs">0</b><span>Best</span></div></div>
   </div>
@@ -157,13 +201,15 @@ li.hd span:nth-child(n+3){text-align:right}
     <p class="note" id="who">Ranked by best streak.</p>
     <div class="cta" id="cta"><div><b>Want to be on the board?</b><span>Create a profile with a unique name to compete.</span></div><button class="btn" id="cb" type="button">Create profile</button></div>
     <button class="lnk2" id="vp" type="button" hidden>View your profile</button>
-    <div class="tabs" id="tabs"><button data-s="best" class="on">Best streak</button><button data-s="wins">Most wins</button></div>
+    <div class="tabs" id="tabs"><button data-s="best" class="on">Best streak</button><button data-s="wins">Most wins</button><button data-s="xp">Level</button></div>
+    <div class="lrow" id="llen"><span>Word length</span><div class="tabs" id="ltabs"><button data-l="all" class="on">All</button><button data-l="4">4</button><button data-l="5">5</button><button data-l="6">6</button></div></div>
     <ol id="list"></ol>
   </div></div>
 </section>
 <section id="prs" hidden>
   <div id="pf"><div class="lbw">
-    <h1 id="pT">Profile</h1>
+    <button class="lnk2" id="pBack" type="button" hidden>&larr; Back to leaderboard</button>
+    <div class="ph"><h1 id="pT">Profile</h1><span class="lvb" id="pLv" hidden></span></div>
     <p class="note" id="pSub">Pick a unique name to join the leaderboard.</p>
     <form class="join" id="jf" autocomplete="off">
       <input id="nm" maxlength="16" placeholder="Pick a unique name" aria-label="Name">
@@ -174,8 +220,10 @@ li.hd span:nth-child(n+3){text-align:right}
     <div class="rc" id="rc" hidden><p>Your recovery code. Save it now, it will not be shown again.</p><div class="rcr"><code id="rcv"></code><button class="btn alt" id="rcc" type="button">Copy</button></div></div>
     <button class="lnk2" id="rl" type="button">Lost your data? Restore your name</button>
     <form class="join" id="rf" hidden autocomplete="off"><input id="rn" maxlength="16" placeholder="Your name" aria-label="Name"><input id="rk" maxlength="20" placeholder="Recovery code" aria-label="Recovery code" autocapitalize="characters"><button class="btn" type="submit">Restore</button></form>
-    <div class="tabs" id="ptabs" hidden><button data-p="stats" class="on">Stats</button><button data-p="acc">Account</button></div>
-    <div id="pStats" hidden></div>
+    <div id="pX"></div>
+    <div class="tabs" id="ptabs"><button data-p="stats" class="on">Stats</button><button data-p="ach">Achievements</button><button data-p="acc">Account</button></div>
+    <div id="pStats"></div>
+    <div id="pAch" hidden></div>
     <div id="pAcc" hidden><p class="note" id="accT"></p>
     <button class="lnk2" id="mk" type="button" hidden>Create a recovery code for this name</button>
     </div>
@@ -183,9 +231,10 @@ li.hd span:nth-child(n+3){text-align:right}
 </section>
 </div>
 <div id="toast"></div>
-<div id="end" hidden><div class="card"><h2 id="eT"></h2><p id="eS"></p><div class="words" id="eW"></div><div class="btns"><button class="btn alt" id="eShare">Share</button><button class="btn" id="eB"></button></div><button class="lnk" id="eView">View board</button></div></div>
+<div id="end" hidden><div class="card"><h2 id="eT"></h2><p id="eS"></p><div class="words" id="eW"></div><div id="eX" hidden><div class="xpl" id="xpH"><b id="xpN"></b><span id="xpD"></span></div><div class="xlv"><b id="xpL"></b><span id="xpT"></span></div><div class="xbar"><i id="xpF"></i></div><div class="lvup" id="xpU" hidden></div><div id="xpA"></div></div><div class="btns"><button class="btn alt" id="eShare">Share</button><button class="btn" id="eB"></button></div><button class="lnk" id="eView">View board</button></div></div>
 <div id="how" hidden><div class="card how"><h2>How to play</h2><ul><li>Guess the hidden word. You get <b>letters + 1</b> tries.</li><li>Each guess must be a real word. Press <b>Enter</b> to submit.</li><li><b>Click any box</b> in your current row to change just that letter.</li><li>Win to grow your streak. Miss and it resets to 0.</li><li>Join the <b>Leaderboard</b> with a unique name to compete.</li></ul><div class="ex"><i class="g">W</i><i>O</i><i class="y">R</i><i>D</i><i>S</i></div><p style="text-align:center;font-size:13px;margin:6px 0 18px"><b style="color:var(--g)">Green</b>: right spot. <b style="color:var(--y)">Yellow</b>: in the word, wrong spot. Gray: not in the word.</p><button class="btn" id="hB" style="width:100%">Got it</button></div></div>
 <div id="shr" hidden><div class="card shc"><img id="shi" alt="Your wordbox result card"><div class="btns"><button class="btn alt" id="shT" type="button">Copy text</button><button class="btn" id="shB" type="button" disabled>Share image</button></div><button class="lnk" id="shX" type="button">Close</button></div></div>
+<div id="spn" hidden><div class="card spc"><h2>Daily spin</h2><p id="spS">One free spin every day.</p><canvas id="spc"></canvas><div class="spr" id="spR"></div><div class="btns"><button class="btn" id="spB" type="button">Spin</button></div><button class="lnk" id="spX" type="button">Close</button><p class="spo" id="spO"></p></div></div>
 <canvas id="cf"></canvas>
 
 <script>
@@ -206,10 +255,54 @@ const DICT={4:'aahs aals abas abba abbe abed abet able ably abos abri abut abye 
 const $=s=>document.querySelector(s), sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const LS={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}},del(k){try{localStorage.removeItem(k)}catch{}}};
 const lists={};for(const l in WORDS)lists[l]=[...new Set(WORDS[l].split(' ').filter(w=>w.length==l&&/^[a-z]+$/.test(w)))];
-let P=Object.assign({streak:0,best:0,wins:0,games:0,dist:{},rc:0,L:5,N:1,name:''},LS.get('wb_p',{}));
-if(P.wins<P.best)P.wins=P.best;
-if(P.games<P.wins)P.games=P.wins;
-let sortBy='best';
+let P=Object.assign({rc:0,L:5,N:1,name:'',xp:0,ach:{}},LS.get('wb_p',{}));
+P.cnt=Object.assign({inv:0,edit:0,shares:0,spins:0,jack:0,last:''},P.cnt);
+const LENS=[4,5,6];
+if(!P.st){ // first run with per-length stats: earlier games count as 5-letter
+  const w=Math.max(P.wins||0,P.best||0),g=Math.max(P.games||0,w);
+  P.st={};LENS.forEach(L=>P.st[L]={g:0,w:0,best:0,streak:0,dist:{}});
+  P.st[5]={g,w,best:P.best||0,streak:P.streak||0,dist:P.dist||{}};P.xp=w*30;P.mig=1}
+['streak','best','wins','games','dist'].forEach(k=>delete P[k]);
+const stL=L=>P.st[L]||(P.st[L]={g:0,w:0,best:0,streak:0,dist:{}});
+const sum=k=>LENS.reduce((a,L)=>a+stL(L)[k],0);
+const maxBest=()=>Math.max(0,...LENS.map(L=>stL(L).best));
+const need=L=>50+30*L;
+function lvInfo(xp){let L=1,r=xp;while(r>=need(L)){r-=need(L);L++}return{L,cur:r,next:need(L),pct:r/need(L)}}
+function winXp(L,n,G,st){const base={4:20,5:30,6:45}[L],fast=(G-n)*5,sk=Math.min(st,10)*3;return{base,fast,st:sk,total:base+fast+sk}}
+const ACH=[
+ {id:'first_win',c:'Wins',n:'First Steps',d:'Win your first game',x:50,t:()=>sum('w')>=1},
+ {id:'wins_10',c:'Wins',n:'Regular',d:'Win 10 games',x:100,t:()=>sum('w')>=10,p:()=>[sum('w'),10]},
+ {id:'wins_50',c:'Wins',n:'Veteran',d:'Win 50 games',x:250,t:()=>sum('w')>=50,p:()=>[sum('w'),50]},
+ {id:'wins_100',c:'Wins',n:'Centurion',d:'Win 100 games',x:500,t:()=>sum('w')>=100,p:()=>[sum('w'),100]},
+ {id:'wins_250',c:'Wins',n:'Wordsmith',d:'Win 250 games',x:1000,t:()=>sum('w')>=250,p:()=>[sum('w'),250]},
+ {id:'three',c:'Guesses',n:'Three or Less',d:'Win in 3 guesses or fewer',x:60,t:c=>c&&c.won&&c.n<=3},
+ {id:'two',c:'Guesses',n:'Mind Reader',d:'Win in 2 guesses or fewer',x:150,t:c=>c&&c.won&&c.n<=2},
+ {id:'one',c:'Guesses',n:'Hole in One',d:'Win on your first guess',x:500,t:c=>c&&c.won&&c.n==1},
+ {id:'clutch',c:'Guesses',n:'Clutch',d:'Win on your very last guess',x:75,t:c=>c&&c.won&&c.n==c.G},
+ {id:'streak_3',c:'Streaks',n:'Warming Up',d:'Reach a 3-win streak',x:60,t:()=>maxBest()>=3,p:()=>[maxBest(),3]},
+ {id:'streak_5',c:'Streaks',n:'On a Roll',d:'Reach a 5-win streak',x:100,t:()=>maxBest()>=5,p:()=>[maxBest(),5]},
+ {id:'streak_10',c:'Streaks',n:'Unstoppable',d:'Reach a 10-win streak',x:250,t:()=>maxBest()>=10,p:()=>[maxBest(),10]},
+ {id:'streak_25',c:'Streaks',n:'Legend',d:'Reach a 25-win streak',x:600,t:()=>maxBest()>=25,p:()=>[maxBest(),25]},
+ {id:'streak_50',c:'Streaks',n:'Immortal',d:'Reach a 50-win streak',x:1200,t:()=>maxBest()>=50,p:()=>[maxBest(),50]},
+ {id:'len4',c:'Word length',n:'Short and Sweet',d:'Win a 4-letter game',x:40,t:()=>stL(4).w>=1},
+ {id:'len6',c:'Word length',n:'Going Long',d:'Win a 6-letter game',x:80,t:()=>stL(6).w>=1},
+ {id:'all_len',c:'Word length',n:'Well Rounded',d:'Win with 4, 5 and 6 letters',x:120,t:()=>LENS.every(L=>stL(L).w>=1)},
+ {id:'long_haul',c:'Word length',n:'Long Haul',d:'Reach a 5-win streak with 6 letters',x:200,t:()=>stL(6).best>=5,p:()=>[stL(6).best,5]},
+ {id:'loss',c:'Mistakes and more',n:'Learning Curve',d:'Lose a game',x:25,t:()=>sum('g')>sum('w')},
+ {id:'comeback',c:'Mistakes and more',n:'Comeback',d:'Win right after a loss',x:60,t:c=>c&&c.won&&c.prevLoss},
+ {id:'typo',c:'Mistakes and more',n:'Typo Hunter',d:'Submit 10 words that are not in the list',x:30,t:()=>P.cnt.inv>=10,p:()=>[P.cnt.inv,10]},
+ {id:'tuner',c:'Mistakes and more',n:'Fine Tuner',d:'Fix a letter in the middle of a row 10 times',x:40,t:()=>P.cnt.edit>=10,p:()=>[P.cnt.edit,10]},
+ {id:'share',c:'Mistakes and more',n:'Show Off',d:'Share a result',x:30,t:()=>P.cnt.shares>=1},
+ {id:'board',c:'Mistakes and more',n:'On the Board',d:'Join the leaderboard with a name',x:50,t:()=>!!P.name},
+ {id:'backup',c:'Mistakes and more',n:'Backed Up',d:'Create a recovery code',x:40,t:()=>!!P.rc},
+ {id:'spin',c:'Mistakes and more',n:'Feeling Lucky',d:'Take your first daily spin',x:30,t:()=>P.cnt.spins>=1},
+ {id:'jackpot',c:'Mistakes and more',n:'Jackpot',d:'Hit the 500 XP daily spin',x:250,t:()=>P.cnt.jack>=1},
+ {id:'lvl10',c:'Mistakes and more',n:'Rising Star',d:'Reach level 10',x:150,t:()=>lvInfo(P.xp).L>=10,p:()=>[lvInfo(P.xp).L,10]}
+];
+function evalAch(ctx){const got=[];let ch=true;while(ch){ch=false;for(const a of ACH)if(!P.ach[a.id]&&a.t(ctx)){P.ach[a.id]=Date.now();P.xp+=a.x;got.push(a);ch=true}}return got}
+function ev2(ctx){const got=evalAch(ctx);if(!got.length)return;save();stats();pushScore();got.forEach((a,i)=>setTimeout(()=>{toast('Achievement: '+a.n+' +'+a.x+' XP');SFX.ach()},i*1400))}
+function countUp(el,to){const t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/700);el.textContent='+'+Math.round(to*(1-Math.pow(1-k,3)))+' XP';if(k<1)requestAnimationFrame(f)})(t0)}
+let sortBy='best',lbLen='all';
 let S=null,busy=false,dict=null;
 const save=()=>LS.set('wb_p',P);
 
@@ -280,7 +373,7 @@ function keys(){
   const m={},rank={a:0,y:1,g:2};
   act().forEach(b=>S.gs.forEach(g=>evaluate(g,S.ans[b]).forEach((s,i)=>{const k=g[i];if(!(k in m)||rank[s]>rank[m[k]])m[k]=s})));
   document.querySelectorAll('.k[data-k]').forEach(k=>{k.classList.remove('g','y','a');const s=m[k.dataset.k];if(s)k.classList.add(s)})}
-function stats(){$('#st').textContent=P.streak;$('#bs').textContent=P.best}
+function stats(){const q=stL(P.L),x=lvInfo(P.xp);$('#st').textContent=q.streak;$('#bs').textContent=q.best;$('#lvn').textContent='Lv '+x.L;$('#lvx').textContent=x.cur+' / '+x.next;$('#lvf').style.width=Math.round(x.pct*100)+'%'}
 
 function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('s');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('s'),1200)}
 function bad(msg){SFX.bad();toast(msg);navigator.vibrate&&navigator.vibrate(20);const r=S.gs.length;
@@ -288,7 +381,7 @@ function bad(msg){SFX.bad();toast(msg);navigator.vibrate&&navigator.vibrate(20);
 
 function type(ch){
   if(busy||S.over||S.pos>=S.L)return;
-  const c=S.pos,r=S.gs.length;S.cur[c]=ch;SFX.key();navigator.vibrate&&navigator.vibrate(6);
+  const c=S.pos,r=S.gs.length;if(S.cur[c]){P.cnt.edit++;save();ev2(null)}S.cur[c]=ch;SFX.key();navigator.vibrate&&navigator.vibrate(6);
   let n=c+1;while(n<S.L&&S.cur[n])n++;S.pos=n;showCur();
   act().forEach(b=>{const t=tile(b,r,c);t.classList.remove('f');void t.offsetWidth;t.classList.add('f')})}
 function del(){
@@ -300,7 +393,7 @@ async function submit(){
   if(busy||S.over)return;
   if(S.cur.some(x=>!x))return bad('Not enough letters');
   const g=S.cur.join('');
-  if(!valid(g))return bad('Not in word list');
+  if(!valid(g)){P.cnt.inv++;save();ev2(null);return bad('Not in word list')}
   busy=true;
   const r=S.gs.length,A=act();
   S.cur=Array(S.L).fill('');S.pos=0;S.gs.push(g);
@@ -325,16 +418,35 @@ async function finish(won,g,A){
   S.over=true;persist();
   S.ans.forEach((a,b)=>boardEl(b).classList.toggle('done',solveIdx(b)>=0));
   A.filter(b=>S.ans[b]==g).forEach(b=>{for(let c=0;c<S.L;c++){const t=tile(b,S.gs.length-1,c);t.style.setProperty('--i',c);t.classList.remove('flip');t.classList.add('bounce')}});
-  P.games++;
-  if(won){P.streak++;P.wins++;P.dist[S.gs.length]=(P.dist[S.gs.length]||0)+1;if(P.streak>P.best)P.best=P.streak;pushScore();confetti();SFX.win()}else{P.streak=0;SFX.lose()}
-  save();stats();
+  const n=S.gs.length,q=stL(S.L),ctx={won,n,G:S.G,L:S.L,prevLoss:P.cnt.last=='l'},lv0=lvInfo(P.xp);let gain=null;
+  q.g++;
+  if(won){q.w++;q.streak++;if(q.streak>q.best)q.best=q.streak;q.dist[n]=(q.dist[n]||0)+1;gain=winXp(S.L,n,S.G,q.streak);P.xp+=gain.total;confetti();SFX.win()}else{q.streak=0;SFX.lose()}
+  P.cnt.last=won?'w':'l';
+  const got=evalAch(ctx),lv1=lvInfo(P.xp);
+  pushScore();save();stats();
   if(won){const e=$('#stc');e.classList.remove('pop');void e.offsetWidth;e.classList.add('pop')}
   await sleep(won?900:500);
   $('#eT').textContent=won?'Solved':'Out of guesses';
-  $('#eS').textContent=won?(P.streak==1?'Streak started.':'Streak: '+P.streak):'Your streak reset to 0.';
+  $('#eS').textContent=won?(q.streak==1?'Streak started.':'Streak: '+q.streak):'Your streak reset to 0.';
   $('#eW').innerHTML='';
   S.ans.forEach(a=>{const s=document.createElement('span');s.textContent=a;if(S.gs.includes(a))s.className='ok';$('#eW').appendChild(s)});
   $('#eB').textContent=won?'Next word':'Try again';
+  const X=$('#eX');X.hidden=!(gain||got.length);
+  if(!X.hidden){
+    $('#xpH').hidden=!gain;
+    if(gain){$('#xpN').textContent='+0 XP';$('#xpD').textContent='Win '+gain.base+(gain.fast?' + Fast '+gain.fast:'')+(gain.st?' + Streak '+gain.st:'')}
+    $('#xpA').innerHTML=got.map(a=>`<div class="au"><span>${a.n}</span><b>+${a.x} XP</b></div>`).join('');
+    const up=lv1.L>lv0.L;$('#xpU').hidden=!up;$('#xpU').textContent='Level up! You reached level '+lv1.L;
+    const F=$('#xpF'),fmt=l=>l.cur+' / '+l.next+' XP';
+    F.style.transition='none';F.style.width=Math.round(lv0.pct*100)+'%';$('#xpL').textContent='Level '+lv0.L;$('#xpT').textContent=fmt(lv0);
+    setTimeout(()=>{
+      if(gain)countUp($('#xpN'),gain.total);
+      F.style.transition='';
+      if(up){F.style.width='100%';setTimeout(()=>{F.style.transition='none';F.style.width='0%';$('#xpL').textContent='Level '+lv1.L;void F.offsetWidth;F.style.transition='';F.style.width=Math.round(lv1.pct*100)+'%';$('#xpT').textContent=fmt(lv1)},650)}
+      else{F.style.width=Math.round(lv1.pct*100)+'%';$('#xpT').textContent=fmt(lv1)}
+      if(got.length)setTimeout(SFX.ach,500);
+      if(up)setTimeout(SFX.level,700);
+    },350)}
   $('#end').hidden=false;$('#eB').focus();
 }
 function next(){$('#end').hidden=true;$('#after').hidden=true;$('#kb').hidden=false;newGame()}
@@ -348,7 +460,7 @@ function seg(id,vals,key){
   const box=$(id);vals.forEach(v=>{const b=document.createElement('button');b.textContent=v;b.dataset.v=v;
     b.onclick=()=>{if(P[key]==v)return;
       if(S&&!S.over&&S.gs.length&&!confirm('Change length? Your current game ends and your streak resets.'))return;
-      if(S&&!S.over&&S.gs.length){P.streak=0}
+      if(S&&!S.over&&S.gs.length){stL(S.L).streak=0}
       P[key]=v;save();mark();newGame()};
     box.appendChild(b)})}
 function mark(){document.querySelectorAll('#sL button').forEach(b=>b.classList.toggle('on',b.dataset.v==P.L));}
@@ -368,6 +480,7 @@ $('#kb').addEventListener('pointerdown',e=>{
   if(k.dataset.a=='e')submit();else if(k.dataset.a=='d')del();else type(k.dataset.k)});
 addEventListener('keydown',e=>{
   if(e.ctrlKey||e.metaKey||e.altKey)return;
+  if(!$('#spn').hidden){if(e.key=='Escape')closeSpin();return}
   if(!$('#shr').hidden){if(e.key=='Escape'||e.key=='Enter'){e.preventDefault();closeShare()}return}
   if(!$('#how').hidden){if(e.key=='Escape'||e.key=='Enter'){e.preventDefault();closeHow()}return}
   if(!$('#after').hidden&&e.key=='Enter'){e.preventDefault();next();return}
@@ -386,7 +499,7 @@ $('#boards').addEventListener('click',e=>{const t=e.target.closest('.tile');if(!
 function shareText(){
   const won=S.gs.includes(S.ans[0]),E={g:'\u{1F7E9}',y:'\u{1F7E8}',a:'\u2B1B'};
   const grid=S.gs.map(w=>evaluate(w,S.ans[0]).map(s=>E[s]).join('')).join('\n');
-  return `wordbox ${S.L} letters ${won?S.gs.length:'X'}/${S.G}`+(won&&P.streak>1?` \u{1F525}${P.streak}`:'')+`\n\n${grid}\n\n${location.origin+location.pathname}`}
+  return `wordbox ${S.L} letters ${won?S.gs.length:'X'}/${S.G}`+(won&&stL(S.L).streak>1?` \u{1F525}${stL(S.L).streak}`:'')+`\n\n${grid}\n\n${location.origin+location.pathname}`}
 function rr(x,a,b,w,h,r,f){x.beginPath();x.moveTo(a+r,b);x.arcTo(a+w,b,a+w,b+h,r);x.arcTo(a+w,b+h,a,b+h,r);x.arcTo(a,b+h,a,b,r);x.arcTo(a,b,a+w,b,r);x.closePath();x.fillStyle=f;x.fill()}
 async function drawCard(){
   try{await document.fonts.load('700 40px Goldman')}catch{}
@@ -406,7 +519,7 @@ async function drawCard(){
   S.gs.forEach((w,r)=>evaluate(w,S.ans[0]).forEach((s2,i)=>{const a=gx+i*(t+gap),b=gy+r*(t+gap);rr(x,a,b,t,t,t*.18,col[s2]);
     x.fillStyle=s2=='a'?'#868c99':'#fff';x.font='700 '+Math.round(t*.52)+'px Goldman, system-ui, sans-serif';x.textBaseline='middle';
     x.fillText(w[i].toUpperCase(),a+t/2,b+t/2+t*.03);x.textBaseline='alphabetic'}));
-  const chips=[['Streak',P.streak],['Best',P.best],['Wins',P.wins]],cw=260,cg=24,cx=(W-(3*cw+2*cg))/2;
+  const chips=[['Streak',stL(S.L).streak],['Best',stL(S.L).best],['Wins',stL(S.L).w]],cw=260,cg=24,cx=(W-(3*cw+2*cg))/2;
   chips.forEach(([l,v],i)=>{const a=cx+i*(cw+cg);rr(x,a,1150,cw,112,22,'#1b1e25');x.strokeStyle='#2b2f38';x.lineWidth=2;x.stroke();
     x.fillStyle='#e9ebf0';x.font='700 54px Goldman, system-ui, sans-serif';x.fillText(String(v),a+cw/2,1208);
     x.fillStyle='#868c99';x.font='500 26px system-ui, sans-serif';x.fillText(l,a+cw/2,1245)});
@@ -427,11 +540,11 @@ async function openShare(){
 }
 const closeShare=()=>{$('#shr').hidden=true};
 $('#shB').onclick=async()=>{
-  if(!shFile)return;const mode=$('#shB').dataset.mode;
+  if(!shFile)return;P.cnt.shares++;save();ev2(null);const mode=$('#shB').dataset.mode;
   if(mode=='share'){try{await navigator.share({files:[shFile],text:shareText()})}catch{}return}
   if(mode=='copy'){try{await navigator.clipboard.write([new ClipboardItem({'image/png':shBlob})]);toast('Image copied');return}catch{}}
   const a=document.createElement('a');a.href=shUrl;a.download='wordbox-result.png';document.body.appendChild(a);a.click();a.remove();toast(mode=='copy'?'Could not copy, image saved instead':'Image saved')};
-$('#shT').onclick=async()=>{try{await navigator.clipboard.writeText(shareText());toast('Text copied')}catch{}};
+$('#shT').onclick=async()=>{P.cnt.shares++;save();ev2(null);try{await navigator.clipboard.writeText(shareText());toast('Text copied')}catch{}};
 $('#shX').onclick=closeShare;$('#shr').addEventListener('click',e=>{if(e.target.id=='shr')closeShare()});
 $('#eShare').onclick=$('#aShare').onclick=openShare;
 const openHow=()=>{$('#how').hidden=false;$('#hB').focus()},closeHow=()=>{$('#how').hidden=true;LS.set('wb_seen',1)};
@@ -449,12 +562,64 @@ const SFX={
   bad(){tone(190,0,.14,'square',.035,150);tone(160,.11,.16,'square',.035,120)},
   flip(s,i){if(s=='g')tone(SC[Math.min(i,6)],0,.22,'sine',.07);else if(s=='y')tone(440,0,.14,'triangle',.05);else tone(210,0,.07,'triangle',.04,170)},
   win(){[0,2,4,6].forEach((n,i)=>{tone(SC[n],i*.09,.45,'sine',.07);tone(SC[n]*2,i*.09+.02,.3,'triangle',.025)});tone(1567.98,.4,.6,'sine',.04)},
-  lose(){[392,349.23,293.66].forEach((f,i)=>tone(f,i*.16,.3,'triangle',.06))}
+  lose(){[392,349.23,293.66].forEach((f,i)=>tone(f,i*.16,.3,'triangle',.06))},
+  ach(){tone(880,0,.12,'triangle',.07);tone(1318.5,.1,.32,'sine',.07)},
+  level(){[0,1,2,3,5].forEach((n,i)=>tone(SC[n],i*.07,.32,'sine',.06))},
+  tick(){tone(1100,0,.025,'square',.025)}
 };
 function sndIcon(){const on=P.snd!==0,b=$('#nS');
   b.innerHTML='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/>'+(on?'<path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/>':'<path d="M16 9l5 6M21 9l-5 6"/>')+'</svg>';
   b.setAttribute('aria-label',on?'Sound on':'Sound off');b.setAttribute('aria-pressed',on)}
 $('#nS').onclick=()=>{P.snd=P.snd===0?1:0;save();sndIcon();if(P.snd!==0){SFX.flip('g',2);setTimeout(()=>SFX.flip('g',4),90)}};
+
+// ---- daily spin ----
+const SPINS=[{x:10,w:30},{x:20,w:25},{x:30,w:18},{x:50,w:12},{x:75,w:8},{x:100,w:4},{x:200,w:2},{x:500,w:1}];
+const SCOL=['#2b3039','#323843','#1b7048','#228657','#2a9d68','#35b777','#c5d24a','#f2c14e'];
+const todayStr=()=>{const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()};
+const canSpin=()=>P.spin!==todayStr();
+let spinning=false,spRot=0;
+const dotUpd=()=>{$('#nD .dot').hidden=!canSpin()};
+function pickSpin(){let r=Math.random()*100,i=0;for(;i<SPINS.length-1;i++){r-=SPINS[i].w;if(r<0)break}return i}
+function drawWheel(rot){
+  const c=$('#spc'),dpr=window.devicePixelRatio||1,Z=280;
+  if(c.width!=Z*dpr){c.width=Z*dpr;c.height=Z*dpr}
+  const x=c.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);x.clearRect(0,0,Z,Z);
+  const cx=Z/2,cy=Z/2+8,R=124,a=Math.PI*2/SPINS.length;
+  x.save();x.translate(cx,cy);x.rotate(rot);
+  SPINS.forEach((s,i)=>{const a0=-Math.PI/2+i*a;
+    x.beginPath();x.moveTo(0,0);x.arc(0,0,R,a0,a0+a);x.closePath();x.fillStyle=SCOL[i];x.fill();x.strokeStyle='#13151a';x.lineWidth=2;x.stroke();
+    x.save();x.rotate(a0+a/2);x.textAlign='right';x.textBaseline='middle';x.fillStyle=i>=5?'#0e0f12':'#fff';x.font='700 19px Goldman, system-ui, sans-serif';x.fillText(String(s.x),R-16,0);x.restore()});
+  x.restore();
+  x.beginPath();x.arc(cx,cy,R,0,Math.PI*2);x.strokeStyle='#2b2f38';x.lineWidth=4;x.stroke();
+  x.beginPath();x.arc(cx,cy,24,0,Math.PI*2);x.fillStyle='#13151a';x.fill();x.strokeStyle='#2b2f38';x.lineWidth=3;x.stroke();
+  x.beginPath();x.moveTo(cx-11,cy-R-12);x.lineTo(cx+11,cy-R-12);x.lineTo(cx,cy-R+10);x.closePath();x.fillStyle='#e9ebf0';x.fill()}
+function spinWheel(i){
+  return new Promise(res=>{
+    const TAU=Math.PI*2,a=TAU/SPINS.length,jit=(Math.random()-.5)*a*.6;
+    const fin=((-(i*a+a/2)+jit)%TAU+TAU)%TAU+TAU*6,t0=performance.now(),dur=matchMedia('(prefers-reduced-motion:reduce)').matches?1:4600;let last=-1;
+    (function f(t){const k=Math.min(1,(t-t0)/dur),r=fin*(1-Math.pow(1-k,4));spRot=r;drawWheel(r);
+      const seg=Math.floor(r/a);if(seg!=last){if(last>=0)SFX.tick();last=seg}
+      if(k<1)requestAnimationFrame(f);else res()})(t0)})}
+function spinStatus(){
+  if(spinning)return;const b=$('#spB');
+  if(canSpin()){b.disabled=false;b.textContent='Spin';$('#spS').textContent='One free spin every day.'}
+  else{const n=new Date(),ms=new Date(n.getFullYear(),n.getMonth(),n.getDate()+1)-n,h=Math.floor(ms/36e5),mi=Math.floor(ms%36e5/6e4);
+    b.disabled=true;b.textContent='Next spin in '+h+'h '+mi+'m';$('#spS').textContent="You've used today's spin."}}
+function openSpin(){$('#spn').hidden=false;$('#spO').textContent='Odds: '+SPINS.map(s=>s.x+' XP '+s.w+'%').join(' · ');if(!spinning)$('#spR').innerHTML='';spinStatus();drawWheel(spRot)}
+const closeSpin=()=>{$('#spn').hidden=true};
+$('#spB').onclick=async()=>{
+  if(spinning||!canSpin())return;
+  spinning=true;$('#spB').disabled=true;$('#spB').textContent='Spinning...';$('#spR').innerHTML='';
+  const i=pickSpin(),amt=SPINS[i].x,lv0=lvInfo(P.xp);
+  P.spin=todayStr();P.xp+=amt;P.cnt.spins++;if(amt>=500)P.cnt.jack++;save();dotUpd();
+  await spinWheel(i);
+  const lv1=lvInfo(P.xp),up=lv1.L>lv0.L;spinning=false;
+  $('#spR').innerHTML='<b class="'+(amt>=200?'gold':'')+'">+'+amt+' XP</b>'+(up?'<div class="lvup">Level up! You reached level '+lv1.L+'</div>':'');
+  stats();pushScore();(amt>=100?SFX.win:SFX.ach)();if(amt>=200)confetti();if(up)setTimeout(SFX.level,500);
+  if($('#spn').hidden)toast('Daily spin: +'+amt+' XP');
+  setTimeout(()=>ev2(null),1600);spinStatus()};
+$('#nD').onclick=openSpin;$('#spX').onclick=closeSpin;$('#spn').addEventListener('click',e=>{if(e.target.id=='spn')closeSpin()});
+setInterval(()=>{dotUpd();if(!$('#spn').hidden)spinStatus()},30000);
 
 // ---- views ----
 function view(v){
@@ -466,22 +631,33 @@ function view(v){
 }
 $('#nP').onclick=()=>{location.hash='';view('play')};
 $('#nL').onclick=()=>{location.hash='leaderboard';view('leaderboard')};
-const goProfile=()=>{location.hash='profile';view('profile')};
-$('#nPr').onclick=goProfile;$('#cb').onclick=goProfile;$('#vp').onclick=goProfile;
+const goProfile=()=>{PV=null;pLen=String(P.L);location.hash='profile';view('profile')};
+$('#nPr').onclick=goProfile;$('#lvc').onclick=goProfile;$('#cb').onclick=goProfile;$('#vp').onclick=goProfile;
 
 // ---- leaderboard ----
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function pushScore(){
   if(!DB||!P.name)return;
-  fetch(`${DB}/scores/${P.name.toLowerCase()}.json`,{method:'PUT',body:JSON.stringify({name:P.name,best:P.best,wins:P.wins,t:Date.now()})}).catch(()=>{});
+  const k=P.name.toLowerCase(),mb=maxBest(),o={name:P.name,best:mb,wins:Math.max(sum('w'),mb),xp:P.xp,t:Date.now()};
+  LENS.forEach(L=>{o['b'+L]=stL(L).best;o['w'+L]=Math.max(stL(L).w,stL(L).best)});
+  fetch(`${DB}/scores/${k}.json`,{method:'PUT',body:JSON.stringify(o)}).catch(()=>{});
+  fetch(`${DB}/profiles/${k}.json`,{method:'PUT',body:JSON.stringify({name:P.name,xp:P.xp,st:P.st,ach:P.ach,t:Date.now()})}).catch(()=>{});
 }
+function mergeRemote(s,pr){
+  s=s||{};pr=pr||{};
+  if(pr.st){LENS.forEach(L=>{const r=pr.st[L];if(!r)return;const l=stL(L);l.g=Math.max(l.g,r.g||0);if((r.w||0)>l.w){l.w=r.w;l.dist=r.dist||l.dist}l.best=Math.max(l.best,r.best||0)})}
+  else{const w=Math.max(s.wins||0,s.best||0),l=stL(5);l.w=Math.max(l.w,w);l.best=Math.max(l.best,s.best||0)}
+  LENS.forEach(L=>{const l=stL(L);l.w=Math.max(l.w,l.best);l.g=Math.max(l.g,l.w)});
+  P.xp=Math.max(P.xp,pr.xp||s.xp||0);
+  Object.entries(pr.ach||{}).forEach(([k,v])=>{if(!P.ach[k])P.ach[k]=v});
+  evalAch(null)}
 const mkCode=()=>{const a='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';return [...crypto.getRandomValues(new Uint8Array(12))].map(x=>a[x%32]).join('')};
 const normCode=c=>c.toUpperCase().replace(/[^A-Z0-9]/g,'');
 async function saveCode(){
   const c=mkCode();
   const r=await fetch(`${DB}/keys/${P.name.toLowerCase()}/${c}.json`,{method:'PUT',body:'true'});
   if(!r.ok)return false;
-  P.rc=1;save();$('#rcv').textContent=c.match(/.{4}/g).join('-');$('#rc').hidden=false;return true}
+  P.rc=1;save();ev2(null);$('#rcv').textContent=c.match(/.{4}/g).join('-');$('#rc').hidden=false;return true}
 $('#rcc').onclick=()=>{navigator.clipboard.writeText($('#rcv').textContent).then(()=>toast('Code copied')).catch(()=>{})};
 $('#mk').onclick=async()=>{const m=$('#msg');m.className='note';m.textContent='';
   try{if(await saveCode())renderProfile();else{m.className='note err';m.textContent='Could not create a code. Check the database rules.'}}catch{m.className='note err';m.textContent='Could not reach the board. Try again.'}};
@@ -497,50 +673,101 @@ $('#rf').addEventListener('submit',async e=>{
     if(r.status==401||r.status==403)return bad('Recovery is not enabled yet. Update the database rules.');
     if(!r.ok)throw 0;
     if(await r.json()!==true)return bad('That name and code do not match.');
-    const s=await(await fetch(`${DB}/scores/${k}.json`)).json();
-    P.name=(s&&s.name)||n;P.rc=1;
-    if(s&&s.best>P.best)P.best=s.best;
-    P.wins=Math.max(P.wins,(s&&s.wins)||0,P.best);
+    const s=await(await fetch(`${DB}/scores/${k}.json`)).json(),pr=await(await fetch(`${DB}/profiles/${k}.json`)).json();
+    P.name=(s&&s.name)||n;P.rc=1;mergeRemote(s,pr);
     save();stats();pushScore();$('#rf').hidden=true;m.textContent='Welcome back, '+P.name+'.';renderProfile();
   }catch{bad('Could not reach the board. Try again.')}});
-let pTab='stats';
+let pTab='stats',pLen='5',PV=null;
 const navLabel=()=>{$('#nPr').textContent=P.name||'Profile'};
+function subj(){
+  if(!PV)return{own:true,xp:P.xp,st:P.st,ach:P.ach};
+  const d=PV.data||{};return{own:false,name:PV.name,xp:d.xp||0,st:d.st||null,ach:d.ach||{},loading:PV.loading,fail:PV.fail}}
+function aggr(st,len){
+  let g=0,w=0,b=0,sk=0;const d={};
+  (len=='all'?LENS:[+len]).forEach(L=>{const x=(st&&st[L])||{};g+=x.g||0;w+=x.w||0;b=Math.max(b,x.best||0);sk=Math.max(sk,x.streak||0);for(const k in (x.dist||{}))d[k]=(d[k]||0)+x.dist[k]});
+  return{g:Math.max(g,w),w,b,sk,d}}
+function statsHtml(s0){
+  const a=aggr(s0.st,pLen),rate=a.g?Math.round(a.w/a.g*100)+'%':'0%';
+  const cards=s0.own?[[a.g,'Games'],[a.w,'Wins'],[rate,'Win rate'],[a.sk,'Streak'],[a.b,'Best']]:[[a.g,'Games'],[a.w,'Wins'],[rate,'Win rate'],[a.b,'Best streak']];
+  const top=Math.max(pLen=='all'?7:+pLen+1,...Object.keys(a.d).map(Number)),mx=Math.max(1,...Object.values(a.d));
+  const BC=['#f2c14e','#c5d24a','#8fcf55','#35b777','#2a9d68','#228657','#1b7048'];
+  let h='<div class="lrow"><span>Word length</span><div class="tabs" id="plen">'+['all',4,5,6].map(l=>`<button data-pl="${l}" class="${l==pLen?'on':''}">${l=='all'?'All':l}</button>`).join('')+'</div></div>';
+  h+='<div class="sg">'+cards.map(([v,l])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join('')+'</div><h3 class="sh">Guesses per win</h3>';
+  for(let i=1;i<=top;i++){const n=a.d[i]||0;h+=`<div class="db"><span>${i}</span><i class="${n?'on':''}" style="width:${n?Math.max(10,n/mx*100):6}%${n?';background:'+BC[i-1]+';color:'+(i>=6?'#fff':'#0e0f12'):''}">${n||''}</i></div>`}
+  return h}
+function achHtml(s0){
+  const cats=[...new Set(ACH.map(a=>a.c))],got=ACH.filter(a=>s0.ach[a.id]).length;
+  let h=`<p class="note" style="margin-top:14px">${got} / ${ACH.length} unlocked</p>`;
+  cats.forEach(c=>{h+=`<h3 class="sh">${c}</h3>`;ACH.filter(a=>a.c==c).forEach(a=>{
+    const u=!!s0.ach[a.id];let pr='';
+    if(s0.own&&!u&&a.p){const[cu,t]=a.p();pr=`<span class="xbar sm"><i style="width:${Math.min(100,cu/t*100)}%"></i></span><small>${Math.min(cu,t)} / ${t}</small>`}
+    h+=`<div class="ac ${u?'on':''}"><span class="ai">${u?'&#10003;':''}</span><div><b>${a.n}</b><span>${a.d}</span>${pr}</div><em>+${a.x} XP</em></div>`})});
+  return h}
 function renderProfile(){
-  const j=!!P.name;navLabel();
-  $('#pT').textContent=j?P.name:'Profile';$('#pSub').hidden=j;
-  $('#jf').hidden=j;$('#rcl').hidden=j;$('#rl').hidden=j||!DB;if(j)$('#rf').hidden=true;
-  $('#ptabs').hidden=!j;
+  const s0=subj(),own=s0.own,j=!!P.name,acc=own&&j,busy2=!own&&(s0.loading||s0.fail);navLabel();
+  $('#pBack').hidden=own;
+  $('#pT').textContent=own?(j?P.name:'Profile'):(s0.name||'Player');
+  const xi=lvInfo(s0.xp);$('#pLv').textContent='Lv '+xi.L;$('#pLv').hidden=busy2;
+  $('#pSub').hidden=!own||j;
+  const form=own&&!j;
+  $('#jf').hidden=!form;$('#rcl').hidden=!form;$('#rl').hidden=!form||!DB;if(!form)$('#rf').hidden=true;
+  $('#pX').hidden=busy2;
+  $('#pX').innerHTML=`<div class="xlv"><b>Level ${xi.L}</b><span>${xi.cur} / ${xi.next} XP</span></div><div class="xbar"><i style="width:${Math.round(xi.pct*100)}%"></i></div>`;
+  $('#ptabs').hidden=busy2;$('#ptabs [data-p=acc]').hidden=!acc;
+  if(pTab=='acc'&&!acc)pTab='stats';
   document.querySelectorAll('#ptabs button').forEach(b=>b.classList.toggle('on',b.dataset.p==pTab));
-  $('#pStats').hidden=!(j&&pTab=='stats');$('#pAcc').hidden=!(j&&pTab=='acc');
-  $('#mk').hidden=!(j&&DB&&!P.rc);
+  $('#pStats').hidden=pTab!='stats';$('#pAch').hidden=pTab!='ach';$('#pAcc').hidden=!(acc&&pTab=='acc');
+  $('#mk').hidden=!(acc&&DB&&!P.rc);
   $('#accT').textContent=P.rc?'Recovery code created. Keep it safe, it can restore this name on any device.':(DB?'No recovery code yet. Create one so you can restore this name if you lose your data.':'');
-  if(j&&pTab=='stats'){
-    const g=P.games,w=P.wins,top=Math.max(6,...Object.keys(P.dist).map(Number)),mx=Math.max(1,...Object.values(P.dist));
-    let h='<div class="sg">'+[[g,'Games'],[w,'Wins'],[g?Math.round(w/g*100)+'%':'0%','Win rate'],[P.streak,'Streak'],[P.best,'Best']].map(([a,b])=>`<div class="stat"><b>${a}</b><span>${b}</span></div>`).join('')+'</div><h3 class="sh">Guesses per win</h3>';
-    const BC=['#f2c14e','#c5d24a','#8fcf55','#35b777','#2a9d68','#228657','#1b7048'];
-    for(let i=1;i<=top;i++){const n=P.dist[i]||0;h+=`<div class="db"><span>${i}</span><i class="${n?'on':''}" style="width:${n?Math.max(10,n/mx*100):6}%${n?';background:'+BC[i-1]+';color:'+(i>=6?'#fff':'#0e0f12'):''}">${n||''}</i></div>`}
-    $('#pStats').innerHTML=h}
+  if(s0.loading){$('#pStats').innerHTML='<p class="note" style="margin-top:16px">Loading...</p>';$('#pAch').innerHTML='';return}
+  if(s0.fail){$('#pStats').innerHTML='<p class="note err" style="margin-top:16px">Could not load this profile.</p>';$('#pAch').innerHTML='';return}
+  $('#pStats').innerHTML=statsHtml(s0);$('#pAch').innerHTML=achHtml(s0);
 }
 $('#ptabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;pTab=b.dataset.p;renderProfile()});
+$('#pStats').addEventListener('click',e=>{const b=e.target.closest('[data-pl]');if(!b)return;pLen=b.dataset.pl;renderProfile()});
+$('#pBack').onclick=()=>{PV=null;location.hash='leaderboard';view('leaderboard')};
+async function openPlayer(k,name){
+  if(P.name&&k==P.name.toLowerCase())return goProfile();
+  PV={key:k,name,loading:true};pTab='stats';pLen='all';location.hash='profile';view('profile');
+  try{
+    const [pr,sc]=await Promise.all([fetch(`${DB}/profiles/${k}.json`).then(r=>r.ok?r.json():null),fetch(`${DB}/scores/${k}.json`).then(r=>r.ok?r.json():null)]);
+    const c=sc||{};let d=pr;
+    if(!d||!d.st){const w=Math.max(c.wins||0,c.best||0);d={xp:c.xp||0,ach:(pr&&pr.ach)||{},st:{5:{g:w,w:w,best:c.best||0,streak:0,dist:{}}}}}
+    if(!PV||PV.key!=k)return;
+    PV={key:k,name:c.name||name,data:d}
+  }catch{if(!PV||PV.key!=k)return;PV={key:k,name,fail:true}}
+  if(!$('#prs').hidden)renderProfile()}
+const lbv=(x,f,L)=>{
+  const leg=x.b4===undefined&&x.b5===undefined&&x.b6===undefined;
+  if(L=='all')return f=='best'?x.best||0:Math.max(x.wins||0,x.best||0);
+  const b=leg?(L==5?x.best||0:0):x['b'+L]||0,w=leg?(L==5?x.wins||0:0):x['w'+L]||0;
+  return f=='best'?b:Math.max(w,b)};
 async function loadLB(){
-  const joined=!!P.name;
-  $('#cta').hidden=joined;$('#vp').hidden=!joined;
-  $('#who').textContent=joined?`Playing as ${P.name}. Ranked by best streak.`:'Ranked by best streak.';
+  const joined=!!P.name,L=sortBy=='xp'?'all':lbLen;
+  $('#cta').hidden=joined;$('#vp').hidden=!joined;$('#llen').hidden=sortBy=='xp';
+  $('#who').textContent=(joined?`Playing as ${P.name}. `:'')+({best:'Ranked by best streak.',wins:'Ranked by total wins.',xp:'Ranked by level.'}[sortBy]);
   const list=$('#list');
   if(!DB){
     $('#msg').textContent='Online board is not connected yet. Set the DB url in index.html.';
-    list.innerHTML=joined?`<li class="me"><span class="r">-</span><span>${esc(P.name)}</span><b class="hl">${P.best}</b><b>${P.wins}</b></li>`:'';
+    list.innerHTML=joined?`<li class="me"><span class="r">-</span><span>${esc(P.name)}</span><b class="hl">${maxBest()}</b><b>${sum('w')}</b></li>`:'';
     return}
   list.innerHTML='<li><span></span><span class="note">Loading...</span></li>';
   try{
-    let r=await fetch(`${DB}/scores.json?orderBy="${sortBy}"&limitToLast=50`);
-    if(!r.ok&&sortBy=='wins')r=await fetch(`${DB}/scores.json?orderBy="best"&limitToLast=200`);
+    const field=sortBy=='xp'?'xp':(sortBy=='best'?(L=='all'?'best':'b'+L):(L=='all'?'wins':'w'+L));
+    let r=await fetch(`${DB}/scores.json?orderBy="${field}"&limitToLast=50`);
+    if(!r.ok)r=await fetch(`${DB}/scores.json?orderBy="best"&limitToLast=200`);
     if(!r.ok)throw 0;
-    const d=await r.json()||{},k=sortBy,o=k=='best'?'wins':'best',V=(x,f)=>f=='wins'?Math.max(x.wins||0,x.best):x.best;
-    const rows=Object.values(d).filter(x=>x&&typeof x.best=='number').sort((a,b)=>V(b,k)-V(a,k)||V(b,o)-V(a,o)||a.t-b.t).slice(0,50);
-    list.innerHTML=rows.length?'<li class="hd"><span></span><span>Player</span><span>Streak</span><span>Wins</span></li>'+rows.map((x,i)=>`<li class="${x.name==P.name?'me':''}"><span class="r">${i+1}</span><span>${esc(x.name)}</span><b class="${k=='best'?'hl':''}">${x.best}</b><b class="${k=='wins'?'hl':''}">${V(x,'wins')}</b></li>`).join(''):'<li><span></span><span class="note">No players yet. Be the first.</span></li>';
+    const d=await r.json()||{};
+    let rows=Object.entries(d).filter(([k,x])=>x&&typeof x.best=='number').map(([k,x])=>({k,x}));
+    const key=o=>sortBy=='xp'?(o.x.xp||0):lbv(o.x,sortBy,L),alt=o=>lbv(o.x,sortBy=='best'?'wins':'best',L);
+    if(L!='all'&&sortBy!='xp')rows=rows.filter(o=>lbv(o.x,'best',L)>0||lbv(o.x,'wins',L)>0);
+    rows.sort((a,b)=>key(b)-key(a)||alt(b)-alt(a)||(a.x.t||0)-(b.x.t||0));rows=rows.slice(0,50);
+    list.innerHTML=rows.length?'<li class="hd"><span></span><span>Player</span><span>Streak</span><span>Wins</span></li>'+rows.map((o,i)=>{const x=o.x;
+      return `<li data-k="${esc(o.k)}" data-n="${esc(x.name)}" class="${x.name==P.name?'me':''}"><span class="r">${i+1}</span><span>${esc(x.name)}<em class="lvb ${sortBy=='xp'?'on':''}">Lv ${lvInfo(x.xp||0).L}</em></span><b class="${sortBy=='best'?'hl':''}">${lbv(x,'best',L)}</b><b class="${sortBy=='wins'?'hl':''}">${lbv(x,'wins',L)}</b></li>`}).join(''):'<li><span></span><span class="note">No players yet. Be the first.</span></li>';
   }catch{list.innerHTML='<li><span></span><span class="note err">Could not load the board. Try again later.</span></li>'}
 }
+$('#list').addEventListener('click',e=>{const li=e.target.closest('li[data-k]');if(li)openPlayer(li.dataset.k,li.dataset.n)});
+$('#ltabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.dataset.l==lbLen)return;lbLen=b.dataset.l;document.querySelectorAll('#ltabs button').forEach(x=>x.classList.toggle('on',x==b));loadLB()});
 $('#jf').addEventListener('submit',async e=>{
   e.preventDefault();
   const name=$('#nm').value.trim(),msg=$('#msg');msg.className='note';
@@ -556,7 +783,7 @@ $('#jf').addEventListener('submit',async e=>{
     const r=await fetch(url,{method:'PUT',body:'1'});
     if(r.status==401||r.status==403)return err('That name was just taken. Try another.');
     if(!r.ok)throw 0;
-    P.name=name;save();pushScore();msg.textContent='';if($('#rcb').checked)await saveCode().catch(()=>{});renderProfile();
+    P.name=name;save();ev2(null);pushScore();msg.textContent='';if($('#rcb').checked)await saveCode().catch(()=>{});renderProfile();
   }catch{msg.className='note err';msg.textContent='Could not reach the board. Try again.'}
 });
 
@@ -568,7 +795,8 @@ $('#tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b
   P.N=1;if(![4,5,6].includes(+P.L))P.L=5;
   const g=LS.get('wb_g',null);
   if(g&&g.ans&&g.L==P.L&&g.N==1&&g.G==g.L+1&&g.ans.every(a=>a.length==g.L)){g.cur=Array(g.L).fill('');g.pos=0;S=g;render()}else newGame();
-  navLabel();sndIcon();
+  pLen=String(P.L);navLabel();sndIcon();dotUpd();
+  if(P.mig){evalAch(null);delete P.mig;save();stats();if(P.xp>0)setTimeout(()=>toast('Your past games earned '+P.xp+' XP'),700)}
   if(location.hash=='#leaderboard')view('leaderboard');else if(location.hash=='#profile')view('profile');
   if(P.name)pushScore();
 })();
