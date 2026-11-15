@@ -403,7 +403,9 @@ async function drawCard(){
   x.fillStyle='#868c99';x.font='500 36px system-ui, sans-serif';x.fillText(S.L+'-letter word',W/2,482);
   const top=520,area=580,gap=12,t=Math.floor(Math.min(120,(W-240-(S.L-1)*gap)/S.L,(area-(n-1)*gap)/n)),gh=n*t+(n-1)*gap,gw=S.L*t+(S.L-1)*gap;
   const gx=(W-gw)/2,gy=top+(area-gh)/2;
-  S.gs.forEach((w,r)=>evaluate(w,S.ans[0]).forEach((s2,i)=>rr(x,gx+i*(t+gap),gy+r*(t+gap),t,t,t*.18,col[s2])));
+  S.gs.forEach((w,r)=>evaluate(w,S.ans[0]).forEach((s2,i)=>{const a=gx+i*(t+gap),b=gy+r*(t+gap);rr(x,a,b,t,t,t*.18,col[s2]);
+    x.fillStyle=s2=='a'?'#868c99':'#fff';x.font='700 '+Math.round(t*.52)+'px Goldman, system-ui, sans-serif';x.textBaseline='middle';
+    x.fillText(w[i].toUpperCase(),a+t/2,b+t/2+t*.03);x.textBaseline='alphabetic'}));
   const chips=[['Streak',P.streak],['Best',P.best],['Wins',P.wins]],cw=260,cg=24,cx=(W-(3*cw+2*cg))/2;
   chips.forEach(([l,v],i)=>{const a=cx+i*(cw+cg);rr(x,a,1150,cw,112,22,'#1b1e25');x.strokeStyle='#2b2f38';x.lineWidth=2;x.stroke();
     x.fillStyle='#e9ebf0';x.font='700 54px Goldman, system-ui, sans-serif';x.fillText(String(v),a+cw/2,1208);
@@ -411,22 +413,24 @@ async function drawCard(){
   x.fillStyle='#868c99';x.font='500 30px system-ui, sans-serif';
   x.fillText(((location.host||'wordbox')+location.pathname.replace(/index\.html$/,'')).replace(/\/$/,''),W/2,1316);
   return c}
-let shUrl=null,shFile=null;
+let shUrl=null,shFile=null,shBlob=null;
 async function openShare(){
   $('#shr').hidden=false;$('#shi').removeAttribute('src');$('#shB').disabled=true;
   try{
     const c=await drawCard(),blob=await new Promise(r=>c.toBlob(r,'image/png'));
-    shFile=new File([blob],'wordbox-result.png',{type:'image/png'});
+    shBlob=blob;shFile=new File([blob],'wordbox-result.png',{type:'image/png'});
     if(shUrl)URL.revokeObjectURL(shUrl);shUrl=URL.createObjectURL(blob);$('#shi').src=shUrl;
     const can=!!(navigator.canShare&&navigator.canShare({files:[shFile]}));
-    $('#shB').textContent=can?'Share image':'Save image';$('#shB').dataset.can=can?'1':'';$('#shB').disabled=false;
+    const mode=can?'share':(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write?'copy':'save');
+    $('#shB').textContent={share:'Share image',copy:'Copy image',save:'Save image'}[mode];$('#shB').dataset.mode=mode;$('#shB').disabled=false;
   }catch{toast('Could not make the image');closeShare()}
 }
 const closeShare=()=>{$('#shr').hidden=true};
 $('#shB').onclick=async()=>{
-  if(!shFile)return;
-  if($('#shB').dataset.can){try{await navigator.share({files:[shFile],text:shareText()})}catch{}return}
-  const a=document.createElement('a');a.href=shUrl;a.download='wordbox-result.png';document.body.appendChild(a);a.click();a.remove();toast('Image saved')};
+  if(!shFile)return;const mode=$('#shB').dataset.mode;
+  if(mode=='share'){try{await navigator.share({files:[shFile],text:shareText()})}catch{}return}
+  if(mode=='copy'){try{await navigator.clipboard.write([new ClipboardItem({'image/png':shBlob})]);toast('Image copied');return}catch{}}
+  const a=document.createElement('a');a.href=shUrl;a.download='wordbox-result.png';document.body.appendChild(a);a.click();a.remove();toast(mode=='copy'?'Could not copy, image saved instead':'Image saved')};
 $('#shT').onclick=async()=>{try{await navigator.clipboard.writeText(shareText());toast('Text copied')}catch{}};
 $('#shX').onclick=closeShare;$('#shr').addEventListener('click',e=>{if(e.target.id=='shr')closeShare()});
 $('#eShare').onclick=$('#aShare').onclick=openShare;
