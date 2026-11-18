@@ -161,6 +161,12 @@ li[data-k]{cursor:pointer}li[data-k]:hover{background:var(--panel);border-radius
 .ac small{color:var(--mut);font-size:12px}
 .ac em{font-style:normal;color:var(--mut);font-weight:700;font-size:13px;white-space:nowrap}
 .ac.on em{color:var(--g)}
+#eD{margin:-6px 0 16px;padding:12px 14px;background:var(--a);border-radius:12px;text-align:left}
+.dh{display:flex;align-items:center;gap:10px}.dh b{text-transform:uppercase;letter-spacing:.04em}
+#dP{color:var(--mut);font-size:14px}
+.dA{margin-left:auto;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);color:var(--mut);display:grid;place-items:center;flex:none}.dA:hover{color:var(--text)}
+#dM{margin-top:6px;color:var(--text);font-size:14px;line-height:1.4}#dM i{color:var(--mut)}
+#eD small{display:block;margin-top:8px;color:var(--mut);font-size:11px}
 li.hd{color:var(--mut);font-size:12px;padding:4px 12px}
 li .r{color:var(--mut);font-weight:700}
 li:nth-child(n+2):nth-child(-n+4) .r{color:var(--y)}
@@ -231,7 +237,7 @@ li.hd span:nth-child(n+3){text-align:right}
 </section>
 </div>
 <div id="toast"></div>
-<div id="end" hidden><div class="card"><h2 id="eT"></h2><p id="eS"></p><div class="words" id="eW"></div><div id="eX" hidden><div class="xpl" id="xpH"><b id="xpN"></b><span id="xpD"></span></div><div class="xlv"><b id="xpL"></b><span id="xpT"></span></div><div class="xbar"><i id="xpF"></i></div><div class="lvup" id="xpU" hidden></div><div id="xpA"></div></div><div class="btns"><button class="btn alt" id="eShare">Share</button><button class="btn" id="eB"></button></div><button class="lnk" id="eView">View board</button></div></div>
+<div id="end" hidden><div class="card"><h2 id="eT"></h2><p id="eS"></p><div class="words" id="eW"></div><div id="eD" hidden><div class="dh"><b id="dW"></b><span id="dP"></span><button class="dA" id="dA" type="button" aria-label="Hear the word"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button></div><p id="dM"></p><small>Definitions: Wiktionary</small></div><div id="eX" hidden><div class="xpl" id="xpH"><b id="xpN"></b><span id="xpD"></span></div><div class="xlv"><b id="xpL"></b><span id="xpT"></span></div><div class="xbar"><i id="xpF"></i></div><div class="lvup" id="xpU" hidden></div><div id="xpA"></div></div><div class="btns"><button class="btn alt" id="eShare">Share</button><button class="btn" id="eB"></button></div><button class="lnk" id="eView">View board</button></div></div>
 <div id="how" hidden><div class="card how"><h2>How to play</h2><ul><li>Guess the hidden word. You get <b>letters + 1</b> tries.</li><li>Each guess must be a real word. Press <b>Enter</b> to submit.</li><li><b>Click any box</b> in your current row to change just that letter.</li><li>Win to grow your streak. Miss and it resets to 0.</li><li>Join the <b>Leaderboard</b> with a unique name to compete.</li></ul><div class="ex"><i class="g">W</i><i>O</i><i class="y">R</i><i>D</i><i>S</i></div><p style="text-align:center;font-size:13px;margin:6px 0 18px"><b style="color:var(--g)">Green</b>: right spot. <b style="color:var(--y)">Yellow</b>: in the word, wrong spot. Gray: not in the word.</p><button class="btn" id="hB" style="width:100%">Got it</button></div></div>
 <div id="shr" hidden><div class="card shc"><img id="shi" alt="Your wordbox result card"><div class="btns"><button class="btn alt" id="shT" type="button">Copy text</button><button class="btn" id="shB" type="button" disabled>Share image</button></div><button class="lnk" id="shX" type="button">Close</button></div></div>
 <div id="spn" hidden><div class="card spc"><h2>Daily spin</h2><p id="spS">One free spin every day.</p><canvas id="spc"></canvas><div class="spr" id="spR"></div><div class="btns"><button class="btn" id="spB" type="button">Spin</button></div><button class="lnk" id="spX" type="button">Close</button><p class="spo" id="spO"></p></div></div>
@@ -414,6 +420,29 @@ function confetti(){
     ps.forEach(p=>{p.vy+=.35;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);x.restore()});
     if(++f<140)requestAnimationFrame(tick);else x.clearRect(0,0,c.width,c.height)})()}
 
+const DEF={};try{Object.assign(DEF,JSON.parse(localStorage.getItem('wb_dc')||'{}'))}catch{}
+function shorten(m){m=m.replace(/\s+/g,' ').trim();if(m.length<=110)return m;const c=m.slice(0,107),i=c.lastIndexOf(' ');return (i>60?c.slice(0,i):c).replace(/[,;:(\s]+$/,'')+'...'}
+async function lookup(w){
+  if(DEF[w])return DEF[w];
+  const r=await fetch('https://api.dictionaryapi.dev/v2/entries/en/'+encodeURIComponent(w));
+  let out;
+  if(r.status==404)out={none:1};
+  else{
+    if(!r.ok)throw 0;
+    const e=((await r.json())||[])[0]||{};let ph='',au='',pos='',m='';
+    (e.phonetics||[]).forEach(x=>{if(!ph&&x.text)ph=x.text;if(!au&&x.audio)au=x.audio});
+    if(!ph)ph=e.phonetic||'';
+    for(const g of e.meanings||[]){const d=(g.definitions||[])[0];if(d&&d.definition){pos=g.partOfSpeech||'';m=d.definition;break}}
+    out=m?{p:ph,a:au.startsWith('//')?'https:'+au:au,pos,m:shorten(m)}:{none:1}}
+  DEF[w]=out;try{const k=Object.keys(DEF).slice(-150),o={};k.forEach(x=>o[x]=DEF[x]);localStorage.setItem('wb_dc',JSON.stringify(o))}catch{}
+  return out}
+function say(w){try{const u=new SpeechSynthesisUtterance(w);u.lang='en-US';speechSynthesis.cancel();speechSynthesis.speak(u)}catch{}}
+function renderDef(w,d){
+  const B=$('#eD');if(!d){B.hidden=true;return}
+  B.hidden=false;$('#dW').textContent=w;$('#dP').textContent=d.none?'':d.p;
+  $('#dM').innerHTML=d.none?'No definition found.':(d.pos?'<i>'+esc(d.pos)+'</i> ':'')+esc(d.m);
+  const b=$('#dA');b.dataset.a=d.a||'';b.hidden=!(d.a||window.speechSynthesis)}
+$('#dA').onclick=()=>{const w=$('#dW').textContent,u=$('#dA').dataset.a;if(u){const a=new Audio(u);a.play().catch(()=>say(w))}else say(w)};
 async function finish(won,g,A){
   S.over=true;persist();
   S.ans.forEach((a,b)=>boardEl(b).classList.toggle('done',solveIdx(b)>=0));
@@ -422,6 +451,7 @@ async function finish(won,g,A){
   q.g++;
   if(won){q.w++;q.streak++;if(q.streak>q.best)q.best=q.streak;q.dist[n]=(q.dist[n]||0)+1;gain=winXp(S.L,n,S.G,q.streak);P.xp+=gain.total;confetti();SFX.win()}else{q.streak=0;SFX.lose()}
   P.cnt.last=won?'w':'l';
+  const w0=S.ans[0],dp=lookup(w0).catch(()=>null);$('#eD').hidden=true;
   const got=evalAch(ctx),lv1=lvInfo(P.xp);
   pushScore();save();stats();
   if(won){const e=$('#stc');e.classList.remove('pop');void e.offsetWidth;e.classList.add('pop')}
@@ -447,6 +477,7 @@ async function finish(won,g,A){
       if(got.length)setTimeout(SFX.ach,500);
       if(up)setTimeout(SFX.level,700);
     },350)}
+  dp.then(d=>{if(S&&S.ans[0]==w0)renderDef(w0,d)});
   $('#end').hidden=false;$('#eB').focus();
 }
 function next(){$('#end').hidden=true;$('#after').hidden=true;$('#kb').hidden=false;newGame()}
