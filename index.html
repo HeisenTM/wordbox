@@ -421,19 +421,36 @@ function confetti(){
     if(++f<140)requestAnimationFrame(tick);else x.clearRect(0,0,c.width,c.height)})()}
 
 const DEF={};try{Object.assign(DEF,JSON.parse(localStorage.getItem('wb_dc')||'{}'))}catch{}
+for(const k in DEF)if(!DEF[k]||DEF[k].none)delete DEF[k];
 function shorten(m){m=m.replace(/\s+/g,' ').trim();if(m.length<=110)return m;const c=m.slice(0,107),i=c.lastIndexOf(' ');return (i>60?c.slice(0,i):c).replace(/[,;:(\s]+$/,'')+'...'}
+async function fromDict(w){
+  const r=await fetch('https://api.dictionaryapi.dev/v2/entries/en/'+encodeURIComponent(w));
+  if(!r.ok)return null;
+  let ph='',au='',pos='',m='';
+  ((await r.json())||[]).forEach(e=>{
+    (e.phonetics||[]).forEach(x=>{if(!ph&&x.text)ph=x.text;if(!au&&x.audio)au=x.audio});
+    if(!ph&&e.phonetic)ph=e.phonetic;
+    if(!m)for(const g of e.meanings||[]){const d=(g.definitions||[])[0];if(d&&d.definition){pos=g.partOfSpeech||'';m=d.definition;break}}});
+  return m?{p:ph,a:au.startsWith('//')?'https:'+au:au,pos,m:shorten(m)}:null}
+async function fromMuse(w){
+  const r=await fetch('https://api.datamuse.com/words?sp='+encodeURIComponent(w)+'&md=d&max=1');
+  if(!r.ok)return null;
+  const j=await r.json(),e=j&&j[0];
+  if(!e||e.word!=w||!e.defs||!e.defs.length)return null;
+  const p=e.defs[0].split('\t'),t=p.shift(),pos={n:'noun',v:'verb',adj:'adjective',adv:'adverb'}[t]||'';
+  return {p:'',a:'',pos,m:shorten(p.join(' '))}}
+async function fromWikt(w){
+  const r=await fetch('https://en.wiktionary.org/api/rest_v1/page/definition/'+encodeURIComponent(w));
+  if(!r.ok)return null;
+  const en=((await r.json()).en||[])[0],d=en&&(en.definitions||[]).find(x=>x.definition);
+  if(!d)return null;
+  const m=(new DOMParser().parseFromString(d.definition,'text/html').body.textContent||'').trim();
+  return m?{p:'',a:'',pos:(en.partOfSpeech||'').toLowerCase(),m:shorten(m)}:null}
 async function lookup(w){
   if(DEF[w])return DEF[w];
-  const r=await fetch('https://api.dictionaryapi.dev/v2/entries/en/'+encodeURIComponent(w));
-  let out;
-  if(r.status==404)out={none:1};
-  else{
-    if(!r.ok)throw 0;
-    const e=((await r.json())||[])[0]||{};let ph='',au='',pos='',m='';
-    (e.phonetics||[]).forEach(x=>{if(!ph&&x.text)ph=x.text;if(!au&&x.audio)au=x.audio});
-    if(!ph)ph=e.phonetic||'';
-    for(const g of e.meanings||[]){const d=(g.definitions||[])[0];if(d&&d.definition){pos=g.partOfSpeech||'';m=d.definition;break}}
-    out=m?{p:ph,a:au.startsWith('//')?'https:'+au:au,pos,m:shorten(m)}:{none:1}}
+  let out=null;
+  for(const f of [fromDict,fromMuse,fromWikt]){try{out=await f(w)}catch{out=null}if(out)break}
+  if(!out)return {none:1};
   DEF[w]=out;try{const k=Object.keys(DEF).slice(-150),o={};k.forEach(x=>o[x]=DEF[x]);localStorage.setItem('wb_dc',JSON.stringify(o))}catch{}
   return out}
 function say(w){try{const u=new SpeechSynthesisUtterance(w);u.lang='en-US';speechSynthesis.cancel();speechSynthesis.speak(u)}catch{}}
