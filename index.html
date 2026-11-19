@@ -167,6 +167,13 @@ li[data-k]{cursor:pointer}li[data-k]:hover{background:var(--panel);border-radius
 .dA{margin-left:auto;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);color:var(--mut);display:grid;place-items:center;flex:none}.dA:hover{color:var(--text)}
 #dM{margin-top:6px;color:var(--text);font-size:14px;line-height:1.4}#dM i{color:var(--mut)}
 #eD small{display:block;margin-top:8px;color:var(--mut);font-size:11px}
+.hrow{display:flex;gap:8px;justify-content:center;padding:0 0 8px}
+.hbtn{font-size:13px;font-weight:600;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:5px 14px;transition:color .15s,border-color .15s}
+.hbtn:hover:not(:disabled){color:var(--text);border-color:#3d4350}
+.hbtn:disabled{opacity:.45;cursor:default}
+.hb{margin:0 auto 8px;max-width:520px;text-align:center;font-size:13.5px;color:var(--mut);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.hb b,.hb i{color:var(--text)}
+.tile.gh{color:#59606d;border-style:dashed;border-color:#3b414c}
 li.hd{color:var(--mut);font-size:12px;padding:4px 12px}
 li .r{color:var(--mut);font-weight:700}
 li:nth-child(n+2):nth-child(-n+4) .r{color:var(--y)}
@@ -196,6 +203,8 @@ li.hd span:nth-child(n+3){text-align:right}
     <div class="seg"><div id="sL" role="group" aria-label="Word length"></div></div>
     <div class="stats"><div class="stat" id="stc"><b id="st">0</b><span>Streak</span></div><div class="stat"><b id="bs">0</b><span>Best</span></div></div>
   </div>
+  <div class="hrow" id="hr"><button class="hbtn" id="hBtn" type="button" title="A letter first, then the meaning. Each costs 25% of the XP for a win. The first hint each day is free.">Hint</button><button class="hbtn" id="sBtn" type="button" title="Free before your first guess. After that, one streak-saving skip a day.">Skip</button></div>
+  <div class="hb" id="hb" hidden></div>
   <div id="boards"></div>
   <div id="kb"></div>
   <div id="after" class="btns" hidden><button class="btn alt" id="aShare">Share</button><button class="btn" id="aNext">Next word</button></div>
@@ -238,7 +247,7 @@ li.hd span:nth-child(n+3){text-align:right}
 </div>
 <div id="toast"></div>
 <div id="end" hidden><div class="card"><h2 id="eT"></h2><p id="eS"></p><div class="words" id="eW"></div><div id="eD" hidden><div class="dh"><b id="dW"></b><span id="dP"></span><button class="dA" id="dA" type="button" aria-label="Hear the word"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button></div><p id="dM"></p><small>Definitions: Wiktionary</small></div><div id="eX" hidden><div class="xpl" id="xpH"><b id="xpN"></b><span id="xpD"></span></div><div class="xlv"><b id="xpL"></b><span id="xpT"></span></div><div class="xbar"><i id="xpF"></i></div><div class="lvup" id="xpU" hidden></div><div id="xpA"></div></div><div class="btns"><button class="btn alt" id="eShare">Share</button><button class="btn" id="eB"></button></div><button class="lnk" id="eView">View board</button></div></div>
-<div id="how" hidden><div class="card how"><h2>How to play</h2><ul><li>Guess the hidden word. You get <b>letters + 1</b> tries.</li><li>Each guess must be a real word. Press <b>Enter</b> to submit.</li><li><b>Click any box</b> in your current row to change just that letter.</li><li>Win to grow your streak. Miss and it resets to 0.</li><li>Join the <b>Leaderboard</b> with a unique name to compete.</li></ul><div class="ex"><i class="g">W</i><i>O</i><i class="y">R</i><i>D</i><i>S</i></div><p style="text-align:center;font-size:13px;margin:6px 0 18px"><b style="color:var(--g)">Green</b>: right spot. <b style="color:var(--y)">Yellow</b>: in the word, wrong spot. Gray: not in the word.</p><button class="btn" id="hB" style="width:100%">Got it</button></div></div>
+<div id="how" hidden><div class="card how"><h2>How to play</h2><ul><li>Guess the hidden word. You get <b>letters + 1</b> tries.</li><li>Each guess must be a real word. Press <b>Enter</b> to submit.</li><li><b>Click any box</b> in your current row to change just that letter.</li><li>Win to grow your streak. Miss and it resets to 0.</li><li>Join the <b>Leaderboard</b> with a unique name to compete.</li><li>Stuck? <b>Hint</b> shows a letter, then the meaning, at 25% less XP each. <b>Skip</b> is free before your first guess.</li></ul><div class="ex"><i class="g">W</i><i>O</i><i class="y">R</i><i>D</i><i>S</i></div><p style="text-align:center;font-size:13px;margin:6px 0 18px"><b style="color:var(--g)">Green</b>: right spot. <b style="color:var(--y)">Yellow</b>: in the word, wrong spot. Gray: not in the word.</p><button class="btn" id="hB" style="width:100%">Got it</button></div></div>
 <div id="shr" hidden><div class="card shc"><img id="shi" alt="Your wordbox result card"><div class="btns"><button class="btn alt" id="shT" type="button">Copy text</button><button class="btn" id="shB" type="button" disabled>Share image</button></div><button class="lnk" id="shX" type="button">Close</button></div></div>
 <div id="spn" hidden><div class="card spc"><h2>Daily spin</h2><p id="spS">One free spin every day.</p><canvas id="spc"></canvas><div class="spr" id="spR"></div><div class="btns"><button class="btn" id="spB" type="button">Spin</button></div><button class="lnk" id="spX" type="button">Close</button><p class="spo" id="spO"></p></div></div>
 <canvas id="cf"></canvas>
@@ -274,16 +283,16 @@ const sum=k=>LENS.reduce((a,L)=>a+stL(L)[k],0);
 const maxBest=()=>Math.max(0,...LENS.map(L=>stL(L).best));
 const need=L=>50+30*L;
 function lvInfo(xp){let L=1,r=xp;while(r>=need(L)){r-=need(L);L++}return{L,cur:r,next:need(L),pct:r/need(L)}}
-function winXp(L,n,G,st){const base={4:20,5:30,6:45}[L],fast=(G-n)*5,sk=Math.min(st,10)*3;return{base,fast,st:sk,total:base+fast+sk}}
+function winXp(L,n,G,st,paid){const base={4:20,5:30,6:45}[L],fast=(G-n)*5,sk=Math.min(st,10)*3,sub=base+fast+sk,total=Math.round(sub*(1-.25*(paid||0)));return{base,fast,st:sk,total,cut:sub-total}}
 const ACH=[
  {id:'first_win',c:'Wins',n:'First Steps',d:'Win your first game',x:50,t:()=>sum('w')>=1},
  {id:'wins_10',c:'Wins',n:'Regular',d:'Win 10 games',x:100,t:()=>sum('w')>=10,p:()=>[sum('w'),10]},
  {id:'wins_50',c:'Wins',n:'Veteran',d:'Win 50 games',x:250,t:()=>sum('w')>=50,p:()=>[sum('w'),50]},
  {id:'wins_100',c:'Wins',n:'Centurion',d:'Win 100 games',x:500,t:()=>sum('w')>=100,p:()=>[sum('w'),100]},
  {id:'wins_250',c:'Wins',n:'Wordsmith',d:'Win 250 games',x:1000,t:()=>sum('w')>=250,p:()=>[sum('w'),250]},
- {id:'three',c:'Guesses',n:'Three or Less',d:'Win in 3 guesses or fewer',x:60,t:c=>c&&c.won&&c.n<=3},
- {id:'two',c:'Guesses',n:'Mind Reader',d:'Win in 2 guesses or fewer',x:150,t:c=>c&&c.won&&c.n<=2},
- {id:'one',c:'Guesses',n:'Hole in One',d:'Win on your first guess',x:500,t:c=>c&&c.won&&c.n==1},
+ {id:'three',c:'Guesses',n:'Three or Less',d:'Win in 3 guesses or fewer',x:60,t:c=>c&&c.won&&!c.hinted&&c.n<=3},
+ {id:'two',c:'Guesses',n:'Mind Reader',d:'Win in 2 guesses or fewer',x:150,t:c=>c&&c.won&&!c.hinted&&c.n<=2},
+ {id:'one',c:'Guesses',n:'Hole in One',d:'Win on your first guess',x:500,t:c=>c&&c.won&&!c.hinted&&c.n==1},
  {id:'clutch',c:'Guesses',n:'Clutch',d:'Win on your very last guess',x:75,t:c=>c&&c.won&&c.n==c.G},
  {id:'streak_3',c:'Streaks',n:'Warming Up',d:'Reach a 3-win streak',x:60,t:()=>maxBest()>=3,p:()=>[maxBest(),3]},
  {id:'streak_5',c:'Streaks',n:'On a Roll',d:'Reach a 5-win streak',x:100,t:()=>maxBest()>=5,p:()=>[maxBest(),5]},
@@ -337,7 +346,7 @@ function pick(L,N){
   return out}
 
 function newGame(){
-  S={L:P.L,N:1,G:P.L+1,ans:pick(P.L,1),gs:[],cur:Array(P.L).fill(''),pos:0,over:false};
+  S={L:P.L,N:1,G:P.L+1,ans:pick(P.L,1),gs:[],cur:Array(P.L).fill(''),pos:0,over:false,hn:0,hf:false,hp:-1,hl:'',hd:null};
   persist();render();
 }
 const persist=()=>S&&!S.over?LS.set('wb_g',S):LS.del('wb_g');
@@ -350,19 +359,19 @@ function render(){
       bd.appendChild(row)}
     el.appendChild(bd)});
   S.gs.forEach((g,r)=>S.ans.forEach((_,b)=>{if(shown(b,r))paint(b,r,g,false)}));
-  showCur();fit();keys();stats();
+  showCur();fit();keys();stats();hintUi();
   S.ans.forEach((_,b)=>boardEl(b).classList.toggle('done',solveIdx(b)>=0));
 }
 
 function paint(b,r,g,anim){
   const ev=evaluate(g,S.ans[b]);
-  for(let c=0;c<S.L;c++){const t=tile(b,r,c);t.textContent=g[c];t.classList.remove('f','cr','ed');
+  for(let c=0;c<S.L;c++){const t=tile(b,r,c);t.textContent=g[c];t.classList.remove('f','cr','ed','gh');
     if(anim){t.style.setProperty('--i',c);t.classList.add('flip');setTimeout(()=>{t.classList.add(ev[c]);SFX.flip(ev[c],c)},c*130+275)}
     else t.classList.add(ev[c])}
 }
 function showCur(){
   const r=S.gs.length;if(r>=S.G)return;
-  act().forEach(b=>{for(let c=0;c<S.L;c++){const t=tile(b,r,c);t.textContent=S.cur[c];t.classList.add('ed');t.classList.toggle('f',!!S.cur[c]);t.classList.toggle('cr',c==S.pos&&!S.over)}})}
+  act().forEach(b=>{for(let c=0;c<S.L;c++){const t=tile(b,r,c);const gh=!S.cur[c]&&S.hn>=1&&c==S.hp&&!S.over;t.textContent=S.cur[c]||(gh?S.hl:'');t.classList.toggle('gh',gh);t.classList.add('ed');t.classList.toggle('f',!!S.cur[c]);t.classList.toggle('cr',c==S.pos&&!S.over)}})}
 function setPos(p){if(busy||S.over)return;S.pos=Math.max(0,Math.min(S.L,p));showCur()}
 
 function fit(){
@@ -460,20 +469,20 @@ function renderDef(w,d){
   $('#dM').innerHTML=d.none?'No definition found.':(d.pos?'<i>'+esc(d.pos)+'</i> ':'')+esc(d.m);
   const b=$('#dA');b.dataset.a=d.a||'';b.hidden=!(d.a||window.speechSynthesis)}
 $('#dA').onclick=()=>{const w=$('#dW').textContent,u=$('#dA').dataset.a;if(u){const a=new Audio(u);a.play().catch(()=>say(w))}else say(w)};
-async function finish(won,g,A){
-  S.over=true;persist();
+async function finish(won,g,A,sk){
+  S.over=true;persist();hintUi();
   S.ans.forEach((a,b)=>boardEl(b).classList.toggle('done',solveIdx(b)>=0));
   A.filter(b=>S.ans[b]==g).forEach(b=>{for(let c=0;c<S.L;c++){const t=tile(b,S.gs.length-1,c);t.style.setProperty('--i',c);t.classList.remove('flip');t.classList.add('bounce')}});
-  const n=S.gs.length,q=stL(S.L),ctx={won,n,G:S.G,L:S.L,prevLoss:P.cnt.last=='l'},lv0=lvInfo(P.xp);let gain=null;
+  const n=S.gs.length,q=stL(S.L),ctx={won,n,G:S.G,L:S.L,prevLoss:P.cnt.last=='l',hinted:(S.hn||0)>0},paid=Math.max(0,(S.hn||0)-(S.hf?1:0)),lv0=lvInfo(P.xp);let gain=null;
   q.g++;
-  if(won){q.w++;q.streak++;if(q.streak>q.best)q.best=q.streak;q.dist[n]=(q.dist[n]||0)+1;gain=winXp(S.L,n,S.G,q.streak);P.xp+=gain.total;confetti();SFX.win()}else{q.streak=0;SFX.lose()}
+  if(won){q.w++;q.streak++;if(q.streak>q.best)q.best=q.streak;q.dist[n]=(q.dist[n]||0)+1;gain=winXp(S.L,n,S.G,q.streak,paid);P.xp+=gain.total;confetti();SFX.win()}else{q.streak=0;SFX.lose()}
   P.cnt.last=won?'w':'l';
   const w0=S.ans[0],dp=lookup(w0).catch(()=>null);$('#eD').hidden=true;
   const got=evalAch(ctx),lv1=lvInfo(P.xp);
   pushScore();save();stats();
   if(won){const e=$('#stc');e.classList.remove('pop');void e.offsetWidth;e.classList.add('pop')}
   await sleep(won?900:500);
-  $('#eT').textContent=won?'Solved':'Out of guesses';
+  $('#eT').textContent=won?'Solved':(sk?'Skipped':'Out of guesses');$('#eShare').hidden=!!sk;
   $('#eS').textContent=won?(q.streak==1?'Streak started.':'Streak: '+q.streak):'Your streak reset to 0.';
   $('#eW').innerHTML='';
   S.ans.forEach(a=>{const s=document.createElement('span');s.textContent=a;if(S.gs.includes(a))s.className='ok';$('#eW').appendChild(s)});
@@ -481,7 +490,7 @@ async function finish(won,g,A){
   const X=$('#eX');X.hidden=!(gain||got.length);
   if(!X.hidden){
     $('#xpH').hidden=!gain;
-    if(gain){$('#xpN').textContent='+0 XP';$('#xpD').textContent='Win '+gain.base+(gain.fast?' + Fast '+gain.fast:'')+(gain.st?' + Streak '+gain.st:'')}
+    if(gain){$('#xpN').textContent='+0 XP';$('#xpD').textContent='Win '+gain.base+(gain.fast?' + Fast '+gain.fast:'')+(gain.st?' + Streak '+gain.st:'')+(gain.cut?' - Hints '+gain.cut:'')}
     $('#xpA').innerHTML=got.map(a=>`<div class="au"><span>${a.n}</span><b>+${a.x} XP</b></div>`).join('');
     const up=lv1.L>lv0.L;$('#xpU').hidden=!up;$('#xpU').textContent='Level up! You reached level '+lv1.L;
     const F=$('#xpF'),fmt=l=>l.cur+' / '+l.next+' XP';
@@ -498,7 +507,7 @@ async function finish(won,g,A){
   $('#end').hidden=false;$('#eB').focus();
 }
 function next(){$('#end').hidden=true;$('#after').hidden=true;$('#kb').hidden=false;newGame()}
-function viewBoard(){$('#end').hidden=true;$('#kb').hidden=true;$('#after').hidden=false;$('#aNext').textContent=$('#eB').textContent;fit();$('#aNext').focus()}
+function viewBoard(){$('#end').hidden=true;$('#kb').hidden=true;$('#after').hidden=false;$('#aNext').textContent=$('#eB').textContent;$('#aShare').hidden=$('#eShare').hidden;fit();$('#aNext').focus()}
 $('#eView').onclick=viewBoard;$('#aNext').onclick=next;
 $('#end').addEventListener('click',e=>{if(e.target.id=='end')viewBoard()});
 $('#eB').onclick=next;
@@ -543,11 +552,11 @@ addEventListener('keydown',e=>{
   if(k){const el=document.querySelector('.k'+k);if(el){el.classList.add('p');setTimeout(()=>el.classList.remove('p'),90)}}
 });
 
-$('#boards').addEventListener('click',e=>{const t=e.target.closest('.tile');if(!t||busy||S.over)return;if(+t.parentElement.dataset.r!==S.gs.length)return;setPos(+t.dataset.c)});
+$('#boards').addEventListener('click',e=>{const t=e.target.closest('.tile');if(!t||busy||S.over)return;if(+t.parentElement.dataset.r!==S.gs.length)return;const c=+t.dataset.c;if(t.classList.contains('gh')){setPos(c);type(S.hl);return}setPos(c)});
 function shareText(){
   const won=S.gs.includes(S.ans[0]),E={g:'\u{1F7E9}',y:'\u{1F7E8}',a:'\u2B1B'};
   const grid=S.gs.map(w=>evaluate(w,S.ans[0]).map(s=>E[s]).join('')).join('\n');
-  return `wordbox ${S.L} letters ${won?S.gs.length:'X'}/${S.G}`+(won&&stL(S.L).streak>1?` \u{1F525}${stL(S.L).streak}`:'')+`\n\n${grid}\n\n${location.origin+location.pathname}`}
+  return `wordbox ${S.L} letters ${won?S.gs.length:'X'}/${S.G}`+(S.hn?` (${S.hn} hint${S.hn>1?'s':''})`:'')+(won&&stL(S.L).streak>1?` \u{1F525}${stL(S.L).streak}`:'')+`\n\n${grid}\n\n${location.origin+location.pathname}`}
 function rr(x,a,b,w,h,r,f){x.beginPath();x.moveTo(a+r,b);x.arcTo(a+w,b,a+w,b+h,r);x.arcTo(a+w,b+h,a,b+h,r);x.arcTo(a,b+h,a,b,r);x.arcTo(a,b,a+w,b,r);x.closePath();x.fillStyle=f;x.fill()}
 async function drawCard(){
   try{await document.fonts.load('700 40px Goldman')}catch{}
@@ -561,7 +570,7 @@ async function drawCard(){
   x.fillStyle='#e9ebf0';x.fillText('wordbox',lx+72,134);
   x.textAlign='center';x.fillStyle='#868c99';x.font='700 34px system-ui, sans-serif';x.fillText(won?'SOLVED IN':'OUT OF GUESSES',W/2,262);
   x.fillStyle=won?'#35b777':'#e9ebf0';x.font='700 170px Goldman, system-ui, sans-serif';x.fillText((won?n:'X')+'/'+S.G,W/2,420);
-  x.fillStyle='#868c99';x.font='500 36px system-ui, sans-serif';x.fillText(S.L+'-letter word',W/2,482);
+  x.fillStyle='#868c99';x.font='500 36px system-ui, sans-serif';x.fillText(S.L+'-letter word'+(S.hn?' \u00b7 '+S.hn+' hint'+(S.hn>1?'s':''):''),W/2,482);
   const top=520,area=580,gap=12,t=Math.floor(Math.min(120,(W-240-(S.L-1)*gap)/S.L,(area-(n-1)*gap)/n)),gh=n*t+(n-1)*gap,gw=S.L*t+(S.L-1)*gap;
   const gx=(W-gw)/2,gy=top+(area-gh)/2;
   S.gs.forEach((w,r)=>evaluate(w,S.ans[0]).forEach((s2,i)=>{const a=gx+i*(t+gap),b=gy+r*(t+gap);rr(x,a,b,t,t,t*.18,col[s2]);
@@ -612,6 +621,7 @@ const SFX={
   win(){[0,2,4,6].forEach((n,i)=>{tone(SC[n],i*.09,.45,'sine',.07);tone(SC[n]*2,i*.09+.02,.3,'triangle',.025)});tone(1567.98,.4,.6,'sine',.04)},
   lose(){[392,349.23,293.66].forEach((f,i)=>tone(f,i*.16,.3,'triangle',.06))},
   ach(){tone(880,0,.12,'triangle',.07);tone(1318.5,.1,.32,'sine',.07)},
+  hint(){tone(700,0,.1,'sine',.05);tone(990,.08,.14,'sine',.05)},
   level(){[0,1,2,3,5].forEach((n,i)=>tone(SC[n],i*.07,.32,'sine',.06))},
   tick(){tone(1100,0,.025,'square',.025)}
 };
@@ -619,6 +629,50 @@ function sndIcon(){const on=P.snd!==0,b=$('#nS');
   b.innerHTML='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/>'+(on?'<path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/>':'<path d="M16 9l5 6M21 9l-5 6"/>')+'</svg>';
   b.setAttribute('aria-label',on?'Sound on':'Sound off');b.setAttribute('aria-pressed',on)}
 $('#nS').onclick=()=>{P.snd=P.snd===0?1:0;save();sndIcon();if(P.snd!==0){SFX.flip('g',2);setTimeout(()=>SFX.flip('g',4),90)}};
+
+// ---- hints and skip ----
+let hintBusy=false;
+const maskWord=(m,w)=>m.replace(new RegExp(w,'ig'),'_____');
+function hintUi(){
+  if(!S)return;
+  const h=S.hn||0,on=!S.over;
+  $('#hr').hidden=!on;
+  const hb=$('#hBtn');hb.disabled=h>=2;
+  hb.textContent=h>=2?'No hints left':(h==0&&P.fh!==todayStr()?'Hint \u00b7 free':'Hint \u00b7 '+(2-h)+' left');
+  const box=$('#hb'),vis=on&&!!S.hd,was=!box.hidden;
+  if(S.hd)box.innerHTML='<b>Hint</b> <i>'+esc(S.hd.pos||'')+'</i> '+esc(S.hd.m);
+  box.hidden=!vis;if(was!==vis)fit()}
+function useHint(e){
+  if(e&&e.currentTarget)e.currentTarget.blur();
+  if(busy||S.over||hintBusy||(S.hn||0)>=2)return;
+  if(!S.hn){
+    const known=new Set(),all=[...Array(S.L).keys()];
+    S.gs.forEach(g=>evaluate(g,S.ans[0]).forEach((r,i)=>{if(r=='g')known.add(i)}));
+    let c=all.filter(i=>!known.has(i));if(!c.length)c=all;
+    S.hp=c[Math.random()*c.length|0];S.hl=S.ans[0][S.hp];S.hn=1;S.hf=P.fh!==todayStr();
+    if(S.hf){P.fh=todayStr();save()}
+    persist();showCur();hintUi();SFX.hint();
+    toast(S.hf?'Free hint of the day: no XP cost':'Hint used: this win earns 25% less XP');return}
+  const w=S.ans[0];hintBusy=true;
+  lookup(w).then(d=>{
+    if(!d||d.none||S.over||S.ans[0]!=w){if(!S.over)toast('No meaning found for this word. No hint used.');return}
+    S.hd={pos:d.pos,m:maskWord(d.m,w)};S.hn=2;persist();hintUi();SFX.hint();toast('Hint used: this win earns 25% less XP')
+  }).catch(()=>toast('Could not load a meaning. No hint used.')).finally(()=>{hintBusy=false})}
+async function skipGame(e){
+  if(e&&e.currentTarget)e.currentTarget.blur();
+  if(busy||S.over)return;
+  if(!S.gs.length){newGame();toast('New word');return}
+  const free=P.sk!==todayStr();
+  if(!confirm(free?'Skip this word? Your streak is kept and you earn no XP. This is free once a day.':"Skip this word? You've used today's free skip, so this counts as a loss and your streak resets."))return;
+  if(!free){busy=true;await finish(false,'',[],true);busy=false;return}
+  P.sk=todayStr();save();S.over=true;persist();hintUi();
+  const w0=S.ans[0],dp=lookup(w0).catch(()=>null);
+  $('#eT').textContent='Skipped';$('#eS').textContent='Your streak is safe. No XP this time.';
+  $('#eW').innerHTML='';const sp=document.createElement('span');sp.textContent=w0;$('#eW').appendChild(sp);
+  $('#eX').hidden=true;$('#eD').hidden=true;$('#eShare').hidden=true;$('#eB').textContent='Next word';
+  dp.then(d=>{if(S&&S.ans[0]==w0)renderDef(w0,d)});
+  $('#end').hidden=false;$('#eB').focus()}
+$('#hBtn').onclick=useHint;$('#sBtn').onclick=skipGame;
 
 // ---- daily spin ----
 const SPINS=[{x:10,w:30},{x:20,w:25},{x:30,w:18},{x:50,w:12},{x:75,w:8},{x:100,w:4},{x:200,w:2},{x:500,w:1}];
@@ -842,7 +896,7 @@ $('#tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b
 (function init(){
   P.N=1;if(![4,5,6].includes(+P.L))P.L=5;
   const g=LS.get('wb_g',null);
-  if(g&&g.ans&&g.L==P.L&&g.N==1&&g.G==g.L+1&&g.ans.every(a=>a.length==g.L)){g.cur=Array(g.L).fill('');g.pos=0;S=g;render()}else newGame();
+  if(g&&g.ans&&g.L==P.L&&g.N==1&&g.G==g.L+1&&g.ans.every(a=>a.length==g.L)){g.cur=Array(g.L).fill('');g.pos=0;g.hn=g.hn||0;if(g.hp==null)g.hp=-1;S=g;render()}else newGame();
   pLen=String(P.L);navLabel();sndIcon();dotUpd();
   if(P.mig){evalAch(null);delete P.mig;save();stats();if(P.xp>0)setTimeout(()=>toast('Your past games earned '+P.xp+' XP'),700)}
   if(location.hash=='#leaderboard')view('leaderboard');else if(location.hash=='#profile')view('profile');
