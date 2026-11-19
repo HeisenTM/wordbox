@@ -203,7 +203,7 @@ li.hd span:nth-child(n+3){text-align:right}
     <div class="seg"><div id="sL" role="group" aria-label="Word length"></div></div>
     <div class="stats"><div class="stat" id="stc"><b id="st">0</b><span>Streak</span></div><div class="stat"><b id="bs">0</b><span>Best</span></div></div>
   </div>
-  <div class="hrow" id="hr"><button class="hbtn" id="hBtn" type="button" title="A letter first, then the meaning. Each costs 25% of the XP for a win. The first hint each day is free.">Hint</button><button class="hbtn" id="sBtn" type="button" title="Free before your first guess. After that, one streak-saving skip a day.">Skip</button></div>
+  <div class="hrow" id="hr"><button class="hbtn" id="hBtn" type="button" title="A letter first, then the meaning. Each hint costs 25% of the XP for a win.">Hint</button><button class="hbtn" id="sBtn" type="button" title="Counts as a loss: no XP and your streak resets.">Skip</button></div>
   <div class="hb" id="hb" hidden></div>
   <div id="boards"></div>
   <div id="kb"></div>
@@ -247,7 +247,7 @@ li.hd span:nth-child(n+3){text-align:right}
 </div>
 <div id="toast"></div>
 <div id="end" hidden><div class="card"><h2 id="eT"></h2><p id="eS"></p><div class="words" id="eW"></div><div id="eD" hidden><div class="dh"><b id="dW"></b><span id="dP"></span><button class="dA" id="dA" type="button" aria-label="Hear the word"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button></div><p id="dM"></p><small>Definitions: Wiktionary</small></div><div id="eX" hidden><div class="xpl" id="xpH"><b id="xpN"></b><span id="xpD"></span></div><div class="xlv"><b id="xpL"></b><span id="xpT"></span></div><div class="xbar"><i id="xpF"></i></div><div class="lvup" id="xpU" hidden></div><div id="xpA"></div></div><div class="btns"><button class="btn alt" id="eShare">Share</button><button class="btn" id="eB"></button></div><button class="lnk" id="eView">View board</button></div></div>
-<div id="how" hidden><div class="card how"><h2>How to play</h2><ul><li>Guess the hidden word. You get <b>letters + 1</b> tries.</li><li>Each guess must be a real word. Press <b>Enter</b> to submit.</li><li><b>Click any box</b> in your current row to change just that letter.</li><li>Win to grow your streak. Miss and it resets to 0.</li><li>Join the <b>Leaderboard</b> with a unique name to compete.</li><li>Stuck? <b>Hint</b> shows a letter, then the meaning, at 25% less XP each. <b>Skip</b> is free before your first guess.</li></ul><div class="ex"><i class="g">W</i><i>O</i><i class="y">R</i><i>D</i><i>S</i></div><p style="text-align:center;font-size:13px;margin:6px 0 18px"><b style="color:var(--g)">Green</b>: right spot. <b style="color:var(--y)">Yellow</b>: in the word, wrong spot. Gray: not in the word.</p><button class="btn" id="hB" style="width:100%">Got it</button></div></div>
+<div id="how" hidden><div class="card how"><h2>How to play</h2><ul><li>Guess the hidden word. You get <b>letters + 1</b> tries.</li><li>Each guess must be a real word. Press <b>Enter</b> to submit.</li><li><b>Click any box</b> in your current row to change just that letter.</li><li>Win to grow your streak. Miss and it resets to 0.</li><li>Join the <b>Leaderboard</b> with a unique name to compete.</li><li>Stuck? <b>Hint</b> shows a letter, then the meaning, at 25% less XP each. <b>Skip</b> counts as a loss and resets your streak.</li></ul><div class="ex"><i class="g">W</i><i>O</i><i class="y">R</i><i>D</i><i>S</i></div><p style="text-align:center;font-size:13px;margin:6px 0 18px"><b style="color:var(--g)">Green</b>: right spot. <b style="color:var(--y)">Yellow</b>: in the word, wrong spot. Gray: not in the word.</p><button class="btn" id="hB" style="width:100%">Got it</button></div></div>
 <div id="shr" hidden><div class="card shc"><img id="shi" alt="Your wordbox result card"><div class="btns"><button class="btn alt" id="shT" type="button">Copy text</button><button class="btn" id="shB" type="button" disabled>Share image</button></div><button class="lnk" id="shX" type="button">Close</button></div></div>
 <div id="spn" hidden><div class="card spc"><h2>Daily spin</h2><p id="spS">One free spin every day.</p><canvas id="spc"></canvas><div class="spr" id="spR"></div><div class="btns"><button class="btn" id="spB" type="button">Spin</button></div><button class="lnk" id="spX" type="button">Close</button><p class="spo" id="spO"></p></div></div>
 <canvas id="cf"></canvas>
@@ -473,7 +473,7 @@ async function finish(won,g,A,sk){
   S.over=true;persist();hintUi();
   S.ans.forEach((a,b)=>boardEl(b).classList.toggle('done',solveIdx(b)>=0));
   A.filter(b=>S.ans[b]==g).forEach(b=>{for(let c=0;c<S.L;c++){const t=tile(b,S.gs.length-1,c);t.style.setProperty('--i',c);t.classList.remove('flip');t.classList.add('bounce')}});
-  const n=S.gs.length,q=stL(S.L),ctx={won,n,G:S.G,L:S.L,prevLoss:P.cnt.last=='l',hinted:(S.hn||0)>0},paid=Math.max(0,(S.hn||0)-(S.hf?1:0)),lv0=lvInfo(P.xp);let gain=null;
+  const n=S.gs.length,q=stL(S.L),ctx={won,n,G:S.G,L:S.L,prevLoss:P.cnt.last=='l',hinted:(S.hn||0)>0},paid=S.hn||0,lv0=lvInfo(P.xp);let gain=null;
   q.g++;
   if(won){q.w++;q.streak++;if(q.streak>q.best)q.best=q.streak;q.dist[n]=(q.dist[n]||0)+1;gain=winXp(S.L,n,S.G,q.streak,paid);P.xp+=gain.total;confetti();SFX.win()}else{q.streak=0;SFX.lose()}
   P.cnt.last=won?'w':'l';
@@ -638,7 +638,7 @@ function hintUi(){
   const h=S.hn||0,on=!S.over;
   $('#hr').hidden=!on;
   const hb=$('#hBtn');hb.disabled=h>=2;
-  hb.textContent=h>=2?'No hints left':(h==0&&P.fh!==todayStr()?'Hint \u00b7 free':'Hint \u00b7 '+(2-h)+' left');
+  hb.textContent=h>=2?'No hints left':'Hint \u00b7 '+(2-h)+' left';
   const box=$('#hb'),vis=on&&!!S.hd,was=!box.hidden;
   if(S.hd)box.innerHTML='<b>Hint</b> <i>'+esc(S.hd.pos||'')+'</i> '+esc(S.hd.m);
   box.hidden=!vis;if(was!==vis)fit()}
@@ -649,29 +649,20 @@ function useHint(e){
     const known=new Set(),all=[...Array(S.L).keys()];
     S.gs.forEach(g=>evaluate(g,S.ans[0]).forEach((r,i)=>{if(r=='g')known.add(i)}));
     let c=all.filter(i=>!known.has(i));if(!c.length)c=all;
-    S.hp=c[Math.random()*c.length|0];S.hl=S.ans[0][S.hp];S.hn=1;S.hf=P.fh!==todayStr();
-    if(S.hf){P.fh=todayStr();save()}
+    S.hp=c[Math.random()*c.length|0];S.hl=S.ans[0][S.hp];S.hn=1;S.hf=false;
     persist();showCur();hintUi();SFX.hint();
-    toast(S.hf?'Free hint of the day: no XP cost':'Hint used: this win earns 25% less XP');return}
+    toast('Hint used: this win earns 25% less XP');return}
   const w=S.ans[0];hintBusy=true;
   lookup(w).then(d=>{
     if(!d||d.none||S.over||S.ans[0]!=w){if(!S.over)toast('No meaning found for this word. No hint used.');return}
-    S.hd={pos:d.pos,m:maskWord(d.m,w)};S.hn=2;persist();hintUi();SFX.hint();toast('Hint used: this win earns 25% less XP')
+    S.hd={pos:d.pos,m:maskWord(d.m,w)};S.hn=2;persist();hintUi();SFX.hint();toast('Second hint used: this win earns 50% less XP')
   }).catch(()=>toast('Could not load a meaning. No hint used.')).finally(()=>{hintBusy=false})}
 async function skipGame(e){
   if(e&&e.currentTarget)e.currentTarget.blur();
   if(busy||S.over)return;
-  if(!S.gs.length){newGame();toast('New word');return}
-  const free=P.sk!==todayStr();
-  if(!confirm(free?'Skip this word? Your streak is kept and you earn no XP. This is free once a day.':"Skip this word? You've used today's free skip, so this counts as a loss and your streak resets."))return;
-  if(!free){busy=true;await finish(false,'',[],true);busy=false;return}
-  P.sk=todayStr();save();S.over=true;persist();hintUi();
-  const w0=S.ans[0],dp=lookup(w0).catch(()=>null);
-  $('#eT').textContent='Skipped';$('#eS').textContent='Your streak is safe. No XP this time.';
-  $('#eW').innerHTML='';const sp=document.createElement('span');sp.textContent=w0;$('#eW').appendChild(sp);
-  $('#eX').hidden=true;$('#eD').hidden=true;$('#eShare').hidden=true;$('#eB').textContent='Next word';
-  dp.then(d=>{if(S&&S.ans[0]==w0)renderDef(w0,d)});
-  $('#end').hidden=false;$('#eB').focus()}
+  const k=stL(S.L).streak;
+  if(!confirm('Skip this word? It counts as a loss: no XP'+(k?' and your streak of '+k+' resets to 0.':'.')))return;
+  busy=true;await finish(false,'',[],true);busy=false}
 $('#hBtn').onclick=useHint;$('#sBtn').onclick=skipGame;
 
 // ---- daily spin ----
