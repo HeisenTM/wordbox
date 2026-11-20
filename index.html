@@ -45,10 +45,11 @@ section{flex:1;min-height:0;display:flex;flex-direction:column}
 .lnk{display:block;margin:12px auto 0;color:var(--mut);font-weight:700;padding:6px 12px;border-radius:8px}.lnk:hover{color:var(--text)}
 #after{padding:8px 0 14px}
 .btns{display:flex;gap:8px}
-#shr,#spn{z-index:10}.shc{width:min(400px,100%)}.shc img{display:block;max-width:100%;max-height:58dvh;width:auto;margin:0 auto 16px;border-radius:12px;background:var(--bg)}
+#shr,#spn,#set,#dcm{z-index:10}
+#cfm{z-index:11}.shc{width:min(400px,100%)}.shc img{display:block;max-width:100%;max-height:58dvh;width:auto;margin:0 auto 16px;border-radius:12px;background:var(--bg)}
 .btn:disabled{opacity:.5;pointer-events:none}.btns .btn{flex:1}
-#nH,#nS,#nD{width:34px;height:34px;padding:0;border-radius:50%;border:1px solid var(--line);color:var(--mut);font-weight:800;display:grid;place-items:center}
-#nS:hover,#nD:hover{color:var(--text)}
+#nH,#nS,#nD,#nG{width:34px;height:34px;padding:0;border-radius:50%;border:1px solid var(--line);color:var(--mut);font-weight:800;display:grid;place-items:center}
+#nS:hover,#nD:hover,#nG:hover{color:var(--text)}
 #nD{position:relative}
 #nD .dot{position:absolute;top:1px;right:1px;width:10px;height:10px;border-radius:50%;background:var(--g);border:2px solid var(--bg)}
 .spc{width:min(360px,100%)}
@@ -92,7 +93,7 @@ section{flex:1;min-height:0;display:flex;flex-direction:column}
 .k.g{background:var(--g)}.k.y{background:var(--y)}.k.a{background:#1d2026;color:#5b606b}
 #toast{position:fixed;top:68px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:9px 15px;border-radius:9px;font-weight:700;opacity:0;pointer-events:none;transition:opacity .15s;z-index:12}
 #toast.s{opacity:1}
-#end,#how,#shr,#spn{position:fixed;inset:0;display:grid;place-items:center;background:rgba(10,11,14,.72);backdrop-filter:blur(4px);z-index:8;padding:16px}
+#end,#how,#shr,#spn,#set,#dcm,#cfm{position:fixed;inset:0;display:grid;place-items:center;background:rgba(10,11,14,.72);backdrop-filter:blur(4px);z-index:8;padding:16px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px 24px;width:min(380px,100%);text-align:center;animation:rise .25s ease-out}
 .card{max-height:92dvh;overflow:auto}
 .card h2{font-size:24px;letter-spacing:-.02em}
@@ -174,6 +175,29 @@ li[data-k]{cursor:pointer}li[data-k]:hover{background:var(--panel);border-radius
 .hb{margin:0 auto 8px;max-width:520px;text-align:center;font-size:13.5px;color:var(--mut);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
 .hb b,.hb i{color:var(--text)}
 .tile.gh{color:#59606d;border-style:dashed;border-color:#3b414c}
+html.fast *,html.fast *::before,html.fast *::after{animation:none!important;transition:none!important}
+.srow{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 0;border-bottom:1px solid var(--line);text-align:left}
+.srow b{display:block}.srow span{display:block;color:var(--mut);font-size:13px;margin-top:1px}
+.sw{width:46px;height:26px;border-radius:999px;background:var(--a);border:1px solid var(--line);position:relative;flex:none;transition:background .2s}
+.sw:after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:var(--mut);transition:transform .2s,background .2s}
+.sw[aria-checked=true]{background:var(--g);border-color:var(--g)}.sw[aria-checked=true]:after{transform:translateX(20px);background:#06150d}
+input[type=range]{accent-color:var(--g);width:140px}input[type=range]:disabled{opacity:.4}
+.stc,.cfc{width:min(380px,100%)}.stc h2{text-align:left}
+.btn.dng{background:#e0697a;color:#1a0b0e}
+a.btn{display:block;text-align:center;text-decoration:none}
+.ft{padding:6px 6px 8px;text-align:center;font-size:11px;color:var(--mut);line-height:1.45}
+.ft a,.ft button{color:var(--mut);text-decoration:underline;font-size:inherit}.ft a:hover,.ft button:hover{color:var(--text)}
+.dcc{width:min(420px,100%);text-align:left}.dcc h2{text-align:left}.dcc p{margin-top:10px;font-size:14px;line-height:1.5}.dcc .btns{margin-top:18px}
+.how .hs{color:var(--mut);font-size:14px;text-align:center;margin:8px 0 12px}
+.hx{display:flex;align-items:center;gap:14px;margin:10px 0;flex-wrap:wrap}
+.hx p{flex:1 1 150px;margin:0;color:var(--mut);font-size:14px;line-height:1.35}
+.how .ex{margin:0;gap:4px;flex:none}
+.how .ex i{width:32px;height:32px;font-size:16px;border-radius:8px}
+.how li b{font-size:inherit;text-align:left;color:var(--text)}
+.how .sh{margin:18px 0 4px}
+.how ul{margin:0 0 16px}
+.how li{font-size:13px;padding:4px 0 4px 16px}
+.how li:before{width:6px;height:6px;top:.8em}
 li.hd{color:var(--mut);font-size:12px;padding:4px 12px}
 li .r{color:var(--mut);font-weight:700}
 li:nth-child(n+2):nth-child(-n+4) .r{color:var(--y)}
@@ -194,7 +218,7 @@ li.hd span:nth-child(n+3){text-align:right}
 <header>
   <button class="logo" id="lg" aria-label="wordbox home"><i></i>wordbox</button>
   <nav><button id="nP" class="on">Play</button><button id="nL">Leaderboard</button><button id="nPr">Profile</button></nav>
-  <div class="tools"><button id="nD" aria-label="Daily spin"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4"/></svg><i class="dot" hidden></i></button><button id="nS" aria-label="Sound"></button><button id="nH" aria-label="How to play">?</button></div>
+  <div class="tools"><button id="nD" aria-label="Daily spin"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg><i class="dot" hidden></i></button><button id="nG" aria-label="Settings"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></button><button id="nH" aria-label="How to play">?</button></div>
 </header>
 
 <section id="play">
@@ -244,12 +268,32 @@ li.hd span:nth-child(n+3){text-align:right}
     </div>
   </div></div>
 </section>
+<footer class="ft">Fan-made, not affiliated with The New York Times or Wordle. Play the word of the day on the <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank" rel="noopener noreferrer">original Wordle</a>, then come back for more. <button type="button" id="dcl">Disclaimer</button></footer>
 </div>
 <div id="toast"></div>
 <div id="end" hidden><div class="card"><h2 id="eT"></h2><p id="eS"></p><div class="words" id="eW"></div><div id="eD" hidden><div class="dh"><b id="dW"></b><span id="dP"></span><button class="dA" id="dA" type="button" aria-label="Hear the word"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button></div><p id="dM"></p><small>Definitions: Wiktionary</small></div><div id="eX" hidden><div class="xpl" id="xpH"><b id="xpN"></b><span id="xpD"></span></div><div class="xlv"><b id="xpL"></b><span id="xpT"></span></div><div class="xbar"><i id="xpF"></i></div><div class="lvup" id="xpU" hidden></div><div id="xpA"></div></div><div class="btns"><button class="btn alt" id="eShare">Share</button><button class="btn" id="eB"></button></div><button class="lnk" id="eView">View board</button></div></div>
-<div id="how" hidden><div class="card how"><h2>How to play</h2><ul><li>Guess the hidden word. You get <b>letters + 1</b> tries.</li><li>Each guess must be a real word. Press <b>Enter</b> to submit.</li><li><b>Click any box</b> in your current row to change just that letter.</li><li>Win to grow your streak. Miss and it resets to 0.</li><li>Join the <b>Leaderboard</b> with a unique name to compete.</li><li>Stuck? <b>Hint</b> shows a letter, then the meaning, at 25% less XP each. <b>Skip</b> counts as a loss and resets your streak.</li></ul><div class="ex"><i class="g">W</i><i>O</i><i class="y">R</i><i>D</i><i>S</i></div><p style="text-align:center;font-size:13px;margin:6px 0 18px"><b style="color:var(--g)">Green</b>: right spot. <b style="color:var(--y)">Yellow</b>: in the word, wrong spot. Gray: not in the word.</p><button class="btn" id="hB" style="width:100%">Got it</button></div></div>
+<div id="how" hidden><div class="card how"><h2>How to play</h2>
+<p class="hs">Guess the hidden word. After every guess, each tile changes color:</p>
+<div class="hx"><div class="ex"><i class="g">C</i><i>R</i><i>A</i><i>N</i><i>E</i></div><p><b style="color:var(--g)">Green</b>: the letter is in the word and in the right spot.</p></div>
+<div class="hx"><div class="ex"><i>C</i><i class="y">R</i><i>A</i><i>N</i><i>E</i></div><p><b style="color:var(--y)">Yellow</b>: the letter is in the word, but in the wrong spot.</p></div>
+<div class="hx"><div class="ex"><i>C</i><i>R</i><i>A</i><i>N</i><i>E</i></div><p><b style="color:var(--text)">Gray</b>: the letter is not in the word.</p></div>
+<h3 class="sh">Good to know</h3>
+<ul><li>You get <b>letters + 1</b> tries, with 4, 5 or 6 letters. Every guess must be a real word.</li><li>Click a box in your row to fix just that letter.</li><li>Wins earn XP, and faster wins earn more. Your streak grows with every win.</li><li><b>Hint</b> shows a letter, then the meaning, for 25% less XP each. <b>Skip</b> counts as a loss.</li><li>Join the <b>Leaderboard</b> with a unique name to compete.</li></ul>
+<button class="btn" id="hB" style="width:100%">Got it</button></div></div>
 <div id="shr" hidden><div class="card shc"><img id="shi" alt="Your wordbox result card"><div class="btns"><button class="btn alt" id="shT" type="button">Copy text</button><button class="btn" id="shB" type="button" disabled>Share image</button></div><button class="lnk" id="shX" type="button">Close</button></div></div>
 <div id="spn" hidden><div class="card spc"><h2>Daily spin</h2><p id="spS">One free spin every day.</p><canvas id="spc"></canvas><div class="spr" id="spR"></div><div class="btns"><button class="btn" id="spB" type="button">Spin</button></div><button class="lnk" id="spX" type="button">Close</button><p class="spo" id="spO"></p></div></div>
+<div id="set" hidden><div class="card stc"><h2>Settings</h2>
+<div class="srow"><div><b>Sound</b><span>Key clicks, reveals and wins</span></div><button class="sw" id="swS" type="button" role="switch" aria-checked="true" aria-label="Sound"></button></div>
+<div class="srow"><div><b>Volume</b><span id="volT">100%</span></div><input type="range" id="vol" min="0" max="100" step="5" aria-label="Volume"></div>
+<div class="srow"><div><b>Speedrun mode</b><span>No animations. Results show instantly.</span></div><button class="sw" id="swF" type="button" role="switch" aria-checked="false" aria-label="Speedrun mode"></button></div>
+<button class="btn" id="stX" type="button" style="width:100%;margin-top:16px">Done</button></div></div>
+<div id="cfm" hidden><div class="card cfc"><h2 id="cfT"></h2><p id="cfP"></p><div class="btns" style="margin-top:18px"><button class="btn alt" id="cfN" type="button">Cancel</button><button class="btn" id="cfY" type="button">OK</button></div></div></div>
+<div id="dcm" hidden><div class="card dcc"><h2>About wordbox</h2>
+<p>wordbox is an independent, fan-made word game. It is not affiliated with, endorsed by or connected to The New York Times Company or Wordle. Wordle is a trademark of The New York Times Company, and all other names belong to their owners.</p>
+<p>The game uses its own code and design. Answer words come from a common-words list, guesses are checked against the public-domain ENABLE word list, and definitions come from Wiktionary.</p>
+<p>Want the word of the day? Play the original Wordle on The New York Times Games site, then come back here for as many extra rounds as you like.</p>
+<p>Your progress is saved in your browser. If you join the leaderboard, your name and scores are stored online.</p>
+<div class="btns"><button class="btn alt" id="dcX" type="button">Close</button><a class="btn" href="https://www.nytimes.com/games/wordle/index.html" target="_blank" rel="noopener noreferrer">Play the original Wordle</a></div></div></div>
 <canvas id="cf"></canvas>
 
 <script>
@@ -316,7 +360,7 @@ const ACH=[
 ];
 function evalAch(ctx){const got=[];let ch=true;while(ch){ch=false;for(const a of ACH)if(!P.ach[a.id]&&a.t(ctx)){P.ach[a.id]=Date.now();P.xp+=a.x;got.push(a);ch=true}}return got}
 function ev2(ctx){const got=evalAch(ctx);if(!got.length)return;save();stats();pushScore();got.forEach((a,i)=>setTimeout(()=>{toast('Achievement: '+a.n+' +'+a.x+' XP');SFX.ach()},i*1400))}
-function countUp(el,to){const t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/700);el.textContent='+'+Math.round(to*(1-Math.pow(1-k,3)))+' XP';if(k<1)requestAnimationFrame(f)})(t0)}
+function countUp(el,to){if(P.fast){el.textContent='+'+to+' XP';return}const t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/700);el.textContent='+'+Math.round(to*(1-Math.pow(1-k,3)))+' XP';if(k<1)requestAnimationFrame(f)})(t0)}
 let sortBy='best',lbLen='all';
 let S=null,busy=false,dict=null;
 const save=()=>LS.set('wb_p',P);
@@ -366,7 +410,7 @@ function render(){
 function paint(b,r,g,anim){
   const ev=evaluate(g,S.ans[b]);
   for(let c=0;c<S.L;c++){const t=tile(b,r,c);t.textContent=g[c];t.classList.remove('f','cr','ed','gh');
-    if(anim){t.style.setProperty('--i',c);t.classList.add('flip');setTimeout(()=>{t.classList.add(ev[c]);SFX.flip(ev[c],c)},c*130+275)}
+    if(anim){t.style.setProperty('--i',c);t.classList.add('flip');const F=P.fast;setTimeout(()=>{t.classList.add(ev[c]);if(!F)SFX.flip(ev[c],c)},F?0:c*130+275);if(F)setTimeout(()=>SFX.flip(ev[c],c),c*45)}
     else t.classList.add(ev[c])}
 }
 function showCur(){
@@ -413,7 +457,7 @@ async function submit(){
   const r=S.gs.length,A=act();
   S.cur=Array(S.L).fill('');S.pos=0;S.gs.push(g);
   A.forEach(b=>paint(b,r,g,true));
-  await sleep(S.L*130+420);
+  await sleep(P.fast?40:S.L*130+420);
   keys();
   const won=S.ans.every(a=>S.gs.includes(a));
   if(won||S.gs.length>=S.G)await finish(won,g,A);else{persist();showCur()}
@@ -421,6 +465,7 @@ async function submit(){
 }
 
 function confetti(){
+  if(P.fast)return;
   if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
   const c=$('#cf'),x=c.getContext('2d'),cols=['#35b777','#e0ad1f','#e9ebf0','#7ee2ab'];
   c.width=innerWidth;c.height=innerHeight;
@@ -481,7 +526,7 @@ async function finish(won,g,A,sk){
   const got=evalAch(ctx),lv1=lvInfo(P.xp);
   pushScore();save();stats();
   if(won){const e=$('#stc');e.classList.remove('pop');void e.offsetWidth;e.classList.add('pop')}
-  await sleep(won?900:500);
+  await sleep(P.fast?60:(won?900:500));
   $('#eT').textContent=won?'Solved':(sk?'Skipped':'Out of guesses');$('#eShare').hidden=!!sk;
   $('#eS').textContent=won?(q.streak==1?'Streak started.':'Streak: '+q.streak):'Your streak reset to 0.';
   $('#eW').innerHTML='';
@@ -498,11 +543,11 @@ async function finish(won,g,A,sk){
     setTimeout(()=>{
       if(gain)countUp($('#xpN'),gain.total);
       F.style.transition='';
-      if(up){F.style.width='100%';setTimeout(()=>{F.style.transition='none';F.style.width='0%';$('#xpL').textContent='Level '+lv1.L;void F.offsetWidth;F.style.transition='';F.style.width=Math.round(lv1.pct*100)+'%';$('#xpT').textContent=fmt(lv1)},650)}
-      else{F.style.width=Math.round(lv1.pct*100)+'%';$('#xpT').textContent=fmt(lv1)}
+      if(up&&!P.fast){F.style.width='100%';setTimeout(()=>{F.style.transition='none';F.style.width='0%';$('#xpL').textContent='Level '+lv1.L;void F.offsetWidth;F.style.transition='';F.style.width=Math.round(lv1.pct*100)+'%';$('#xpT').textContent=fmt(lv1)},650)}
+      else{F.style.width=Math.round(lv1.pct*100)+'%';$('#xpL').textContent='Level '+lv1.L;$('#xpT').textContent=fmt(lv1)}
       if(got.length)setTimeout(SFX.ach,500);
       if(up)setTimeout(SFX.level,700);
-    },350)}
+    },P.fast?0:350)}
   dp.then(d=>{if(S&&S.ans[0]==w0)renderDef(w0,d)});
   $('#end').hidden=false;$('#eB').focus();
 }
@@ -515,8 +560,8 @@ $('#eB').onclick=next;
 // ---- controls ----
 function seg(id,vals,key){
   const box=$(id);vals.forEach(v=>{const b=document.createElement('button');b.textContent=v;b.dataset.v=v;
-    b.onclick=()=>{if(P[key]==v)return;
-      if(S&&!S.over&&S.gs.length&&!confirm('Change length? Your current game ends and your streak resets.'))return;
+    b.onclick=async()=>{if(P[key]==v)return;
+      if(S&&!S.over&&S.gs.length&&!await askConfirm('Change word length?','Your current game ends and your streak resets.','Change',true))return;
       if(S&&!S.over&&S.gs.length){stL(S.L).streak=0}
       P[key]=v;save();mark();newGame()};
     box.appendChild(b)})}
@@ -537,6 +582,9 @@ $('#kb').addEventListener('pointerdown',e=>{
   if(k.dataset.a=='e')submit();else if(k.dataset.a=='d')del();else type(k.dataset.k)});
 addEventListener('keydown',e=>{
   if(e.ctrlKey||e.metaKey||e.altKey)return;
+  if(!$('#cfm').hidden){if(e.key=='Escape')cfmDone(false);return}
+  if(!$('#set').hidden){if(e.key=='Escape')closeSet();return}
+  if(!$('#dcm').hidden){if(e.key=='Escape')closeDcm();return}
   if(!$('#spn').hidden){if(e.key=='Escape')closeSpin();return}
   if(!$('#shr').hidden){if(e.key=='Escape'||e.key=='Enter'){e.preventDefault();closeShare()}return}
   if(!$('#how').hidden){if(e.key=='Escape'||e.key=='Enter'){e.preventDefault();closeHow()}return}
@@ -611,7 +659,7 @@ $('#lg').onclick=()=>{location.hash='';view('play')};
 // ---- sound ----
 let AC=null;
 function ac(){if(P.snd===0)return null;if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)()}catch{return null}}if(AC.state=='suspended')AC.resume();return AC}
-function tone(f,t0,d,type,v,f2){const a=ac();if(!a)return;const t=a.currentTime+t0,o=a.createOscillator(),g=a.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+d);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v||.07,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+d+.03)}
+function tone(f,t0,d,type,v,f2){const a=ac();if(!a)return;const t=a.currentTime+t0,o=a.createOscillator(),g=a.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+d);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(Math.max(.0001,(v||.07)*(P.vol==null?1:P.vol)),t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+d+.03)}
 const SC=[523.25,587.33,659.25,783.99,880,987.77,1174.66];
 const SFX={
   key(){tone(640+Math.random()*80,0,.05,'triangle',.07,420);tone(110,0,.06,'sine',.06,70)},
@@ -625,10 +673,22 @@ const SFX={
   level(){[0,1,2,3,5].forEach((n,i)=>tone(SC[n],i*.07,.32,'sine',.06))},
   tick(){tone(1100,0,.025,'square',.025)}
 };
-function sndIcon(){const on=P.snd!==0,b=$('#nS');
-  b.innerHTML='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/>'+(on?'<path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/>':'<path d="M16 9l5 6M21 9l-5 6"/>')+'</svg>';
-  b.setAttribute('aria-label',on?'Sound on':'Sound off');b.setAttribute('aria-pressed',on)}
-$('#nS').onclick=()=>{P.snd=P.snd===0?1:0;save();sndIcon();if(P.snd!==0){SFX.flip('g',2);setTimeout(()=>SFX.flip('g',4),90)}};
+function setUi(){
+  const on=P.snd!==0,v=Math.round((P.vol==null?1:P.vol)*100);
+  $('#swS').setAttribute('aria-checked',on);$('#swF').setAttribute('aria-checked',!!P.fast);
+  $('#vol').value=v;$('#volT').textContent=v+'%';$('#vol').disabled=!on;
+  document.documentElement.classList.toggle('fast',!!P.fast)}
+$('#swS').onclick=()=>{P.snd=P.snd===0?1:0;save();setUi();if(P.snd!==0){SFX.flip('g',2);setTimeout(()=>SFX.flip('g',4),90)}};
+$('#swF').onclick=()=>{P.fast=P.fast?0:1;save();setUi()};
+let volT=0;$('#vol').oninput=()=>{P.vol=$('#vol').value/100;$('#volT').textContent=$('#vol').value+'%';save();const n=Date.now();if(n-volT>120){volT=n;SFX.key()}};
+const openSet=()=>{setUi();$('#set').hidden=false},closeSet=()=>{$('#set').hidden=true};
+$('#nG').onclick=openSet;$('#stX').onclick=closeSet;$('#set').addEventListener('click',e=>{if(e.target.id=='set')closeSet()});
+const openDcm=()=>{$('#dcm').hidden=false},closeDcm=()=>{$('#dcm').hidden=true};
+$('#dcl').onclick=openDcm;$('#dcX').onclick=closeDcm;$('#dcm').addEventListener('click',e=>{if(e.target.id=='dcm')closeDcm()});
+let cfmRes=null;
+function askConfirm(t,p,ok,danger){return new Promise(res=>{$('#cfT').textContent=t;$('#cfP').textContent=p;const y=$('#cfY');y.textContent=ok;y.classList.toggle('dng',!!danger);$('#cfm').hidden=false;$('#cfN').focus();cfmRes=res})}
+function cfmDone(v){if(!cfmRes)return;$('#cfm').hidden=true;const r=cfmRes;cfmRes=null;r(v)}
+$('#cfN').onclick=()=>cfmDone(false);$('#cfY').onclick=()=>cfmDone(true);$('#cfm').addEventListener('click',e=>{if(e.target.id=='cfm')cfmDone(false)});
 
 // ---- hints and skip ----
 let hintBusy=false;
@@ -661,7 +721,8 @@ async function skipGame(e){
   if(e&&e.currentTarget)e.currentTarget.blur();
   if(busy||S.over)return;
   const k=stL(S.L).streak;
-  if(!confirm('Skip this word? It counts as a loss: no XP'+(k?' and your streak of '+k+' resets to 0.':'.')))return;
+  if(!await askConfirm('Skip this word?','It counts as a loss: no XP'+(k?' and your streak of '+k+' resets to 0.':'.'),'Skip',true))return;
+  if(busy||S.over)return;
   busy=true;await finish(false,'',[],true);busy=false}
 $('#hBtn').onclick=useHint;$('#sBtn').onclick=skipGame;
 
@@ -689,7 +750,7 @@ function drawWheel(rot){
 function spinWheel(i){
   return new Promise(res=>{
     const TAU=Math.PI*2,a=TAU/SPINS.length,jit=(Math.random()-.5)*a*.6;
-    const fin=((-(i*a+a/2)+jit)%TAU+TAU)%TAU+TAU*6,t0=performance.now(),dur=matchMedia('(prefers-reduced-motion:reduce)').matches?1:4600;let last=-1;
+    const fin=((-(i*a+a/2)+jit)%TAU+TAU)%TAU+TAU*6,t0=performance.now(),dur=(P.fast||matchMedia('(prefers-reduced-motion:reduce)').matches)?1:4600;let last=-1;
     (function f(t){const k=Math.min(1,(t-t0)/dur),r=fin*(1-Math.pow(1-k,4));spRot=r;drawWheel(r);
       const seg=Math.floor(r/a);if(seg!=last){if(last>=0)SFX.tick();last=seg}
       if(k<1)requestAnimationFrame(f);else res()})(t0)})}
@@ -888,7 +949,7 @@ $('#tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b
   P.N=1;if(![4,5,6].includes(+P.L))P.L=5;
   const g=LS.get('wb_g',null);
   if(g&&g.ans&&g.L==P.L&&g.N==1&&g.G==g.L+1&&g.ans.every(a=>a.length==g.L)){g.cur=Array(g.L).fill('');g.pos=0;g.hn=g.hn||0;if(g.hp==null)g.hp=-1;S=g;render()}else newGame();
-  pLen=String(P.L);navLabel();sndIcon();dotUpd();
+  pLen=String(P.L);navLabel();setUi();dotUpd();
   if(P.mig){evalAch(null);delete P.mig;save();stats();if(P.xp>0)setTimeout(()=>toast('Your past games earned '+P.xp+' XP'),700)}
   if(location.hash=='#leaderboard')view('leaderboard');else if(location.hash=='#profile')view('profile');
   if(P.name)pushScore();
