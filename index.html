@@ -45,7 +45,7 @@ section{flex:1;min-height:0;display:flex;flex-direction:column}
 .lnk{display:block;margin:12px auto 0;color:var(--mut);font-weight:700;padding:6px 12px;border-radius:8px}.lnk:hover{color:var(--text)}
 #after{padding:8px 0 14px}
 .btns{display:flex;gap:8px}
-#shr,#spn,#set,#dcm{z-index:10}
+#shr,#spn,#set,#dcm,#cint,#csh,#cres{z-index:10}
 #cfm{z-index:11}.shc{width:min(400px,100%)}.shc img{display:block;max-width:100%;max-height:58dvh;width:auto;margin:0 auto 16px;border-radius:12px;background:var(--bg)}
 .btn:disabled{opacity:.5;pointer-events:none}.btns .btn{flex:1}
 #nH,#nS,#nD,#nG{width:34px;height:34px;padding:0;border-radius:50%;border:1px solid var(--line);color:var(--mut);font-weight:800;display:grid;place-items:center}
@@ -93,7 +93,7 @@ section{flex:1;min-height:0;display:flex;flex-direction:column}
 .k.g{background:var(--g)}.k.y{background:var(--y)}.k.a{background:#1d2026;color:#5b606b}
 #toast{position:fixed;top:68px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:9px 15px;border-radius:9px;font-weight:700;opacity:0;pointer-events:none;transition:opacity .15s;z-index:12}
 #toast.s{opacity:1}
-#end,#how,#shr,#spn,#set,#dcm,#cfm{position:fixed;inset:0;display:grid;place-items:center;background:rgba(10,11,14,.72);backdrop-filter:blur(4px);z-index:8;padding:16px}
+#end,#how,#shr,#spn,#set,#dcm,#cfm,#cint,#csh,#cres{position:fixed;inset:0;display:grid;place-items:center;background:rgba(10,11,14,.72);backdrop-filter:blur(4px);z-index:8;padding:16px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px 24px;width:min(380px,100%);text-align:center;animation:rise .25s ease-out}
 .card{max-height:92dvh;overflow:auto}
 .card h2{font-size:24px;letter-spacing:-.02em}
@@ -104,7 +104,7 @@ section{flex:1;min-height:0;display:flex;flex-direction:column}
 .btn{background:var(--g);color:#06150d;font-weight:800;padding:12px 20px;border-radius:11px;transition:transform .08s,filter .15s}
 .btn:hover{filter:brightness(1.08)}.btn:active{transform:scale(.97)}
 .btn.alt{background:var(--key);color:var(--text)}
-#lb,#pf{overflow:auto;padding:18px 2px 24px}
+#lb,#pf,#cp{overflow:auto;padding:18px 2px 24px}
 .lbw{max-width:480px;margin:auto}
 .lbw h1{font-size:24px;letter-spacing:-.02em}
 .join{display:flex;gap:8px;margin:14px 0 6px}
@@ -198,6 +198,37 @@ a.btn{display:block;text-align:center;text-decoration:none}
 .how ul{margin:0 0 16px}
 .how li{font-size:13px;padding:4px 0 4px 16px}
 .how li:before{width:6px;height:6px;top:.8em}
+
+.wr{display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:4px 6px 4px 14px;margin-top:10px}
+.wr:focus-within{border-color:#4a505c}
+.wn{color:var(--mut);min-width:18px}
+.wr input{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--text);font:600 17px system-ui,sans-serif;text-transform:uppercase;letter-spacing:.04em;padding:10px 0}
+.wc{color:var(--mut);font-size:13px;white-space:nowrap}.wc.bad{color:#e0697a}
+.wd{width:38px;height:38px;border-radius:9px;display:grid;place-items:center;color:var(--mut);transition:color .15s,background .15s}
+.wd:hover:not(:disabled){color:#e0697a;background:var(--a)}.wd:disabled{opacity:.35;cursor:default}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:22px}
+.rl{display:grid;gap:6px;justify-items:center;color:var(--mut);font-size:13px;font-weight:600}
+.stp{display:flex;align-items:center;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:4px}
+.stp b{min-width:70px;text-align:center;color:var(--text);font-size:15px}
+.stp button{width:34px;height:34px;border-radius:8px;background:var(--key);color:var(--text);font-weight:700;display:grid;place-items:center}
+.cuact{display:flex;gap:10px;align-items:center;margin-top:20px}.cuact .btn{margin-left:auto}
+.cmi{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:8px;font-size:14px}
+.cmi span{color:var(--mut)}.cmi .hbtn{margin-left:auto}
+.crc{width:min(420px,100%)}
+.cr{display:flex;align-items:center;gap:10px;background:var(--a);border-radius:10px;padding:8px 12px;margin-top:8px;text-align:left}
+.cr i{font-style:normal;width:22px;height:22px;border-radius:6px;display:grid;place-items:center;font-weight:800;color:#06150d;background:var(--g);font-size:13px}.cr i.no{background:#e0697a}
+.cr b{text-transform:uppercase;letter-spacing:.04em}.cr span{margin-left:auto;color:var(--mut);font-size:13px}
+#crX{color:var(--g);font-weight:700;margin-top:8px}
+.cic{width:min(420px,100%);text-align:left;position:relative}.cic h2{text-align:center;margin:4px 0 12px}
+.cib{background:var(--a);border-radius:12px;padding:14px;margin-top:12px}
+.cib small{color:var(--mut);font-weight:700;letter-spacing:.06em;font-size:11px}
+.cby{display:flex;align-items:center;margin-top:6px;font-size:18px;font-weight:700}.cby .lvb{margin-left:10px}
+.cir{display:flex;justify-content:space-between;margin-top:8px;font-size:14px}.cir span{color:var(--mut)}
+.cin{font-size:12.5px;color:var(--mut);text-align:center;margin:14px 0}
+.cic .x{position:absolute;top:10px;right:12px;width:32px;height:32px;border-radius:8px;color:var(--mut);font-size:22px;line-height:1}
+.csc{width:min(400px,100%)}
+#cshL{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:12px;color:var(--text);font:inherit;margin:14px 0}
+#cut{font-weight:700;color:var(--text);margin-left:8px}
 li.hd{color:var(--mut);font-size:12px;padding:4px 12px}
 li .r{color:var(--mut);font-weight:700}
 li:nth-child(n+2):nth-child(-n+4) .r{color:var(--y)}
@@ -217,7 +248,7 @@ li.hd span:nth-child(n+3){text-align:right}
 <div id="app">
 <header>
   <button class="logo" id="lg" aria-label="wordbox home"><i></i>wordbox</button>
-  <nav><button id="nP" class="on">Play</button><button id="nL">Leaderboard</button><button id="nPr">Profile</button></nav>
+  <nav><button id="nP" class="on">Play</button><button id="nL">Leaderboard</button><button id="nCu">Custom</button><button id="nPr">Profile</button></nav>
   <div class="tools"><button id="nD" aria-label="Daily spin"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg><i class="dot" hidden></i></button><button id="nG" aria-label="Settings"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></button><button id="nH" aria-label="How to play">?</button></div>
 </header>
 
@@ -227,7 +258,8 @@ li.hd span:nth-child(n+3){text-align:right}
     <div class="seg"><div id="sL" role="group" aria-label="Word length"></div></div>
     <div class="stats"><div class="stat" id="stc"><b id="st">0</b><span>Streak</span></div><div class="stat"><b id="bs">0</b><span>Best</span></div></div>
   </div>
-  <div class="hrow" id="hr"><button class="hbtn" id="hBtn" type="button" title="A letter first, then the meaning. Each hint costs 25% of the XP for a win.">Hint</button><button class="hbtn" id="sBtn" type="button" title="Counts as a loss: no XP and your streak resets.">Skip</button></div>
+  <div class="hrow" id="hr"><button class="hbtn" id="hBtn" type="button" title="A letter first, then the meaning. Each hint costs 25% of the XP for a win.">Hint</button><button class="hbtn" id="sBtn" type="button" title="Counts as a loss: no XP and your streak resets.">Skip</button><button class="hbtn" id="qBtn" type="button" hidden>Quit challenge</button></div>
+  <div class="hb" id="cub" hidden></div>
   <div class="hb" id="hb" hidden></div>
   <div id="boards"></div>
   <div id="kb"></div>
@@ -243,6 +275,22 @@ li.hd span:nth-child(n+3){text-align:right}
     <div class="tabs" id="tabs"><button data-s="best" class="on">Best streak</button><button data-s="wins">Most wins</button><button data-s="xp">Level</button></div>
     <div class="lrow" id="llen"><span>Word length</span><div class="tabs" id="ltabs"><button data-l="all" class="on">All</button><button data-l="4">4</button><button data-l="5">5</button><button data-l="6">6</button></div></div>
     <ol id="list"></ol>
+  </div></div>
+</section>
+<section id="cus" hidden>
+  <div id="cp"><div class="lbw">
+    <h1>Custom game</h1>
+    <p class="note" id="cuSub">Make your own challenge and send the link to friends.</p>
+    <div id="cuWords"></div>
+    <button class="hbtn" id="cuAdd" type="button" style="margin-top:12px">+ Add word</button>
+    <div class="rules">
+      <div class="rl"><span>Max guesses</span><div class="stp"><button data-s="g-" type="button" aria-label="Fewer guesses">&minus;</button><b id="vg">6</b><button data-s="g+" type="button" aria-label="More guesses">+</button></div></div>
+      <div class="rl"><span>Time limit</span><div class="stp"><button data-s="t-" type="button" aria-label="Shorter time">&larr;</button><b id="vt">None</b><button data-s="t+" type="button" aria-label="Longer time">&rarr;</button></div></div>
+      <div class="rl"><span>Dictionary</span><div class="stp"><button data-s="d" type="button" aria-label="Toggle dictionary">&larr;</button><b id="vd">Enabled</b><button data-s="d" type="button" aria-label="Toggle dictionary">&rarr;</button></div></div>
+    </div>
+    <p class="note" id="cuMsg" style="margin-top:14px"></p>
+    <div class="cuact"><span class="note" id="cuNote"></span><button class="btn" id="cuMk" type="button">Create</button></div>
+    <h3 class="sh" id="cuMh" hidden>Your recent challenges</h3><div id="cuMine"></div>
   </div></div>
 </section>
 <section id="prs" hidden>
@@ -294,6 +342,14 @@ li.hd span:nth-child(n+3){text-align:right}
 <p>Want the word of the day? Play the original Wordle on The New York Times Games site, then come back here for as many extra rounds as you like.</p>
 <p>Your progress is saved in your browser. If you join the leaderboard, your name and scores are stored online.</p>
 <div class="btns"><button class="btn alt" id="dcX" type="button">Close</button><a class="btn" href="https://www.nytimes.com/games/wordle/index.html" target="_blank" rel="noopener noreferrer">Play the original Wordle</a></div></div></div>
+<div id="cint" hidden><div class="card cic"><button class="x" id="ciX" type="button" aria-label="Close">&times;</button><h2>Custom wordbox</h2>
+<div id="ciBody"><div class="cib"><small>CREATED BY</small><div class="cby"><span id="ciBy"></span><em class="lvb" id="ciLv" hidden></em></div></div>
+<div class="cib"><small>RULES</small><div class="cir"><span>Words</span><b id="ciW"></b></div><div class="cir"><span>Letters</span><b id="ciLt"></b></div><div class="cir"><span>Max guesses</span><b id="ciG"></b></div><div class="cir"><span>Time limit</span><b id="ciT"></b></div><div class="cir"><span>Dictionary</span><b id="ciD"></b></div></div>
+<p class="cin">This challenge's words and rules were picked by another player. wordbox hasn't reviewed or endorsed them.</p></div>
+<p class="note err" id="ciE" hidden style="text-align:center;margin:14px 0">This challenge could not be loaded. The link may be wrong, or it was removed.</p>
+<button class="btn" id="ciP" type="button" style="width:100%">Play</button></div></div>
+<div id="csh" hidden><div class="card csc"><h2>Share with friends</h2><p>Anyone with this link can play your challenge.</p><input id="cshL" readonly aria-label="Challenge link"><div class="btns"><button class="btn alt" id="cshS" type="button" hidden>Share</button><button class="btn" id="cshC" type="button">Copy</button></div><button class="lnk" id="cshX" type="button">Close</button></div></div>
+<div id="cres" hidden><div class="card crc"><h2 id="crT"></h2><p id="crS"></p><p id="crX" hidden></p><div id="crL"></div><div class="btns" style="margin-top:18px"><button class="btn alt" id="crC" type="button">Copy result</button><button class="btn" id="crD" type="button">Done</button></div></div></div>
 <canvas id="cf"></canvas>
 
 <script>
@@ -315,7 +371,7 @@ const $=s=>document.querySelector(s), sleep=ms=>new Promise(r=>setTimeout(r,ms))
 const LS={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}},del(k){try{localStorage.removeItem(k)}catch{}}};
 const lists={};for(const l in WORDS)lists[l]=[...new Set(WORDS[l].split(' ').filter(w=>w.length==l&&/^[a-z]+$/.test(w)))];
 let P=Object.assign({rc:0,L:5,N:1,name:'',xp:0,ach:{}},LS.get('wb_p',{}));
-P.cnt=Object.assign({inv:0,edit:0,shares:0,spins:0,jack:0,last:''},P.cnt);
+P.cnt=Object.assign({inv:0,edit:0,shares:0,spins:0,jack:0,made:0,cdone:0,last:''},P.cnt);
 const LENS=[4,5,6];
 if(!P.st){ // first run with per-length stats: earlier games count as 5-letter
   const w=Math.max(P.wins||0,P.best||0),g=Math.max(P.games||0,w);
@@ -356,6 +412,8 @@ const ACH=[
  {id:'backup',c:'Mistakes and more',n:'Backed Up',d:'Create a recovery code',x:40,t:()=>!!P.rc},
  {id:'spin',c:'Mistakes and more',n:'Feeling Lucky',d:'Take your first daily spin',x:30,t:()=>P.cnt.spins>=1},
  {id:'jackpot',c:'Mistakes and more',n:'Jackpot',d:'Hit the 500 XP daily spin',x:250,t:()=>P.cnt.jack>=1},
+ {id:'mk',c:'Challenges',n:'Challenger',d:'Create a custom challenge',x:40,t:()=>P.cnt.made>=1},
+ {id:'cd',c:'Challenges',n:'Friendly Rival',d:"Finish someone else's challenge",x:40,t:()=>P.cnt.cdone>=1},
  {id:'lvl10',c:'Mistakes and more',n:'Rising Star',d:'Reach level 10',x:150,t:()=>lvInfo(P.xp).L>=10,p:()=>[lvInfo(P.xp).L,10]}
 ];
 function evalAch(ctx){const got=[];let ch=true;while(ch){ch=false;for(const a of ACH)if(!P.ach[a.id]&&a.t(ctx)){P.ach[a.id]=Date.now();P.xp+=a.x;got.push(a);ch=true}}return got}
@@ -393,7 +451,7 @@ function newGame(){
   S={L:P.L,N:1,G:P.L+1,ans:pick(P.L,1),gs:[],cur:Array(P.L).fill(''),pos:0,over:false,hn:0,hf:false,hp:-1,hl:'',hd:null};
   persist();render();
 }
-const persist=()=>S&&!S.over?LS.set('wb_g',S):LS.del('wb_g');
+const persist=()=>{if(S&&S.cu){LS.set('wb_cg',S);return}S&&!S.over?LS.set('wb_g',S):LS.del('wb_g')};
 
 function render(){
   const el=$('#boards');el.innerHTML='';
@@ -452,15 +510,17 @@ async function submit(){
   if(busy||S.over)return;
   if(S.cur.some(x=>!x))return bad('Not enough letters');
   const g=S.cur.join('');
-  if(!valid(g)){P.cnt.inv++;save();ev2(null);return bad('Not in word list')}
   busy=true;
+  const okw=await isValid(g);
+  if(!okw){busy=false;if(!S.cu){P.cnt.inv++;save();ev2(null)}return bad('Not in word list')}
+  if(S.over){busy=false;return}
   const r=S.gs.length,A=act();
   S.cur=Array(S.L).fill('');S.pos=0;S.gs.push(g);
   A.forEach(b=>paint(b,r,g,true));
   await sleep(P.fast?40:S.L*130+420);
   keys();
   const won=S.ans.every(a=>S.gs.includes(a));
-  if(won||S.gs.length>=S.G)await finish(won,g,A);else{persist();showCur()}
+  if(won||S.gs.length>=S.G)await(S.cu?cuFinish(won):finish(won,g,A));else{persist();showCur()}
   busy=false;
 }
 
@@ -551,7 +611,7 @@ async function finish(won,g,A,sk){
   dp.then(d=>{if(S&&S.ans[0]==w0)renderDef(w0,d)});
   $('#end').hidden=false;$('#eB').focus();
 }
-function next(){$('#end').hidden=true;$('#after').hidden=true;$('#kb').hidden=false;newGame()}
+function next(){$('#end').hidden=true;$('#after').hidden=true;$('#kb').hidden=false;if(S&&S.cu){cuNext();return}newGame()}
 function viewBoard(){$('#end').hidden=true;$('#kb').hidden=true;$('#after').hidden=false;$('#aNext').textContent=$('#eB').textContent;$('#aShare').hidden=$('#eShare').hidden;fit();$('#aNext').focus()}
 $('#eView').onclick=viewBoard;$('#aNext').onclick=next;
 $('#end').addEventListener('click',e=>{if(e.target.id=='end')viewBoard()});
@@ -560,7 +620,7 @@ $('#eB').onclick=next;
 // ---- controls ----
 function seg(id,vals,key){
   const box=$(id);vals.forEach(v=>{const b=document.createElement('button');b.textContent=v;b.dataset.v=v;
-    b.onclick=async()=>{if(P[key]==v)return;
+    b.onclick=async()=>{if(P[key]==v)return;if(S&&S.cu){toast('Quit the challenge first');return}
       if(S&&!S.over&&S.gs.length&&!await askConfirm('Change word length?','Your current game ends and your streak resets.','Change',true))return;
       if(S&&!S.over&&S.gs.length){stL(S.L).streak=0}
       P[key]=v;save();mark();newGame()};
@@ -582,6 +642,9 @@ $('#kb').addEventListener('pointerdown',e=>{
   if(k.dataset.a=='e')submit();else if(k.dataset.a=='d')del();else type(k.dataset.k)});
 addEventListener('keydown',e=>{
   if(e.ctrlKey||e.metaKey||e.altKey)return;
+  if(!$('#cres').hidden){if(e.key=='Escape')cuLeave();return}
+  if(!$('#cint').hidden){if(e.key=='Escape')closeInt();return}
+  if(!$('#csh').hidden){if(e.key=='Escape')closeCsh();return}
   if(!$('#cfm').hidden){if(e.key=='Escape')cfmDone(false);return}
   if(!$('#set').hidden){if(e.key=='Escape')closeSet();return}
   if(!$('#dcm').hidden){if(e.key=='Escape')closeDcm();return}
@@ -695,16 +758,20 @@ let hintBusy=false;
 const maskWord=(m,w)=>m.replace(new RegExp(w,'ig'),'_____');
 function hintUi(){
   if(!S)return;
+  const cu=!!S.cu;$('#hBtn').hidden=cu;$('#qBtn').hidden=!cu;
+  const cb=$('#cub'),cvis=cu&&!S.over,cwas=!cb.hidden;
+  if(cu){const c=S.cu;cb.innerHTML='Custom challenge by <b>'+esc(c.by)+'</b> &middot; Word '+(c.i+1)+' of '+c.words.length+(c.dl?'<span id="cut"></span>':'')}
+  cb.hidden=!cvis;
   const h=S.hn||0,on=!S.over;
   $('#hr').hidden=!on;
   const hb=$('#hBtn');hb.disabled=h>=2;
   hb.textContent=h>=2?'No hints left':'Hint \u00b7 '+(2-h)+' left';
   const box=$('#hb'),vis=on&&!!S.hd,was=!box.hidden;
   if(S.hd)box.innerHTML='<b>Hint</b> <i>'+esc(S.hd.pos||'')+'</i> '+esc(S.hd.m);
-  box.hidden=!vis;if(was!==vis)fit()}
+  box.hidden=!vis;if(was!==vis||cwas!==cvis)fit()}
 function useHint(e){
   if(e&&e.currentTarget)e.currentTarget.blur();
-  if(busy||S.over||hintBusy||(S.hn||0)>=2)return;
+  if(S.cu||busy||S.over||hintBusy||(S.hn||0)>=2)return;
   if(!S.hn){
     const known=new Set(),all=[...Array(S.L).keys()];
     S.gs.forEach(g=>evaluate(g,S.ans[0]).forEach((r,i)=>{if(r=='g')known.add(i)}));
@@ -720,11 +787,151 @@ function useHint(e){
 async function skipGame(e){
   if(e&&e.currentTarget)e.currentTarget.blur();
   if(busy||S.over)return;
+  if(S.cu){if(!await askConfirm('Skip this word?','It will count as unsolved.','Skip',true))return;if(busy||S.over)return;busy=true;await cuFinish(false,'skip');busy=false;return}
   const k=stL(S.L).streak;
   if(!await askConfirm('Skip this word?','It counts as a loss: no XP'+(k?' and your streak of '+k+' resets to 0.':'.'),'Skip',true))return;
   if(busy||S.over)return;
   busy=true;await finish(false,'',[],true);busy=false}
 $('#hBtn').onclick=useHint;$('#sBtn').onclick=skipGame;
+
+// ---- custom challenges ----
+const BAD=new Set('anal anus arse ass bitch boob butt clit cock coon crap cunt damn dick dike dyke fag fuck gook hell homo jerk jizz kike nazi negro nigga paki piss poop porn prick pube puss rape rapist sexy shit slut smut spic tits twat wank whore horny nude penis vagina semen sperm orgy incest bimbo hitler gays lesbo boner dildo fetish pervert molest'.split(' '));
+const TLS=[0,30,60,120,180,300],TLN=['None','30s','1m','2m','3m','5m'];
+const enc=x=>btoa(x.split('').reverse().join('')),dec=x=>atob(x).split('').reverse().join('');
+const CODEA='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+const genCode=()=>[...crypto.getRandomValues(new Uint8Array(5))].map(x=>CODEA[x%32]).join('');
+const fmtT=ms=>{const t=Math.round(ms/1000);return Math.floor(t/60)+':'+String(t%60).padStart(2,'0')};
+const chLink=c=>location.origin+location.pathname+'?c='+c;
+const TRASH='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></svg>';
+let CU={w:[''],g:6,t:0,d:1},CHI=null;
+const remoteOK={};
+async function isValid(g){
+  if(!S.cu)return valid(g);
+  const c=S.cu;
+  if(!c.rules.d||c.words.includes(g))return true;
+  if(DICT[S.L]){if(!dicts[S.L])dicts[S.L]=new Set(DICT[S.L].split(' '));return dicts[S.L].has(g)}
+  if(g in remoteOK)return remoteOK[g];
+  try{const r=await fetch('https://api.datamuse.com/words?sp='+g+'&max=1'),j=await r.json();return remoteOK[g]=!!(j[0]&&j[0].word==g)}catch{return true}}
+function renderCustom(){
+  $('#cuMsg').textContent='';
+  $('#cuSub').textContent=P.name?'Make your own challenge and send the link to friends.':'Join with a name on the Profile tab to create challenges. Anyone can play one.';
+  $('#cuWords').innerHTML=CU.w.map((w,i)=>`<div class="wr"><span class="wn">${i+1})</span><input data-i="${i}" maxlength="9" value="${esc(w)}" placeholder="Type a word" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Word ${i+1}"><span class="wc${w.length&&w.length<3?' bad':''}">${w.length} / 9</span><button class="wd" data-del="${i}" type="button" aria-label="Remove word"${CU.w.length<2?' disabled':''}>${TRASH}</button></div>`).join('');
+  $('#cuAdd').hidden=CU.w.length>=6;$('#cuNote').textContent=CU.w.length+' / 6 words';
+  $('#vg').textContent=CU.g;$('#vt').textContent=TLN[TLS.indexOf(CU.t)];$('#vd').textContent=CU.d?'Enabled':'Disabled';
+  const mine=P.ch||[];$('#cuMh').hidden=!mine.length;
+  $('#cuMine').innerHTML=mine.slice(0,5).map(x=>`<div class="cmi"><b>${esc(x.c)}</b><span>${x.n} word${x.n>1?'s':''}</span><button class="hbtn" data-copy="${esc(x.c)}" type="button">Copy link</button></div>`).join('')}
+$('#cuWords').addEventListener('input',e=>{
+  const i=e.target.dataset.i;if(i==null)return;
+  $('#cuMsg').textContent='';
+  const raw=e.target.value,v=raw.replace(/[^a-zA-Z]/g,'').toLowerCase().slice(0,9);
+  if(v!==raw.toLowerCase())e.target.value=v;
+  CU.w[i]=v;const wc=e.target.parentElement.querySelector('.wc');wc.textContent=v.length+' / 9';wc.classList.toggle('bad',v.length>0&&v.length<3)});
+$('#cuWords').addEventListener('click',e=>{const b=e.target.closest('[data-del]');if(!b)return;CU.w.splice(+b.dataset.del,1);if(!CU.w.length)CU.w=[''];renderCustom()});
+$('#cuAdd').onclick=()=>{if(CU.w.length>=6)return;CU.w.push('');renderCustom();const ins=$('#cuWords').querySelectorAll('input');ins[ins.length-1].focus()};
+document.querySelector('.rules').addEventListener('click',e=>{
+  const b=e.target.closest('[data-s]');if(!b)return;const k=b.dataset.s;
+  if(k=='g-')CU.g=Math.max(3,CU.g-1);else if(k=='g+')CU.g=Math.min(10,CU.g+1);
+  else if(k=='t-'||k=='t+'){const i=TLS.indexOf(CU.t)+(k=='t+'?1:-1);CU.t=TLS[(i+TLS.length)%TLS.length]}
+  else if(k=='d')CU.d=CU.d?0:1;
+  renderCustom()});
+$('#cuMine').addEventListener('click',async e=>{const b=e.target.closest('[data-copy]');if(!b)return;try{await navigator.clipboard.writeText(chLink(b.dataset.copy));toast('Link copied')}catch{}});
+function openCsh(code){$('#cshL').value=chLink(code);$('#cshS').hidden=!navigator.share;$('#csh').hidden=false}
+const closeCsh=()=>{$('#csh').hidden=true};
+$('#cshC').onclick=async()=>{try{await navigator.clipboard.writeText($('#cshL').value);toast('Link copied')}catch{$('#cshL').select()}};
+$('#cshS').onclick=()=>{navigator.share({title:'wordbox challenge',text:'Try my wordbox challenge!',url:$('#cshL').value}).catch(()=>{})};
+$('#cshX').onclick=closeCsh;$('#csh').addEventListener('click',e=>{if(e.target.id=='csh')closeCsh()});
+$('#cuMk').onclick=async()=>{
+  const m=$('#cuMsg'),bad=t=>{m.className='note err';m.textContent=t};m.className='note';m.textContent='';
+  if(!P.name)return bad('Join with a unique name on the Profile tab first, so your challenge can show who made it.');
+  if(!DB)return bad('The online board is not connected, so links cannot be created.');
+  const ws=CU.w.map(x=>x.trim()).filter(Boolean);
+  if(!ws.length)return bad('Add at least one word.');
+  if(ws.some(w=>w.length<3||w.length>9))return bad('Every word needs 3 to 9 letters.');
+  if(ws.some(w=>BAD.has(w)))return bad('Please choose different words.');
+  $('#cuMk').disabled=true;m.textContent='Creating...';
+  const body=JSON.stringify({by:P.name,w:enc(ws.join(',')),g:CU.g,t:CU.t,d:CU.d,c:Date.now()});
+  let code=null;
+  try{for(let i=0;i<5&&!code;i++){const c=genCode(),r=await fetch(`${DB}/challenges/${c}.json`,{method:'PUT',body});if(r.ok)code=c;else if(![401,403,412].includes(r.status))throw 0}}catch{}
+  $('#cuMk').disabled=false;
+  if(!code)return bad('Could not create the link. Check the database rules and try again.');
+  m.textContent='';P.ch=[{c:code,n:ws.length},...(P.ch||[])].slice(0,20);P.cnt.made++;save();ev2(null);
+  CU={w:[''],g:CU.g,t:CU.t,d:CU.d};renderCustom();openCsh(code)};
+async function loadChallenge(code){
+  try{
+    const r=await fetch(`${DB}/challenges/${code}.json`);if(!r.ok)return null;
+    const d=await r.json();if(!d||!d.w)return null;
+    const ws=dec(d.w).split(',').filter(x=>/^[a-z]{3,9}$/.test(x)).slice(0,6);if(!ws.length)return null;
+    return{code,by:String(d.by||'Someone').slice(0,16),words:ws,g:Math.min(10,Math.max(3,+d.g||6)),t:TLS.includes(+d.t)?+d.t:0,d:d.d?1:0}
+  }catch{return null}}
+async function openChallenge(code){
+  if(!DB){toast('This site is not connected to the online board.');return}
+  toast('Loading challenge...');
+  const ch=await loadChallenge(code);CHI=ch;
+  $('#cint').hidden=false;$('#ciBody').hidden=!ch;$('#ciE').hidden=!!ch;$('#ciP').hidden=!ch;
+  if(!ch)return;
+  $('#ciBy').textContent=ch.by;$('#ciLv').hidden=true;
+  fetch(`${DB}/scores/${ch.by.toLowerCase()}.json`).then(r=>r.ok?r.json():null).then(sc=>{if(sc&&CHI==ch){$('#ciLv').textContent='Lv '+lvInfo(sc.xp||0).L;$('#ciLv').hidden=false}}).catch(()=>{});
+  const ls=ch.words.map(w=>w.length),lo=Math.min(...ls),hi=Math.max(...ls);
+  $('#ciW').textContent=ch.words.length;$('#ciLt').textContent=lo==hi?lo:lo+' to '+hi;$('#ciG').textContent=ch.g;
+  $('#ciT').textContent=TLN[TLS.indexOf(ch.t)]+(ch.t?' per word':'');$('#ciD').textContent=ch.d?'Enabled':'Disabled'}
+function closeInt(){$('#cint').hidden=true;try{history.replaceState(null,'',location.pathname+location.hash)}catch{}}
+$('#ciX').onclick=closeInt;$('#cint').addEventListener('click',e=>{if(e.target.id=='cint')closeInt()});
+$('#ciP').onclick=()=>{if(CHI){const ch=CHI;closeInt();startCustom(ch)}};
+function startCustom(ch){startWord({code:ch.code,by:ch.by,words:ch.words,rules:{g:ch.g,t:ch.t,d:ch.d},i:0,res:[],fin:false,paid:0,note:''})}
+function startWord(c){
+  const w=c.words[c.i];c.t0=Date.now();c.dl=c.rules.t?c.t0+c.rules.t*1000:0;
+  S={L:w.length,N:1,G:c.rules.g,ans:[w],gs:[],cur:Array(w.length).fill(''),pos:0,over:false,hn:0,hf:false,hp:-1,hl:'',hd:null,cu:c};
+  $('#end').hidden=true;$('#after').hidden=true;$('#kb').hidden=false;
+  persist();view('play');render()}
+async function cuFinish(won,why){
+  const c=S.cu,w0=S.ans[0];
+  S.over=true;c.res.push({w:w0,won,n:S.gs.length,t:Date.now()-c.t0,gs:S.gs.slice(),why:why||''});persist();hintUi();
+  if(won)SFX.win();else SFX.lose();
+  const dp=lookup(w0).catch(()=>null);
+  await sleep(P.fast?60:(won?700:500));
+  const last=c.i+1>=c.words.length;
+  $('#eT').textContent=won?'Solved':(why=='time'?"Time's up":(why=='skip'?'Skipped':'Out of guesses'));
+  $('#eS').textContent='Word '+(c.i+1)+' of '+c.words.length+' \u00b7 '+(won?S.gs.length+' / '+S.G+' guesses':'unsolved');
+  $('#eW').innerHTML='';const sp=document.createElement('span');sp.textContent=w0;if(won)sp.className='ok';$('#eW').appendChild(sp);
+  $('#eX').hidden=true;$('#eD').hidden=true;$('#eShare').hidden=true;$('#eB').textContent=last?'See results':'Next word';
+  dp.then(d=>{if(S&&S.ans[0]==w0)renderDef(w0,d)});
+  $('#end').hidden=false;$('#eB').focus()}
+function cuNext(){const c=S.cu;c.i++;if(c.i>=c.words.length)return cuResults();startWord(c)}
+function cuResults(){
+  const c=S.cu;c.fin=true;
+  const rs=c.res,solved=rs.filter(r=>r.won).length,gu=rs.reduce((a,r)=>a+r.n,0),tt=rs.reduce((a,r)=>a+r.t,0);
+  if(!c.paid){
+    c.paid=1;const own=P.name&&P.name.toLowerCase()==c.by.toLowerCase();P.cd=P.cd||{};
+    if(own)c.note='Your own challenge: no XP.';
+    else if(P.cd[c.code])c.note='Already played: no extra XP.';
+    else{
+      P.cd[c.code]=1;const ks=Object.keys(P.cd);if(ks.length>200)delete P.cd[ks[0]];
+      const d=todayStr(),cx=P.cx&&P.cx.d==d?P.cx:{d,x:0},xp=Math.max(0,Math.min(10+10*solved,150-cx.x));
+      cx.x+=xp;P.cx=cx;P.cnt.cdone++;
+      if(xp>0){P.xp+=xp;c.note='+'+xp+' XP'}else c.note='Daily challenge XP limit reached.'}
+    save();stats();pushScore();setTimeout(()=>ev2(null),800)}
+  persist();
+  $('#crT').textContent=solved==rs.length?'Challenge complete':'Challenge finished';
+  $('#crS').textContent=solved+' of '+rs.length+' solved \u00b7 '+gu+' guesses \u00b7 '+fmtT(tt);
+  $('#crX').textContent=c.note;$('#crX').hidden=!c.note;
+  $('#crL').innerHTML=rs.map(r=>`<div class="cr"><i class="${r.won?'':'no'}">${r.won?'&#10003;':'&times;'}</i><b>${esc(r.w)}</b><span>${r.won?r.n+' / '+c.rules.g+' \u00b7 ':''}${fmtT(r.t)}</span></div>`).join('');
+  $('#end').hidden=true;$('#cres').hidden=false;if(solved==rs.length)confetti()}
+function cuText(){
+  const c=S.cu,E={g:'\u{1F7E9}',y:'\u{1F7E8}',a:'\u2B1B'},rs=c.res,solved=rs.filter(r=>r.won).length,gu=rs.reduce((a,r)=>a+r.n,0),tt=rs.reduce((a,r)=>a+r.t,0);
+  return 'wordbox challenge '+c.code+' by '+c.by+'\n'+solved+'/'+rs.length+' solved \u00b7 '+gu+' guesses \u00b7 '+fmtT(tt)+'\n\n'+rs.map(r=>r.gs.map(g=>evaluate(g,r.w).map(x=>E[x]).join('')).join('\n')+(r.won?'':'\n(unsolved)')).join('\n\n')+'\n\n'+chLink(c.code)}
+function cuLeave(){
+  LS.del('wb_cg');$('#cres').hidden=true;$('#end').hidden=true;$('#after').hidden=true;$('#kb').hidden=false;
+  try{history.replaceState(null,'',location.pathname+location.hash)}catch{}
+  S=null;restoreNormal();view('play')}
+$('#crC').onclick=async()=>{try{await navigator.clipboard.writeText(cuText());toast('Result copied')}catch{}};
+$('#crD').onclick=cuLeave;
+$('#qBtn').onclick=async e=>{e.currentTarget.blur();if(!S||!S.cu)return;if(!await askConfirm('Quit this challenge?','Your progress in it will be lost. Your normal game will continue where you left it.','Quit',true))return;cuLeave()};
+setInterval(()=>{
+  if(!S||!S.cu||S.over)return;
+  const c=S.cu;if(!c.dl)return;
+  const r=Math.max(0,Math.ceil((c.dl-Date.now())/1000)),el=$('#cut');
+  if(el)el.textContent=Math.floor(r/60)+':'+String(r%60).padStart(2,'0');
+  if(r<=0&&!busy){busy=true;cuFinish(false,'time').finally(()=>{busy=false})}},250);
 
 // ---- daily spin ----
 const SPINS=[{x:10,w:30},{x:20,w:25},{x:30,w:18},{x:50,w:12},{x:75,w:8},{x:100,w:4},{x:200,w:2},{x:500,w:1}];
@@ -777,15 +984,16 @@ setInterval(()=>{dotUpd();if(!$('#spn').hidden)spinStatus()},30000);
 
 // ---- views ----
 function view(v){
-  const pg={play:'#play',leaderboard:'#lbs',profile:'#prs'};
+  const pg={play:'#play',leaderboard:'#lbs',custom:'#cus',profile:'#prs'};
   $('#rc').hidden=true;
   for(const k in pg)$(pg[k]).hidden=k!=v;
-  $('#nP').classList.toggle('on',v=='play');$('#nL').classList.toggle('on',v=='leaderboard');$('#nPr').classList.toggle('on',v=='profile');
-  if(v=='leaderboard')loadLB();else if(v=='profile')renderProfile();else fit();
+  $('#nP').classList.toggle('on',v=='play');$('#nL').classList.toggle('on',v=='leaderboard');$('#nCu').classList.toggle('on',v=='custom');$('#nPr').classList.toggle('on',v=='profile');
+  if(v=='leaderboard')loadLB();else if(v=='profile')renderProfile();else if(v=='custom')renderCustom();else fit();
 }
 $('#nP').onclick=()=>{location.hash='';view('play')};
 $('#nL').onclick=()=>{location.hash='leaderboard';view('leaderboard')};
 const goProfile=()=>{PV=null;pLen=String(P.L);location.hash='profile';view('profile')};
+$('#nCu').onclick=()=>{location.hash='custom';view('custom')};
 $('#nPr').onclick=goProfile;$('#lvc').onclick=goProfile;$('#cb').onclick=goProfile;$('#vp').onclick=goProfile;
 
 // ---- leaderboard ----
@@ -945,13 +1153,18 @@ $('#tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b
   document.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('on',x==b));loadLB()});
 
 // ---- start ----
+function restoreNormal(){
+  const g=LS.get('wb_g',null);
+  if(g&&g.ans&&g.L==P.L&&g.N==1&&g.G==g.L+1&&g.ans.every(a=>a.length==g.L)){g.cur=Array(g.L).fill('');g.pos=0;g.hn=g.hn||0;if(g.hp==null)g.hp=-1;S=g;render()}else newGame()}
 (function init(){
   P.N=1;if(![4,5,6].includes(+P.L))P.L=5;
-  const g=LS.get('wb_g',null);
-  if(g&&g.ans&&g.L==P.L&&g.N==1&&g.G==g.L+1&&g.ans.every(a=>a.length==g.L)){g.cur=Array(g.L).fill('');g.pos=0;g.hn=g.hn||0;if(g.hp==null)g.hp=-1;S=g;render()}else newGame();
+  const cg=LS.get('wb_cg',null);
+  if(cg&&cg.cu&&cg.cu.words&&cg.ans){S=cg;S.cur=Array(S.L).fill('');S.pos=0;if(S.cu.fin)cuResults();else if(S.over)cuNext();else render()}
+  else restoreNormal();
   pLen=String(P.L);navLabel();setUi();dotUpd();
   if(P.mig){evalAch(null);delete P.mig;save();stats();if(P.xp>0)setTimeout(()=>toast('Your past games earned '+P.xp+' XP'),700)}
-  if(location.hash=='#leaderboard')view('leaderboard');else if(location.hash=='#profile')view('profile');
+  if(location.hash=='#leaderboard')view('leaderboard');else if(location.hash=='#profile')view('profile');else if(location.hash=='#custom')view('custom');
+  const qc=new URLSearchParams(location.search).get('c');if(qc&&/^[A-Za-z0-9]{5}$/.test(qc))openChallenge(qc.toUpperCase());
   if(P.name)pushScore();
 })();
 </script>
