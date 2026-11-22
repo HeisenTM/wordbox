@@ -215,9 +215,9 @@ a.btn{display:block;text-align:center;text-decoration:none}
 .cmi{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:8px;font-size:14px}
 .cmi span{color:var(--mut)}.cmi .hbtn{margin-left:auto}
 .crc{width:min(420px,100%)}
-.cr{display:flex;align-items:center;gap:10px;background:var(--a);border-radius:10px;padding:8px 12px;margin-top:8px;text-align:left}
-.cr i{font-style:normal;width:22px;height:22px;border-radius:6px;display:grid;place-items:center;font-weight:800;color:#06150d;background:var(--g);font-size:13px}.cr i.no{background:#e0697a}
-.cr b{text-transform:uppercase;letter-spacing:.04em}.cr span{margin-left:auto;color:var(--mut);font-size:13px}
+.crr{display:flex;align-items:center;gap:10px;background:var(--a);border-radius:10px;padding:8px 12px;margin-top:8px;text-align:left}
+.crr i{font-style:normal;width:22px;height:22px;border-radius:6px;display:grid;place-items:center;font-weight:800;color:#06150d;background:var(--g);font-size:13px}.crr i.no{background:#e0697a}
+.crr b{text-transform:uppercase;letter-spacing:.04em}.crr span{margin-left:auto;color:var(--mut);font-size:13px}
 #crX{color:var(--g);font-weight:700;margin-top:8px}
 .cic{width:min(420px,100%);text-align:left;position:relative}.cic h2{text-align:center;margin:4px 0 12px}
 .cib{background:var(--a);border-radius:12px;padding:14px;margin-top:12px}
@@ -229,6 +229,11 @@ a.btn{display:block;text-align:center;text-decoration:none}
 .csc{width:min(400px,100%)}
 #cshL{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:12px;color:var(--text);font:inherit;margin:14px 0}
 #cut{font-weight:700;color:var(--text);margin-left:8px}
+.mrow{display:flex;justify-content:center;padding:0 0 8px}
+.mseg{display:flex;gap:2px;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:3px}
+.mseg button{height:28px;min-width:66px;padding:0 10px;border-radius:8px;font-size:13px;font-weight:600;color:var(--mut);transition:background .15s,color .15s}
+.mseg button.on{background:var(--key);color:var(--text)}
+#boards.blind .tile.g,#boards.blind .tile.y,#boards.blind .tile.a{color:transparent!important}
 li.hd{color:var(--mut);font-size:12px;padding:4px 12px}
 li .r{color:var(--mut);font-weight:700}
 li:nth-child(n+2):nth-child(-n+4) .r{color:var(--y)}
@@ -258,6 +263,7 @@ li.hd span:nth-child(n+3){text-align:right}
     <div class="seg"><div id="sL" role="group" aria-label="Word length"></div></div>
     <div class="stats"><div class="stat" id="stc"><b id="st">0</b><span>Streak</span></div><div class="stat"><b id="bs">0</b><span>Best</span></div></div>
   </div>
+  <div class="mrow" id="mr"><div class="mseg" id="sM"></div></div>
   <div class="hrow" id="hr"><button class="hbtn" id="hBtn" type="button" title="A letter first, then the meaning. Each hint costs 25% of the XP for a win.">Hint</button><button class="hbtn" id="sBtn" type="button" title="Counts as a loss: no XP and your streak resets.">Skip</button><button class="hbtn" id="qBtn" type="button" hidden>Quit challenge</button></div>
   <div class="hb" id="cub" hidden></div>
   <div class="hb" id="hb" hidden></div>
@@ -274,6 +280,7 @@ li.hd span:nth-child(n+3){text-align:right}
     <button class="lnk2" id="vp" type="button" hidden>View your profile</button>
     <div class="tabs" id="tabs"><button data-s="best" class="on">Best streak</button><button data-s="wins">Most wins</button><button data-s="xp">Level</button></div>
     <div class="lrow" id="llen"><span>Word length</span><div class="tabs" id="ltabs"><button data-l="all" class="on">All</button><button data-l="4">4</button><button data-l="5">5</button><button data-l="6">6</button></div></div>
+    <div class="lrow" id="lmode"><span>Mode</span><div class="tabs" id="mtabs"><button data-m="all" class="on">All</button><button data-m="n">Normal</button><button data-m="h">Hard</button><button data-m="b">Blind</button></div></div>
     <ol id="list"></ol>
   </div></div>
 </section>
@@ -286,6 +293,7 @@ li.hd span:nth-child(n+3){text-align:right}
     <div class="rules">
       <div class="rl"><span>Max guesses</span><div class="stp"><button data-s="g-" type="button" aria-label="Fewer guesses">&minus;</button><b id="vg">6</b><button data-s="g+" type="button" aria-label="More guesses">+</button></div></div>
       <div class="rl"><span>Time limit</span><div class="stp"><button data-s="t-" type="button" aria-label="Shorter time">&larr;</button><b id="vt">None</b><button data-s="t+" type="button" aria-label="Longer time">&rarr;</button></div></div>
+      <div class="rl"><span>Mode</span><div class="stp"><button data-s="m-" type="button" aria-label="Previous mode">&larr;</button><b id="vm">Normal</b><button data-s="m+" type="button" aria-label="Next mode">&rarr;</button></div></div>
       <div class="rl"><span>Dictionary</span><div class="stp"><button data-s="d" type="button" aria-label="Toggle dictionary">&larr;</button><b id="vd">Enabled</b><button data-s="d" type="button" aria-label="Toggle dictionary">&rarr;</button></div></div>
     </div>
     <p class="note" id="cuMsg" style="margin-top:14px"></p>
@@ -326,7 +334,7 @@ li.hd span:nth-child(n+3){text-align:right}
 <div class="hx"><div class="ex"><i>C</i><i class="y">R</i><i>A</i><i>N</i><i>E</i></div><p><b style="color:var(--y)">Yellow</b>: the letter is in the word, but in the wrong spot.</p></div>
 <div class="hx"><div class="ex"><i>C</i><i>R</i><i>A</i><i>N</i><i>E</i></div><p><b style="color:var(--text)">Gray</b>: the letter is not in the word.</p></div>
 <h3 class="sh">Good to know</h3>
-<ul><li>You get <b>letters + 1</b> tries, with 4, 5 or 6 letters. Every guess must be a real word.</li><li>Click a box in your row to fix just that letter.</li><li>Wins earn XP, and faster wins earn more. Your streak grows with every win.</li><li><b>Hint</b> shows a letter, then the meaning, for 25% less XP each. <b>Skip</b> counts as a loss.</li><li>Join the <b>Leaderboard</b> with a unique name to compete.</li></ul>
+<ul><li>You get <b>letters + 1</b> tries, with 4, 5 or 6 letters. Every guess must be a real word.</li><li>Click a box in your row to fix just that letter.</li><li>Wins earn XP, and faster wins earn more. Your streak grows with every win.</li><li><b>Hint</b> shows a letter, then the meaning, for 25% less XP each. <b>Skip</b> counts as a loss.</li><li><b>Hard</b> mode makes you reuse revealed hints. <b>Blind</b> mode hides past letters, so only colors stay. Both earn more XP.</li><li>Join the <b>Leaderboard</b> with a unique name to compete.</li></ul>
 <button class="btn" id="hB" style="width:100%">Got it</button></div></div>
 <div id="shr" hidden><div class="card shc"><img id="shi" alt="Your wordbox result card"><div class="btns"><button class="btn alt" id="shT" type="button">Copy text</button><button class="btn" id="shB" type="button" disabled>Share image</button></div><button class="lnk" id="shX" type="button">Close</button></div></div>
 <div id="spn" hidden><div class="card spc"><h2>Daily spin</h2><p id="spS">One free spin every day.</p><canvas id="spc"></canvas><div class="spr" id="spR"></div><div class="btns"><button class="btn" id="spB" type="button">Spin</button></div><button class="lnk" id="spX" type="button">Close</button><p class="spo" id="spO"></p></div></div>
@@ -344,7 +352,7 @@ li.hd span:nth-child(n+3){text-align:right}
 <div class="btns"><button class="btn alt" id="dcX" type="button">Close</button><a class="btn" href="https://www.nytimes.com/games/wordle/index.html" target="_blank" rel="noopener noreferrer">Play the original Wordle</a></div></div></div>
 <div id="cint" hidden><div class="card cic"><button class="x" id="ciX" type="button" aria-label="Close">&times;</button><h2>Custom wordbox</h2>
 <div id="ciBody"><div class="cib"><small>CREATED BY</small><div class="cby"><span id="ciBy"></span><em class="lvb" id="ciLv" hidden></em></div></div>
-<div class="cib"><small>RULES</small><div class="cir"><span>Words</span><b id="ciW"></b></div><div class="cir"><span>Letters</span><b id="ciLt"></b></div><div class="cir"><span>Max guesses</span><b id="ciG"></b></div><div class="cir"><span>Time limit</span><b id="ciT"></b></div><div class="cir"><span>Dictionary</span><b id="ciD"></b></div></div>
+<div class="cib"><small>RULES</small><div class="cir"><span>Words</span><b id="ciW"></b></div><div class="cir"><span>Letters</span><b id="ciLt"></b></div><div class="cir"><span>Max guesses</span><b id="ciG"></b></div><div class="cir"><span>Time limit</span><b id="ciT"></b></div><div class="cir"><span>Mode</span><b id="ciM"></b></div><div class="cir"><span>Dictionary</span><b id="ciD"></b></div></div>
 <p class="cin">This challenge's words and rules were picked by another player. wordbox hasn't reviewed or endorsed them.</p></div>
 <p class="note err" id="ciE" hidden style="text-align:center;margin:14px 0">This challenge could not be loaded. The link may be wrong, or it was removed.</p>
 <button class="btn" id="ciP" type="button" style="width:100%">Play</button></div></div>
@@ -370,20 +378,26 @@ const DICT={4:'aahs aals abas abba abbe abed abet able ably abos abri abut abye 
 const $=s=>document.querySelector(s), sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const LS={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}},del(k){try{localStorage.removeItem(k)}catch{}}};
 const lists={};for(const l in WORDS)lists[l]=[...new Set(WORDS[l].split(' ').filter(w=>w.length==l&&/^[a-z]+$/.test(w)))];
-let P=Object.assign({rc:0,L:5,N:1,name:'',xp:0,ach:{}},LS.get('wb_p',{}));
+let P=Object.assign({rc:0,L:5,N:1,name:'',xp:0,ach:{},mode:'n'},LS.get('wb_p',{}));
 P.cnt=Object.assign({inv:0,edit:0,shares:0,spins:0,jack:0,made:0,cdone:0,last:''},P.cnt);
 const LENS=[4,5,6];
-if(!P.st){ // first run with per-length stats: earlier games count as 5-letter
+if(!P.st&&!P.sm){ // first run with per-length stats: earlier games count as 5-letter
   const w=Math.max(P.wins||0,P.best||0),g=Math.max(P.games||0,w);
   P.st={};LENS.forEach(L=>P.st[L]={g:0,w:0,best:0,streak:0,dist:{}});
   P.st[5]={g,w,best:P.best||0,streak:P.streak||0,dist:P.dist||{}};P.xp=w*30;P.mig=1}
+if(!P.sm){P.sm={n:P.st,h:{},b:{}};delete P.st}
 ['streak','best','wins','games','dist'].forEach(k=>delete P[k]);
-const stL=L=>P.st[L]||(P.st[L]={g:0,w:0,best:0,streak:0,dist:{}});
-const sum=k=>LENS.reduce((a,L)=>a+stL(L)[k],0);
-const maxBest=()=>Math.max(0,...LENS.map(L=>stL(L).best));
+const MODES=['n','h','b'],MN={n:'Normal',h:'Hard',b:'Blind'};
+const stM=(m,L)=>{const o=P.sm[m]||(P.sm[m]={});return o[L]||(o[L]={g:0,w:0,best:0,streak:0,dist:{}})};
+const stL=L=>stM('n',L);
+const sum=k=>MODES.reduce((a,m)=>a+LENS.reduce((b,L)=>b+stM(m,L)[k],0),0);
+const maxBest=()=>Math.max(0,...MODES.flatMap(m=>LENS.map(L=>stM(m,L).best)));
+const wM=m=>LENS.reduce((a,L)=>a+stM(m,L).w,0),bM=m=>Math.max(0,...LENS.map(L=>stM(m,L).best));
+const wL=L=>MODES.reduce((a,m)=>a+stM(m,L).w,0),bL=L=>Math.max(0,...MODES.map(m=>stM(m,L).best));
+MODES.forEach(m=>LENS.forEach(L=>stM(m,L)));
 const need=L=>50+30*L;
 function lvInfo(xp){let L=1,r=xp;while(r>=need(L)){r-=need(L);L++}return{L,cur:r,next:need(L),pct:r/need(L)}}
-function winXp(L,n,G,st,paid){const base={4:20,5:30,6:45}[L],fast=(G-n)*5,sk=Math.min(st,10)*3,sub=base+fast+sk,total=Math.round(sub*(1-.25*(paid||0)));return{base,fast,st:sk,total,cut:sub-total}}
+function winXp(L,n,G,st,paid,mode){const base={4:20,5:30,6:45}[L],fast=(G-n)*5,sk=Math.min(st,10)*3,mult={n:1,h:1.5,b:2}[mode||'n'],scaled=Math.round((base+fast+sk)*mult),total=Math.round(scaled*(1-.25*(paid||0)));return{base,fast,st:sk,mult,total,cut:scaled-total}}
 const ACH=[
  {id:'first_win',c:'Wins',n:'First Steps',d:'Win your first game',x:50,t:()=>sum('w')>=1},
  {id:'wins_10',c:'Wins',n:'Regular',d:'Win 10 games',x:100,t:()=>sum('w')>=10,p:()=>[sum('w'),10]},
@@ -399,10 +413,10 @@ const ACH=[
  {id:'streak_10',c:'Streaks',n:'Unstoppable',d:'Reach a 10-win streak',x:250,t:()=>maxBest()>=10,p:()=>[maxBest(),10]},
  {id:'streak_25',c:'Streaks',n:'Legend',d:'Reach a 25-win streak',x:600,t:()=>maxBest()>=25,p:()=>[maxBest(),25]},
  {id:'streak_50',c:'Streaks',n:'Immortal',d:'Reach a 50-win streak',x:1200,t:()=>maxBest()>=50,p:()=>[maxBest(),50]},
- {id:'len4',c:'Word length',n:'Short and Sweet',d:'Win a 4-letter game',x:40,t:()=>stL(4).w>=1},
- {id:'len6',c:'Word length',n:'Going Long',d:'Win a 6-letter game',x:80,t:()=>stL(6).w>=1},
- {id:'all_len',c:'Word length',n:'Well Rounded',d:'Win with 4, 5 and 6 letters',x:120,t:()=>LENS.every(L=>stL(L).w>=1)},
- {id:'long_haul',c:'Word length',n:'Long Haul',d:'Reach a 5-win streak with 6 letters',x:200,t:()=>stL(6).best>=5,p:()=>[stL(6).best,5]},
+ {id:'len4',c:'Word length',n:'Short and Sweet',d:'Win a 4-letter game',x:40,t:()=>wL(4)>=1},
+ {id:'len6',c:'Word length',n:'Going Long',d:'Win a 6-letter game',x:80,t:()=>wL(6)>=1},
+ {id:'all_len',c:'Word length',n:'Well Rounded',d:'Win with 4, 5 and 6 letters',x:120,t:()=>LENS.every(L=>wL(L)>=1)},
+ {id:'long_haul',c:'Word length',n:'Long Haul',d:'Reach a 5-win streak with 6 letters',x:200,t:()=>bL(6)>=5,p:()=>[bL(6),5]},
  {id:'loss',c:'Mistakes and more',n:'Learning Curve',d:'Lose a game',x:25,t:()=>sum('g')>sum('w')},
  {id:'comeback',c:'Mistakes and more',n:'Comeback',d:'Win right after a loss',x:60,t:c=>c&&c.won&&c.prevLoss},
  {id:'typo',c:'Mistakes and more',n:'Typo Hunter',d:'Submit 10 words that are not in the list',x:30,t:()=>P.cnt.inv>=10,p:()=>[P.cnt.inv,10]},
@@ -412,6 +426,10 @@ const ACH=[
  {id:'backup',c:'Mistakes and more',n:'Backed Up',d:'Create a recovery code',x:40,t:()=>!!P.rc},
  {id:'spin',c:'Mistakes and more',n:'Feeling Lucky',d:'Take your first daily spin',x:30,t:()=>P.cnt.spins>=1},
  {id:'jackpot',c:'Mistakes and more',n:'Jackpot',d:'Hit the 500 XP daily spin',x:250,t:()=>P.cnt.jack>=1},
+ {id:'hard_win',c:'Modes',n:'Hard Hitter',d:'Win a game in Hard mode',x:80,t:()=>wM('h')>=1},
+ {id:'blind_win',c:'Modes',n:'Blindfolded',d:'Win a game in Blind mode',x:100,t:()=>wM('b')>=1},
+ {id:'hard_streak',c:'Modes',n:'Stubborn',d:'Reach a 5-win streak in Hard mode',x:200,t:()=>bM('h')>=5,p:()=>[bM('h'),5]},
+ {id:'blind_streak',c:'Modes',n:'Memory Master',d:'Reach a 3-win streak in Blind mode',x:250,t:()=>bM('b')>=3,p:()=>[bM('b'),3]},
  {id:'mk',c:'Challenges',n:'Challenger',d:'Create a custom challenge',x:40,t:()=>P.cnt.made>=1},
  {id:'cd',c:'Challenges',n:'Friendly Rival',d:"Finish someone else's challenge",x:40,t:()=>P.cnt.cdone>=1},
  {id:'lvl10',c:'Mistakes and more',n:'Rising Star',d:'Reach level 10',x:150,t:()=>lvInfo(P.xp).L>=10,p:()=>[lvInfo(P.xp).L,10]}
@@ -419,7 +437,7 @@ const ACH=[
 function evalAch(ctx){const got=[];let ch=true;while(ch){ch=false;for(const a of ACH)if(!P.ach[a.id]&&a.t(ctx)){P.ach[a.id]=Date.now();P.xp+=a.x;got.push(a);ch=true}}return got}
 function ev2(ctx){const got=evalAch(ctx);if(!got.length)return;save();stats();pushScore();got.forEach((a,i)=>setTimeout(()=>{toast('Achievement: '+a.n+' +'+a.x+' XP');SFX.ach()},i*1400))}
 function countUp(el,to){if(P.fast){el.textContent='+'+to+' XP';return}const t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/700);el.textContent='+'+Math.round(to*(1-Math.pow(1-k,3)))+' XP';if(k<1)requestAnimationFrame(f)})(t0)}
-let sortBy='best',lbLen='all';
+let sortBy='best',lbLen='all',lbMode='all';
 let S=null,busy=false,dict=null;
 const save=()=>LS.set('wb_p',P);
 
@@ -448,7 +466,7 @@ function pick(L,N){
   return out}
 
 function newGame(){
-  S={L:P.L,N:1,G:P.L+1,ans:pick(P.L,1),gs:[],cur:Array(P.L).fill(''),pos:0,over:false,hn:0,hf:false,hp:-1,hl:'',hd:null};
+  S={L:P.L,N:1,G:P.L+1,mode:P.mode||'n',ans:pick(P.L,1),gs:[],cur:Array(P.L).fill(''),pos:0,over:false,hn:0,hf:false,hp:-1,hl:'',hd:null};
   persist();render();
 }
 const persist=()=>{if(S&&S.cu){LS.set('wb_cg',S);return}S&&!S.over?LS.set('wb_g',S):LS.del('wb_g')};
@@ -487,10 +505,11 @@ function fit(){
 addEventListener('resize',fit);
 
 function keys(){
+  if(S.mode=='b'&&!S.over){document.querySelectorAll('.k[data-k]').forEach(k=>k.classList.remove('g','y','a'));return}
   const m={},rank={a:0,y:1,g:2};
   act().forEach(b=>S.gs.forEach(g=>evaluate(g,S.ans[b]).forEach((s,i)=>{const k=g[i];if(!(k in m)||rank[s]>rank[m[k]])m[k]=s})));
   document.querySelectorAll('.k[data-k]').forEach(k=>{k.classList.remove('g','y','a');const s=m[k.dataset.k];if(s)k.classList.add(s)})}
-function stats(){const q=stL(P.L),x=lvInfo(P.xp);$('#st').textContent=q.streak;$('#bs').textContent=q.best;$('#lvn').textContent='Lv '+x.L;$('#lvx').textContent=x.cur+' / '+x.next;$('#lvf').style.width=Math.round(x.pct*100)+'%'}
+function stats(){const q=stM(P.mode,P.L),x=lvInfo(P.xp);$('#st').textContent=q.streak;$('#bs').textContent=q.best;$('#lvn').textContent='Lv '+x.L;$('#lvx').textContent=x.cur+' / '+x.next;$('#lvf').style.width=Math.round(x.pct*100)+'%'}
 
 function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('s');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('s'),1200)}
 function bad(msg){SFX.bad();toast(msg);navigator.vibrate&&navigator.vibrate(20);const r=S.gs.length;
@@ -506,10 +525,20 @@ function del(){
   let c=S.pos;if(!(c<S.L&&S.cur[c])){c--;if(c<0)return}
   S.cur[c]='';S.pos=c;SFX.del();showCur()}
 
+const ORD=['1st','2nd','3rd','4th','5th','6th','7th','8th','9th'];
+function hardErr(g){
+  const ans=S.ans[0],need={},pos=[];
+  for(const pg of S.gs){const cnt={};
+    evaluate(pg,ans).forEach((r,i)=>{if(r=='g')pos[i]=pg[i];if(r!='a')cnt[pg[i]]=(cnt[pg[i]]||0)+1});
+    for(const k in cnt)need[k]=Math.max(need[k]||0,cnt[k])}
+  for(let i=0;i<g.length;i++)if(pos[i]&&g[i]!=pos[i])return ORD[i]+' letter must be '+pos[i].toUpperCase();
+  for(const k in need)if([...g].filter(x=>x==k).length<need[k])return 'Guess must contain '+k.toUpperCase();
+  return null}
 async function submit(){
   if(busy||S.over)return;
   if(S.cur.some(x=>!x))return bad('Not enough letters');
   const g=S.cur.join('');
+  if(S.mode=='h'){const he=hardErr(g);if(he)return bad(he)}
   busy=true;
   const okw=await isValid(g);
   if(!okw){busy=false;if(!S.cu){P.cnt.inv++;save();ev2(null)}return bad('Not in word list')}
@@ -578,9 +607,9 @@ async function finish(won,g,A,sk){
   S.over=true;persist();hintUi();
   S.ans.forEach((a,b)=>boardEl(b).classList.toggle('done',solveIdx(b)>=0));
   A.filter(b=>S.ans[b]==g).forEach(b=>{for(let c=0;c<S.L;c++){const t=tile(b,S.gs.length-1,c);t.style.setProperty('--i',c);t.classList.remove('flip');t.classList.add('bounce')}});
-  const n=S.gs.length,q=stL(S.L),ctx={won,n,G:S.G,L:S.L,prevLoss:P.cnt.last=='l',hinted:(S.hn||0)>0},paid=S.hn||0,lv0=lvInfo(P.xp);let gain=null;
+  const n=S.gs.length,q=stM(S.mode||'n',S.L),ctx={won,n,G:S.G,L:S.L,prevLoss:P.cnt.last=='l',hinted:(S.hn||0)>0},paid=S.hn||0,lv0=lvInfo(P.xp);let gain=null;
   q.g++;
-  if(won){q.w++;q.streak++;if(q.streak>q.best)q.best=q.streak;q.dist[n]=(q.dist[n]||0)+1;gain=winXp(S.L,n,S.G,q.streak,paid);P.xp+=gain.total;confetti();SFX.win()}else{q.streak=0;SFX.lose()}
+  if(won){q.w++;q.streak++;if(q.streak>q.best)q.best=q.streak;q.dist[n]=(q.dist[n]||0)+1;gain=winXp(S.L,n,S.G,q.streak,paid,S.mode||'n');P.xp+=gain.total;confetti();SFX.win()}else{q.streak=0;SFX.lose()}
   P.cnt.last=won?'w':'l';
   const w0=S.ans[0],dp=lookup(w0).catch(()=>null);$('#eD').hidden=true;
   const got=evalAch(ctx),lv1=lvInfo(P.xp);
@@ -588,14 +617,14 @@ async function finish(won,g,A,sk){
   if(won){const e=$('#stc');e.classList.remove('pop');void e.offsetWidth;e.classList.add('pop')}
   await sleep(P.fast?60:(won?900:500));
   $('#eT').textContent=won?'Solved':(sk?'Skipped':'Out of guesses');$('#eShare').hidden=!!sk;
-  $('#eS').textContent=won?(q.streak==1?'Streak started.':'Streak: '+q.streak):'Your streak reset to 0.';
+  $('#eS').textContent=((S.mode||'n')!='n'?MN[S.mode]+' mode \u00b7 ':'')+(won?(q.streak==1?'Streak started.':'Streak: '+q.streak):'Your streak reset to 0.');
   $('#eW').innerHTML='';
   S.ans.forEach(a=>{const s=document.createElement('span');s.textContent=a;if(S.gs.includes(a))s.className='ok';$('#eW').appendChild(s)});
   $('#eB').textContent=won?'Next word':'Try again';
   const X=$('#eX');X.hidden=!(gain||got.length);
   if(!X.hidden){
     $('#xpH').hidden=!gain;
-    if(gain){$('#xpN').textContent='+0 XP';$('#xpD').textContent='Win '+gain.base+(gain.fast?' + Fast '+gain.fast:'')+(gain.st?' + Streak '+gain.st:'')+(gain.cut?' - Hints '+gain.cut:'')}
+    if(gain){$('#xpN').textContent='+0 XP';$('#xpD').textContent='Win '+gain.base+(gain.fast?' + Fast '+gain.fast:'')+(gain.st?' + Streak '+gain.st:'')+(gain.mult>1?' x'+gain.mult+' '+MN[S.mode||'n']:'')+(gain.cut?' - Hints '+gain.cut:'')}
     $('#xpA').innerHTML=got.map(a=>`<div class="au"><span>${a.n}</span><b>+${a.x} XP</b></div>`).join('');
     const up=lv1.L>lv0.L;$('#xpU').hidden=!up;$('#xpU').textContent='Level up! You reached level '+lv1.L;
     const F=$('#xpF'),fmt=l=>l.cur+' / '+l.next+' XP';
@@ -618,15 +647,16 @@ $('#end').addEventListener('click',e=>{if(e.target.id=='end')viewBoard()});
 $('#eB').onclick=next;
 
 // ---- controls ----
-function seg(id,vals,key){
-  const box=$(id);vals.forEach(v=>{const b=document.createElement('button');b.textContent=v;b.dataset.v=v;
+function seg(id,vals,key,labels,tips){
+  const box=$(id);vals.forEach(v=>{const b=document.createElement('button');b.textContent=(labels&&labels[v])||v;b.dataset.v=v;if(tips&&tips[v])b.title=tips[v];
     b.onclick=async()=>{if(P[key]==v)return;if(S&&S.cu){toast('Quit the challenge first');return}
-      if(S&&!S.over&&S.gs.length&&!await askConfirm('Change word length?','Your current game ends and your streak resets.','Change',true))return;
-      if(S&&!S.over&&S.gs.length){stL(S.L).streak=0}
+      if(S&&!S.over&&S.gs.length&&!await askConfirm(key=='L'?'Change word length?':'Change mode?','Your current game ends and your streak resets.','Change',true))return;
+      if(S&&!S.over&&S.gs.length){stM(S.mode||'n',S.L).streak=0}
       P[key]=v;save();mark();newGame()};
     box.appendChild(b)})}
-function mark(){document.querySelectorAll('#sL button').forEach(b=>b.classList.toggle('on',b.dataset.v==P.L));}
-seg('#sL',[4,5,6],'L');mark();
+function mark(){document.querySelectorAll('#sL button').forEach(b=>b.classList.toggle('on',b.dataset.v==P.L));document.querySelectorAll('#sM button').forEach(b=>b.classList.toggle('on',b.dataset.v==P.mode))}
+seg('#sL',[4,5,6],'L');
+seg('#sM',MODES,'mode',MN,{n:'Standard rules',h:'Revealed hints must be used in later guesses. XP x1.5',b:'Past rows show only colors, no letters, and the keyboard stays plain. XP x2'});mark();
 
 const rows=['qwertyuiop','asdfghjkl','!zxcvbnm?'];
 rows.forEach(r=>{const d=document.createElement('div');d.className='kr';
@@ -667,7 +697,7 @@ $('#boards').addEventListener('click',e=>{const t=e.target.closest('.tile');if(!
 function shareText(){
   const won=S.gs.includes(S.ans[0]),E={g:'\u{1F7E9}',y:'\u{1F7E8}',a:'\u2B1B'};
   const grid=S.gs.map(w=>evaluate(w,S.ans[0]).map(s=>E[s]).join('')).join('\n');
-  return `wordbox ${S.L} letters ${won?S.gs.length:'X'}/${S.G}`+(S.hn?` (${S.hn} hint${S.hn>1?'s':''})`:'')+(won&&stL(S.L).streak>1?` \u{1F525}${stL(S.L).streak}`:'')+`\n\n${grid}\n\n${location.origin+location.pathname}`}
+  return `wordbox ${S.L} letters${(S.mode||'n')!='n'?' ('+MN[S.mode]+')':''} ${won?S.gs.length:'X'}/${S.G}`+(S.hn?` (${S.hn} hint${S.hn>1?'s':''})`:'')+(won&&stM(S.mode||'n',S.L).streak>1?` \u{1F525}${stM(S.mode||'n',S.L).streak}`:'')+`\n\n${grid}\n\n${location.origin+location.pathname}`}
 function rr(x,a,b,w,h,r,f){x.beginPath();x.moveTo(a+r,b);x.arcTo(a+w,b,a+w,b+h,r);x.arcTo(a+w,b+h,a,b+h,r);x.arcTo(a,b+h,a,b,r);x.arcTo(a,b,a+w,b,r);x.closePath();x.fillStyle=f;x.fill()}
 async function drawCard(){
   try{await document.fonts.load('700 40px Goldman')}catch{}
@@ -681,13 +711,13 @@ async function drawCard(){
   x.fillStyle='#e9ebf0';x.fillText('wordbox',lx+72,134);
   x.textAlign='center';x.fillStyle='#868c99';x.font='700 34px system-ui, sans-serif';x.fillText(won?'SOLVED IN':'OUT OF GUESSES',W/2,262);
   x.fillStyle=won?'#35b777':'#e9ebf0';x.font='700 170px Goldman, system-ui, sans-serif';x.fillText((won?n:'X')+'/'+S.G,W/2,420);
-  x.fillStyle='#868c99';x.font='500 36px system-ui, sans-serif';x.fillText(S.L+'-letter word'+(S.hn?' \u00b7 '+S.hn+' hint'+(S.hn>1?'s':''):''),W/2,482);
+  x.fillStyle='#868c99';x.font='500 36px system-ui, sans-serif';x.fillText(S.L+'-letter word'+((S.mode||'n')!='n'?' \u00b7 '+MN[S.mode]+' mode':'')+(S.hn?' \u00b7 '+S.hn+' hint'+(S.hn>1?'s':''):''),W/2,482);
   const top=520,area=580,gap=12,t=Math.floor(Math.min(120,(W-240-(S.L-1)*gap)/S.L,(area-(n-1)*gap)/n)),gh=n*t+(n-1)*gap,gw=S.L*t+(S.L-1)*gap;
   const gx=(W-gw)/2,gy=top+(area-gh)/2;
   S.gs.forEach((w,r)=>evaluate(w,S.ans[0]).forEach((s2,i)=>{const a=gx+i*(t+gap),b=gy+r*(t+gap);rr(x,a,b,t,t,t*.18,col[s2]);
     x.fillStyle=s2=='a'?'#868c99':'#fff';x.font='700 '+Math.round(t*.52)+'px Goldman, system-ui, sans-serif';x.textBaseline='middle';
     x.fillText(w[i].toUpperCase(),a+t/2,b+t/2+t*.03);x.textBaseline='alphabetic'}));
-  const chips=[['Streak',stL(S.L).streak],['Best',stL(S.L).best],['Wins',stL(S.L).w]],cw=260,cg=24,cx=(W-(3*cw+2*cg))/2;
+  const chips=[['Streak',stM(S.mode||'n',S.L).streak],['Best',stM(S.mode||'n',S.L).best],['Wins',stM(S.mode||'n',S.L).w]],cw=260,cg=24,cx=(W-(3*cw+2*cg))/2;
   chips.forEach(([l,v],i)=>{const a=cx+i*(cw+cg);rr(x,a,1150,cw,112,22,'#1b1e25');x.strokeStyle='#2b2f38';x.lineWidth=2;x.stroke();
     x.fillStyle='#e9ebf0';x.font='700 54px Goldman, system-ui, sans-serif';x.fillText(String(v),a+cw/2,1208);
     x.fillStyle='#868c99';x.font='500 26px system-ui, sans-serif';x.fillText(l,a+cw/2,1245)});
@@ -758,9 +788,9 @@ let hintBusy=false;
 const maskWord=(m,w)=>m.replace(new RegExp(w,'ig'),'_____');
 function hintUi(){
   if(!S)return;
-  const cu=!!S.cu;$('#hBtn').hidden=cu;$('#qBtn').hidden=!cu;
+  const cu=!!S.cu;$('#hBtn').hidden=cu;$('#qBtn').hidden=!cu;$('#mr').hidden=cu;$('#boards').classList.toggle('blind',S.mode=='b'&&!S.over);
   const cb=$('#cub'),cvis=cu&&!S.over,cwas=!cb.hidden;
-  if(cu){const c=S.cu;cb.innerHTML='Custom challenge by <b>'+esc(c.by)+'</b> &middot; Word '+(c.i+1)+' of '+c.words.length+(c.dl?'<span id="cut"></span>':'')}
+  if(cu){const c=S.cu;cb.innerHTML='Custom challenge by <b>'+esc(c.by)+'</b>'+(c.rules.m&&c.rules.m!='n'?' &middot; '+MN[c.rules.m]:'')+' &middot; Word '+(c.i+1)+' of '+c.words.length+(c.dl?'<span id="cut"></span>':'')}
   cb.hidden=!cvis;
   const h=S.hn||0,on=!S.over;
   $('#hr').hidden=!on;
@@ -788,7 +818,7 @@ async function skipGame(e){
   if(e&&e.currentTarget)e.currentTarget.blur();
   if(busy||S.over)return;
   if(S.cu){if(!await askConfirm('Skip this word?','It will count as unsolved.','Skip',true))return;if(busy||S.over)return;busy=true;await cuFinish(false,'skip');busy=false;return}
-  const k=stL(S.L).streak;
+  const k=stM(S.mode||'n',S.L).streak;
   if(!await askConfirm('Skip this word?','It counts as a loss: no XP'+(k?' and your streak of '+k+' resets to 0.':'.'),'Skip',true))return;
   if(busy||S.over)return;
   busy=true;await finish(false,'',[],true);busy=false}
@@ -803,7 +833,7 @@ const genCode=()=>[...crypto.getRandomValues(new Uint8Array(5))].map(x=>CODEA[x%
 const fmtT=ms=>{const t=Math.round(ms/1000);return Math.floor(t/60)+':'+String(t%60).padStart(2,'0')};
 const chLink=c=>location.origin+location.pathname+'?c='+c;
 const TRASH='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></svg>';
-let CU={w:[''],g:6,t:0,d:1},CHI=null;
+let CU={w:[''],g:6,t:0,d:1,m:'n'},CHI=null;
 const remoteOK={};
 async function isValid(g){
   if(!S.cu)return valid(g);
@@ -817,7 +847,7 @@ function renderCustom(){
   $('#cuSub').textContent=P.name?'Make your own challenge and send the link to friends.':'Join with a name on the Profile tab to create challenges. Anyone can play one.';
   $('#cuWords').innerHTML=CU.w.map((w,i)=>`<div class="wr"><span class="wn">${i+1})</span><input data-i="${i}" maxlength="9" value="${esc(w)}" placeholder="Type a word" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Word ${i+1}"><span class="wc${w.length&&w.length<3?' bad':''}">${w.length} / 9</span><button class="wd" data-del="${i}" type="button" aria-label="Remove word"${CU.w.length<2?' disabled':''}>${TRASH}</button></div>`).join('');
   $('#cuAdd').hidden=CU.w.length>=6;$('#cuNote').textContent=CU.w.length+' / 6 words';
-  $('#vg').textContent=CU.g;$('#vt').textContent=TLN[TLS.indexOf(CU.t)];$('#vd').textContent=CU.d?'Enabled':'Disabled';
+  $('#vg').textContent=CU.g;$('#vt').textContent=TLN[TLS.indexOf(CU.t)];$('#vd').textContent=CU.d?'Enabled':'Disabled';$('#vm').textContent=MN[CU.m];
   const mine=P.ch||[];$('#cuMh').hidden=!mine.length;
   $('#cuMine').innerHTML=mine.slice(0,5).map(x=>`<div class="cmi"><b>${esc(x.c)}</b><span>${x.n} word${x.n>1?'s':''}</span><button class="hbtn" data-copy="${esc(x.c)}" type="button">Copy link</button></div>`).join('')}
 $('#cuWords').addEventListener('input',e=>{
@@ -833,6 +863,7 @@ document.querySelector('.rules').addEventListener('click',e=>{
   if(k=='g-')CU.g=Math.max(3,CU.g-1);else if(k=='g+')CU.g=Math.min(10,CU.g+1);
   else if(k=='t-'||k=='t+'){const i=TLS.indexOf(CU.t)+(k=='t+'?1:-1);CU.t=TLS[(i+TLS.length)%TLS.length]}
   else if(k=='d')CU.d=CU.d?0:1;
+  else if(k=='m-'||k=='m+'){const i=MODES.indexOf(CU.m)+(k=='m+'?1:-1);CU.m=MODES[(i+3)%3]}
   renderCustom()});
 $('#cuMine').addEventListener('click',async e=>{const b=e.target.closest('[data-copy]');if(!b)return;try{await navigator.clipboard.writeText(chLink(b.dataset.copy));toast('Link copied')}catch{}});
 function openCsh(code){$('#cshL').value=chLink(code);$('#cshS').hidden=!navigator.share;$('#csh').hidden=false}
@@ -849,19 +880,19 @@ $('#cuMk').onclick=async()=>{
   if(ws.some(w=>w.length<3||w.length>9))return bad('Every word needs 3 to 9 letters.');
   if(ws.some(w=>BAD.has(w)))return bad('Please choose different words.');
   $('#cuMk').disabled=true;m.textContent='Creating...';
-  const body=JSON.stringify({by:P.name,w:enc(ws.join(',')),g:CU.g,t:CU.t,d:CU.d,c:Date.now()});
+  const body=JSON.stringify({by:P.name,w:enc(ws.join(',')),g:CU.g,t:CU.t,d:CU.d,m:CU.m,c:Date.now()});
   let code=null;
   try{for(let i=0;i<5&&!code;i++){const c=genCode(),r=await fetch(`${DB}/challenges/${c}.json`,{method:'PUT',body});if(r.ok)code=c;else if(![401,403,412].includes(r.status))throw 0}}catch{}
   $('#cuMk').disabled=false;
   if(!code)return bad('Could not create the link. Check the database rules and try again.');
   m.textContent='';P.ch=[{c:code,n:ws.length},...(P.ch||[])].slice(0,20);P.cnt.made++;save();ev2(null);
-  CU={w:[''],g:CU.g,t:CU.t,d:CU.d};renderCustom();openCsh(code)};
+  CU={w:[''],g:CU.g,t:CU.t,d:CU.d,m:CU.m};renderCustom();openCsh(code)};
 async function loadChallenge(code){
   try{
     const r=await fetch(`${DB}/challenges/${code}.json`);if(!r.ok)return null;
     const d=await r.json();if(!d||!d.w)return null;
     const ws=dec(d.w).split(',').filter(x=>/^[a-z]{3,9}$/.test(x)).slice(0,6);if(!ws.length)return null;
-    return{code,by:String(d.by||'Someone').slice(0,16),words:ws,g:Math.min(10,Math.max(3,+d.g||6)),t:TLS.includes(+d.t)?+d.t:0,d:d.d?1:0}
+    return{code,by:String(d.by||'Someone').slice(0,16),words:ws,g:Math.min(10,Math.max(3,+d.g||6)),t:TLS.includes(+d.t)?+d.t:0,d:d.d?1:0,m:MODES.includes(d.m)?d.m:'n'}
   }catch{return null}}
 async function openChallenge(code){
   if(!DB){toast('This site is not connected to the online board.');return}
@@ -873,14 +904,14 @@ async function openChallenge(code){
   fetch(`${DB}/scores/${ch.by.toLowerCase()}.json`).then(r=>r.ok?r.json():null).then(sc=>{if(sc&&CHI==ch){$('#ciLv').textContent='Lv '+lvInfo(sc.xp||0).L;$('#ciLv').hidden=false}}).catch(()=>{});
   const ls=ch.words.map(w=>w.length),lo=Math.min(...ls),hi=Math.max(...ls);
   $('#ciW').textContent=ch.words.length;$('#ciLt').textContent=lo==hi?lo:lo+' to '+hi;$('#ciG').textContent=ch.g;
-  $('#ciT').textContent=TLN[TLS.indexOf(ch.t)]+(ch.t?' per word':'');$('#ciD').textContent=ch.d?'Enabled':'Disabled'}
+  $('#ciT').textContent=TLN[TLS.indexOf(ch.t)]+(ch.t?' per word':'');$('#ciD').textContent=ch.d?'Enabled':'Disabled';$('#ciM').textContent=MN[ch.m]}
 function closeInt(){$('#cint').hidden=true;try{history.replaceState(null,'',location.pathname+location.hash)}catch{}}
 $('#ciX').onclick=closeInt;$('#cint').addEventListener('click',e=>{if(e.target.id=='cint')closeInt()});
 $('#ciP').onclick=()=>{if(CHI){const ch=CHI;closeInt();startCustom(ch)}};
-function startCustom(ch){startWord({code:ch.code,by:ch.by,words:ch.words,rules:{g:ch.g,t:ch.t,d:ch.d},i:0,res:[],fin:false,paid:0,note:''})}
+function startCustom(ch){startWord({code:ch.code,by:ch.by,words:ch.words,rules:{g:ch.g,t:ch.t,d:ch.d,m:ch.m},i:0,res:[],fin:false,paid:0,note:''})}
 function startWord(c){
   const w=c.words[c.i];c.t0=Date.now();c.dl=c.rules.t?c.t0+c.rules.t*1000:0;
-  S={L:w.length,N:1,G:c.rules.g,ans:[w],gs:[],cur:Array(w.length).fill(''),pos:0,over:false,hn:0,hf:false,hp:-1,hl:'',hd:null,cu:c};
+  S={L:w.length,N:1,G:c.rules.g,mode:c.rules.m||'n',ans:[w],gs:[],cur:Array(w.length).fill(''),pos:0,over:false,hn:0,hf:false,hp:-1,hl:'',hd:null,cu:c};
   $('#end').hidden=true;$('#after').hidden=true;$('#kb').hidden=false;
   persist();view('play');render()}
 async function cuFinish(won,why){
@@ -897,6 +928,13 @@ async function cuFinish(won,why){
   dp.then(d=>{if(S&&S.ans[0]==w0)renderDef(w0,d)});
   $('#end').hidden=false;$('#eB').focus()}
 function cuNext(){const c=S.cu;c.i++;if(c.i>=c.words.length)return cuResults();startWord(c)}
+const CB={3:8,4:10,5:14,6:20,7:26,8:32,9:38};
+function cuXp(c){
+  const r=c.rules,mm={n:1,h:1.5,b:2}[r.m||'n'],tm=r.t?(r.t<=60?1.3:1.15):1,gm=Math.min(1.4,Math.max(.8,1+(6-r.g)*.08)),dm=r.d?1:.9;
+  const sv=c.res.filter(x=>x.won);
+  let x=sv.reduce((a,w)=>a+(CB[w.w.length]||10)+Math.max(0,r.g-w.n)*2,0);
+  if(sv.length&&sv.length==c.res.length)x+=5*c.res.length;
+  return Math.round(x*mm*tm*gm*dm)}
 function cuResults(){
   const c=S.cu;c.fin=true;
   const rs=c.res,solved=rs.filter(r=>r.won).length,gu=rs.reduce((a,r)=>a+r.n,0),tt=rs.reduce((a,r)=>a+r.t,0);
@@ -906,7 +944,7 @@ function cuResults(){
     else if(P.cd[c.code])c.note='Already played: no extra XP.';
     else{
       P.cd[c.code]=1;const ks=Object.keys(P.cd);if(ks.length>200)delete P.cd[ks[0]];
-      const d=todayStr(),cx=P.cx&&P.cx.d==d?P.cx:{d,x:0},xp=Math.max(0,Math.min(10+10*solved,150-cx.x));
+      const d=todayStr(),cx=P.cx&&P.cx.d==d?P.cx:{d,x:0},xp=Math.max(0,Math.min(cuXp(c),200-cx.x));
       cx.x+=xp;P.cx=cx;P.cnt.cdone++;
       if(xp>0){P.xp+=xp;c.note='+'+xp+' XP'}else c.note='Daily challenge XP limit reached.'}
     save();stats();pushScore();setTimeout(()=>ev2(null),800)}
@@ -914,11 +952,11 @@ function cuResults(){
   $('#crT').textContent=solved==rs.length?'Challenge complete':'Challenge finished';
   $('#crS').textContent=solved+' of '+rs.length+' solved \u00b7 '+gu+' guesses \u00b7 '+fmtT(tt);
   $('#crX').textContent=c.note;$('#crX').hidden=!c.note;
-  $('#crL').innerHTML=rs.map(r=>`<div class="cr"><i class="${r.won?'':'no'}">${r.won?'&#10003;':'&times;'}</i><b>${esc(r.w)}</b><span>${r.won?r.n+' / '+c.rules.g+' \u00b7 ':''}${fmtT(r.t)}</span></div>`).join('');
+  $('#crL').innerHTML=rs.map(r=>`<div class="crr"><i class="${r.won?'':'no'}">${r.won?'&#10003;':'&times;'}</i><b>${esc(r.w)}</b><span>${r.won?r.n+' / '+c.rules.g+' \u00b7 ':''}${fmtT(r.t)}</span></div>`).join('');
   $('#end').hidden=true;$('#cres').hidden=false;if(solved==rs.length)confetti()}
 function cuText(){
   const c=S.cu,E={g:'\u{1F7E9}',y:'\u{1F7E8}',a:'\u2B1B'},rs=c.res,solved=rs.filter(r=>r.won).length,gu=rs.reduce((a,r)=>a+r.n,0),tt=rs.reduce((a,r)=>a+r.t,0);
-  return 'wordbox challenge '+c.code+' by '+c.by+'\n'+solved+'/'+rs.length+' solved \u00b7 '+gu+' guesses \u00b7 '+fmtT(tt)+'\n\n'+rs.map(r=>r.gs.map(g=>evaluate(g,r.w).map(x=>E[x]).join('')).join('\n')+(r.won?'':'\n(unsolved)')).join('\n\n')+'\n\n'+chLink(c.code)}
+  return 'wordbox challenge '+c.code+' by '+c.by+((c.rules.m||'n')!='n'?' ('+MN[c.rules.m]+')':'')+'\n'+solved+'/'+rs.length+' solved \u00b7 '+gu+' guesses \u00b7 '+fmtT(tt)+'\n\n'+rs.map(r=>r.gs.map(g=>evaluate(g,r.w).map(x=>E[x]).join('')).join('\n')+(r.won?'':'\n(unsolved)')).join('\n\n')+'\n\n'+chLink(c.code)}
 function cuLeave(){
   LS.del('wb_cg');$('#cres').hidden=true;$('#end').hidden=true;$('#after').hidden=true;$('#kb').hidden=false;
   try{history.replaceState(null,'',location.pathname+location.hash)}catch{}
@@ -992,7 +1030,7 @@ function view(v){
 }
 $('#nP').onclick=()=>{location.hash='';view('play')};
 $('#nL').onclick=()=>{location.hash='leaderboard';view('leaderboard')};
-const goProfile=()=>{PV=null;pLen=String(P.L);location.hash='profile';view('profile')};
+const goProfile=()=>{PV=null;pLen=String(P.L);pMode=P.mode;location.hash='profile';view('profile')};
 $('#nCu').onclick=()=>{location.hash='custom';view('custom')};
 $('#nPr').onclick=goProfile;$('#lvc').onclick=goProfile;$('#cb').onclick=goProfile;$('#vp').onclick=goProfile;
 
@@ -1001,15 +1039,17 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 function pushScore(){
   if(!DB||!P.name)return;
   const k=P.name.toLowerCase(),mb=maxBest(),o={name:P.name,best:mb,wins:Math.max(sum('w'),mb),xp:P.xp,t:Date.now()};
-  LENS.forEach(L=>{o['b'+L]=stL(L).best;o['w'+L]=Math.max(stL(L).w,stL(L).best)});
+  LENS.forEach(L=>{const b=bL(L);o['b'+L]=b;o['w'+L]=Math.max(wL(L),b)});
+  MODES.forEach(m=>{let bm=0,wm=0;LENS.forEach(L=>{const q=stM(m,L),w=Math.max(q.w,q.best);o['b'+m+L]=q.best;o['w'+m+L]=w;bm=Math.max(bm,q.best);wm+=w});o['b'+m]=bm;o['w'+m]=wm});
   fetch(`${DB}/scores/${k}.json`,{method:'PUT',body:JSON.stringify(o)}).catch(()=>{});
-  fetch(`${DB}/profiles/${k}.json`,{method:'PUT',body:JSON.stringify({name:P.name,xp:P.xp,st:P.st,ach:P.ach,t:Date.now()})}).catch(()=>{});
+  fetch(`${DB}/profiles/${k}.json`,{method:'PUT',body:JSON.stringify({name:P.name,xp:P.xp,sm:P.sm,ach:P.ach,t:Date.now()})}).catch(()=>{});
 }
 function mergeRemote(s,pr){
   s=s||{};pr=pr||{};
-  if(pr.st){LENS.forEach(L=>{const r=pr.st[L];if(!r)return;const l=stL(L);l.g=Math.max(l.g,r.g||0);if((r.w||0)>l.w){l.w=r.w;l.dist=r.dist||l.dist}l.best=Math.max(l.best,r.best||0)})}
-  else{const w=Math.max(s.wins||0,s.best||0),l=stL(5);l.w=Math.max(l.w,w);l.best=Math.max(l.best,s.best||0)}
-  LENS.forEach(L=>{const l=stL(L);l.w=Math.max(l.w,l.best);l.g=Math.max(l.g,l.w)});
+  const rm=pr.sm||(pr.st?{n:pr.st}:null);
+  if(rm){MODES.forEach(m=>LENS.forEach(L=>{const r=rm[m]&&rm[m][L];if(!r)return;const l=stM(m,L);l.g=Math.max(l.g,r.g||0);if((r.w||0)>l.w){l.w=r.w;l.dist=r.dist||l.dist}l.best=Math.max(l.best,r.best||0)}))}
+  else{const w=Math.max(s.wins||0,s.best||0),l=stM('n',5);l.w=Math.max(l.w,w);l.best=Math.max(l.best,s.best||0)}
+  MODES.forEach(m=>LENS.forEach(L=>{const l=stM(m,L);l.w=Math.max(l.w,l.best);l.g=Math.max(l.g,l.w)}));
   P.xp=Math.max(P.xp,pr.xp||s.xp||0);
   Object.entries(pr.ach||{}).forEach(([k,v])=>{if(!P.ach[k])P.ach[k]=v});
   evalAch(null)}
@@ -1039,21 +1079,21 @@ $('#rf').addEventListener('submit',async e=>{
     P.name=(s&&s.name)||n;P.rc=1;mergeRemote(s,pr);
     save();stats();pushScore();$('#rf').hidden=true;m.textContent='Welcome back, '+P.name+'.';renderProfile();
   }catch{bad('Could not reach the board. Try again.')}});
-let pTab='stats',pLen='5',PV=null;
+let pTab='stats',pLen='5',pMode='all',PV=null;
 const navLabel=()=>{$('#nPr').textContent=P.name||'Profile'};
 function subj(){
-  if(!PV)return{own:true,xp:P.xp,st:P.st,ach:P.ach};
-  const d=PV.data||{};return{own:false,name:PV.name,xp:d.xp||0,st:d.st||null,ach:d.ach||{},loading:PV.loading,fail:PV.fail}}
-function aggr(st,len){
+  if(!PV)return{own:true,xp:P.xp,sm:P.sm,ach:P.ach};
+  const d=PV.data||{};return{own:false,name:PV.name,xp:d.xp||0,sm:d.sm||(d.st?{n:d.st}:null),ach:d.ach||{},loading:PV.loading,fail:PV.fail}}
+function aggr(sm,len,mode){
   let g=0,w=0,b=0,sk=0;const d={};
-  (len=='all'?LENS:[+len]).forEach(L=>{const x=(st&&st[L])||{};g+=x.g||0;w+=x.w||0;b=Math.max(b,x.best||0);sk=Math.max(sk,x.streak||0);for(const k in (x.dist||{}))d[k]=(d[k]||0)+x.dist[k]});
+  (mode=='all'?MODES:[mode]).forEach(m=>(len=='all'?LENS:[+len]).forEach(L=>{const x=(sm&&sm[m]&&sm[m][L])||{};g+=x.g||0;w+=x.w||0;b=Math.max(b,x.best||0);sk=Math.max(sk,x.streak||0);for(const k in (x.dist||{}))d[k]=(d[k]||0)+x.dist[k]}));
   return{g:Math.max(g,w),w,b,sk,d}}
 function statsHtml(s0){
-  const a=aggr(s0.st,pLen),rate=a.g?Math.round(a.w/a.g*100)+'%':'0%';
+  const a=aggr(s0.sm,pLen,pMode),rate=a.g?Math.round(a.w/a.g*100)+'%':'0%';
   const cards=s0.own?[[a.g,'Games'],[a.w,'Wins'],[rate,'Win rate'],[a.sk,'Streak'],[a.b,'Best']]:[[a.g,'Games'],[a.w,'Wins'],[rate,'Win rate'],[a.b,'Best streak']];
   const top=Math.max(pLen=='all'?7:+pLen+1,...Object.keys(a.d).map(Number)),mx=Math.max(1,...Object.values(a.d));
   const BC=['#f2c14e','#c5d24a','#8fcf55','#35b777','#2a9d68','#228657','#1b7048'];
-  let h='<div class="lrow"><span>Word length</span><div class="tabs" id="plen">'+['all',4,5,6].map(l=>`<button data-pl="${l}" class="${l==pLen?'on':''}">${l=='all'?'All':l}</button>`).join('')+'</div></div>';
+  let h='<div class="lrow"><span>Mode</span><div class="tabs" id="pmode">'+['all','n','h','b'].map(m=>`<button data-pm="${m}" class="${m==pMode?'on':''}">${m=='all'?'All':MN[m]}</button>`).join('')+'</div></div><div class="lrow"><span>Word length</span><div class="tabs" id="plen">'+['all',4,5,6].map(l=>`<button data-pl="${l}" class="${l==pLen?'on':''}">${l=='all'?'All':l}</button>`).join('')+'</div></div>';
   h+='<div class="sg">'+cards.map(([v,l])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join('')+'</div><h3 class="sh">Guesses per win</h3>';
   for(let i=1;i<=top;i++){const n=a.d[i]||0;h+=`<div class="db"><span>${i}</span><i class="${n?'on':''}" style="width:${n?Math.max(10,n/mx*100):6}%${n?';background:'+BC[i-1]+';color:'+(i>=6?'#fff':'#0e0f12'):''}">${n||''}</i></div>`}
   return h}
@@ -1087,26 +1127,31 @@ function renderProfile(){
 }
 $('#ptabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;pTab=b.dataset.p;renderProfile()});
 $('#pStats').addEventListener('click',e=>{const b=e.target.closest('[data-pl]');if(!b)return;pLen=b.dataset.pl;renderProfile()});
+$('#pStats').addEventListener('click',e=>{const b=e.target.closest('[data-pm]');if(!b)return;pMode=b.dataset.pm;renderProfile()});
 $('#pBack').onclick=()=>{PV=null;location.hash='leaderboard';view('leaderboard')};
 async function openPlayer(k,name){
   if(P.name&&k==P.name.toLowerCase())return goProfile();
-  PV={key:k,name,loading:true};pTab='stats';pLen='all';location.hash='profile';view('profile');
+  PV={key:k,name,loading:true};pTab='stats';pLen='all';pMode='all';location.hash='profile';view('profile');
   try{
     const [pr,sc]=await Promise.all([fetch(`${DB}/profiles/${k}.json`).then(r=>r.ok?r.json():null),fetch(`${DB}/scores/${k}.json`).then(r=>r.ok?r.json():null)]);
     const c=sc||{};let d=pr;
-    if(!d||!d.st){const w=Math.max(c.wins||0,c.best||0);d={xp:c.xp||0,ach:(pr&&pr.ach)||{},st:{5:{g:w,w:w,best:c.best||0,streak:0,dist:{}}}}}
+    if(!d||(!d.sm&&!d.st)){const w=Math.max(c.wins||0,c.best||0);d={xp:c.xp||0,ach:(pr&&pr.ach)||{},sm:{n:{5:{g:w,w:w,best:c.best||0,streak:0,dist:{}}}}}}
     if(!PV||PV.key!=k)return;
     PV={key:k,name:c.name||name,data:d}
   }catch{if(!PV||PV.key!=k)return;PV={key:k,name,fail:true}}
   if(!$('#prs').hidden)renderProfile()}
-const lbv=(x,f,L)=>{
-  const leg=x.b4===undefined&&x.b5===undefined&&x.b6===undefined;
-  if(L=='all')return f=='best'?x.best||0:Math.max(x.wins||0,x.best||0);
-  const b=leg?(L==5?x.best||0:0):x['b'+L]||0,w=leg?(L==5?x.wins||0:0):x['w'+L]||0;
-  return f=='best'?b:Math.max(w,b)};
+const lbv=(x,f,L,m)=>{
+  m=m||'all';
+  const old=x.b4===undefined&&x.b5===undefined&&x.b6===undefined,hasM=x.bn!==undefined||x.bh!==undefined||x.bb!==undefined;
+  let b,w;
+  if(m=='all'||(!hasM&&m=='n')){
+    if(L=='all'){b=x.best;w=x.wins}else if(old){b=L==5?x.best:0;w=L==5?x.wins:0}else{b=x['b'+L];w=x['w'+L]}}
+  else if(hasM){const sf=L=='all'?'':L;b=x['b'+m+sf];w=x['w'+m+sf]}
+  else{b=0;w=0}
+  b=b||0;w=w||0;return f=='best'?b:Math.max(w,b)};
 async function loadLB(){
-  const joined=!!P.name,L=sortBy=='xp'?'all':lbLen;
-  $('#cta').hidden=joined;$('#vp').hidden=!joined;$('#llen').hidden=sortBy=='xp';
+  const joined=!!P.name,L=sortBy=='xp'?'all':lbLen,M=sortBy=='xp'?'all':lbMode;
+  $('#cta').hidden=joined;$('#vp').hidden=!joined;$('#llen').hidden=sortBy=='xp';$('#lmode').hidden=sortBy=='xp';
   $('#who').textContent=(joined?`Playing as ${P.name}. `:'')+({best:'Ranked by best streak.',wins:'Ranked by total wins.',xp:'Ranked by level.'}[sortBy]);
   const list=$('#list');
   if(!DB){
@@ -1115,20 +1160,21 @@ async function loadLB(){
     return}
   list.innerHTML='<li><span></span><span class="note">Loading...</span></li>';
   try{
-    const field=sortBy=='xp'?'xp':(sortBy=='best'?(L=='all'?'best':'b'+L):(L=='all'?'wins':'w'+L));
+    const field=sortBy=='xp'?'xp':(M=='all'?(sortBy=='best'?(L=='all'?'best':'b'+L):(L=='all'?'wins':'w'+L)):(sortBy=='best'?'b':'w')+M+(L=='all'?'':L));
     let r=await fetch(`${DB}/scores.json?orderBy="${field}"&limitToLast=50`);
     if(!r.ok)r=await fetch(`${DB}/scores.json?orderBy="best"&limitToLast=200`);
     if(!r.ok)throw 0;
     const d=await r.json()||{};
     let rows=Object.entries(d).filter(([k,x])=>x&&typeof x.best=='number').map(([k,x])=>({k,x}));
-    const key=o=>sortBy=='xp'?(o.x.xp||0):lbv(o.x,sortBy,L),alt=o=>lbv(o.x,sortBy=='best'?'wins':'best',L);
-    if(L!='all'&&sortBy!='xp')rows=rows.filter(o=>lbv(o.x,'best',L)>0||lbv(o.x,'wins',L)>0);
+    const key=o=>sortBy=='xp'?(o.x.xp||0):lbv(o.x,sortBy,L,M),alt=o=>lbv(o.x,sortBy=='best'?'wins':'best',L,M);
+    if((L!='all'||M!='all')&&sortBy!='xp')rows=rows.filter(o=>lbv(o.x,'best',L,M)>0||lbv(o.x,'wins',L,M)>0);
     rows.sort((a,b)=>key(b)-key(a)||alt(b)-alt(a)||(a.x.t||0)-(b.x.t||0));rows=rows.slice(0,50);
     list.innerHTML=rows.length?'<li class="hd"><span></span><span>Player</span><span>Streak</span><span>Wins</span></li>'+rows.map((o,i)=>{const x=o.x;
-      return `<li data-k="${esc(o.k)}" data-n="${esc(x.name)}" class="${x.name==P.name?'me':''}"><span class="r">${i+1}</span><span>${esc(x.name)}<em class="lvb ${sortBy=='xp'?'on':''}">Lv ${lvInfo(x.xp||0).L}</em></span><b class="${sortBy=='best'?'hl':''}">${lbv(x,'best',L)}</b><b class="${sortBy=='wins'?'hl':''}">${lbv(x,'wins',L)}</b></li>`}).join(''):'<li><span></span><span class="note">No players yet. Be the first.</span></li>';
+      return `<li data-k="${esc(o.k)}" data-n="${esc(x.name)}" class="${x.name==P.name?'me':''}"><span class="r">${i+1}</span><span>${esc(x.name)}<em class="lvb ${sortBy=='xp'?'on':''}">Lv ${lvInfo(x.xp||0).L}</em></span><b class="${sortBy=='best'?'hl':''}">${lbv(x,'best',L,M)}</b><b class="${sortBy=='wins'?'hl':''}">${lbv(x,'wins',L,M)}</b></li>`}).join(''):'<li><span></span><span class="note">No players yet. Be the first.</span></li>';
   }catch{list.innerHTML='<li><span></span><span class="note err">Could not load the board. Try again later.</span></li>'}
 }
 $('#list').addEventListener('click',e=>{const li=e.target.closest('li[data-k]');if(li)openPlayer(li.dataset.k,li.dataset.n)});
+$('#mtabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.dataset.m==lbMode)return;lbMode=b.dataset.m;document.querySelectorAll('#mtabs button').forEach(x=>x.classList.toggle('on',x==b));loadLB()});
 $('#ltabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.dataset.l==lbLen)return;lbLen=b.dataset.l;document.querySelectorAll('#ltabs button').forEach(x=>x.classList.toggle('on',x==b));loadLB()});
 $('#jf').addEventListener('submit',async e=>{
   e.preventDefault();
@@ -1155,9 +1201,9 @@ $('#tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b
 // ---- start ----
 function restoreNormal(){
   const g=LS.get('wb_g',null);
-  if(g&&g.ans&&g.L==P.L&&g.N==1&&g.G==g.L+1&&g.ans.every(a=>a.length==g.L)){g.cur=Array(g.L).fill('');g.pos=0;g.hn=g.hn||0;if(g.hp==null)g.hp=-1;S=g;render()}else newGame()}
+  if(g&&g.ans&&g.L==P.L&&g.N==1&&g.G==g.L+1&&(g.mode||'n')==P.mode&&g.ans.every(a=>a.length==g.L)){g.cur=Array(g.L).fill('');g.pos=0;g.hn=g.hn||0;if(g.hp==null)g.hp=-1;S=g;render()}else newGame()}
 (function init(){
-  P.N=1;if(![4,5,6].includes(+P.L))P.L=5;
+  P.N=1;if(![4,5,6].includes(+P.L))P.L=5;if(!MODES.includes(P.mode))P.mode='n';
   const cg=LS.get('wb_cg',null);
   if(cg&&cg.cu&&cg.cu.words&&cg.ans){S=cg;S.cur=Array(S.L).fill('');S.pos=0;if(S.cu.fin)cuResults();else if(S.over)cuNext();else render()}
   else restoreNormal();
