@@ -260,6 +260,88 @@ body.tight #play{min-height:auto}
 @media(max-height:620px){.k{height:44px}.bar{padding:6px 0 2px}}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-delay:0s!important}}
 @media(max-width:620px){.lvc{grid-column:1;grid-row:2}}
+/* ===== v2: unified, finer popups ===== */
+#end,#how,#shr,#spn,#set,#dcm,#cfm,#cint,#csh,#cres{background:rgba(8,9,12,.78)}
+.card{padding:22px 22px 20px;border-radius:20px;box-shadow:0 24px 60px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.02) inset;scrollbar-width:thin;scrollbar-color:var(--key) transparent}
+.card h2{font-size:22px;line-height:1.2;letter-spacing:-.01em}
+.card p{line-height:1.5}
+.btn{font-size:15px;line-height:1.2}
+.btns{gap:10px}
+/* text-heavy popups: left aligned, consistent header */
+#how .card,#dcm .card,#cint .card,#csh .card,#cfm .card,#set .card{text-align:left}
+#how .card h2,#dcm .card h2,#cint .card h2,#csh .card h2,#cfm .card h2,#set .card h2{text-align:left;margin:0 0 4px}
+#cint .card h2{margin:0 36px 4px 0}
+/* How to play */
+.card.how{width:min(420px,100%);padding:22px 22px 18px}
+.how .hs{text-align:left;margin:0 0 14px;font-size:14px;line-height:1.45}
+.hx{display:block;background:var(--a);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:8px 0}
+.hx p{margin:9px 0 0;font-size:13.5px;line-height:1.4;flex:none}
+.how .ex{justify-content:flex-start;margin:0}
+.how .ex i{width:34px;height:34px;background:var(--key)}
+.how .ex i.g{background:var(--g)}.how .ex i.y{background:var(--y)}
+.how .sh{margin:20px 0 6px;padding-top:16px;border-top:1px solid var(--line);color:var(--text);font-size:13px;letter-spacing:.05em;text-transform:uppercase}
+.how ul{margin:0 0 16px}
+.how li{font-size:13.5px;line-height:1.45;padding:5px 0 5px 18px;color:var(--mut)}
+.how li:before{top:.95em}
+/* About */
+.card.dcc{width:min(440px,100%)}
+.dcc p{margin-top:12px;font-size:14px;line-height:1.55;color:var(--mut)}
+.dcc p:first-of-type{background:var(--a);border:1px solid var(--line);border-left:3px solid var(--g);border-radius:12px;padding:12px 14px;color:var(--text);margin-top:14px}
+.dcc .btns{margin-top:20px;align-items:stretch}
+.dcc .btns .btn{display:grid;place-items:center;padding:12px 14px;font-size:14px}
+.dcc .btns .btn.alt{flex:0 0 auto;min-width:84px}
+.dcc .btns a.btn{flex:1}
+/* confirm */
+.card.cfc{width:min(360px,100%)}
+#cfP{margin-top:8px;font-size:14px}
+#cfm .btns{margin-top:20px!important}
+/* settings */
+.card.stc{width:min(400px,100%)}
+.stc .srow:last-of-type{border-bottom:0}
+/* custom challenge intro */
+.cic{width:min(440px,100%)}
+.cib{border:1px solid var(--line);padding:14px 16px}
+.cir{padding:6px 0;margin-top:0;border-bottom:1px solid var(--line)}.cir:last-child{border-bottom:0;padding-bottom:0}
+.cib small{display:block;margin-bottom:6px}
+.cin{text-align:left;line-height:1.5;margin:14px 2px}
+#ciE{text-align:left!important}
+/* share link / results */
+.card.csc p{margin-top:4px}
+#cshL{margin:14px 0}
+.card.crc{width:min(440px,100%)}
+.crr{padding:9px 14px}
+/* ===== win / lose popup: compact, no scrolling ===== */
+#end .card{width:min(400px,100%);padding:18px 18px 10px;max-height:96dvh}
+#end h2{font-size:23px}
+#eS{font-size:14px;margin-top:2px}
+#end .words{margin:10px 0 12px;gap:6px}
+#end .words span{padding:4px 14px;font-size:15px}
+#eD{margin:0 0 12px;padding:10px 14px}
+#dM{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:13.5px;line-height:1.4;margin-top:4px}
+#eD small{margin-top:5px;font-size:11px}
+#eX{margin:0 0 12px}
+.xpl{margin:0 0 8px;gap:12px}
+.xpl b{font-size:26px}
+.xpl span{text-align:right;font-size:12px}
+.xlv{margin:0 0 5px}
+.lvup{margin-top:7px;font-size:14px}
+.au{padding:7px 12px;margin-top:6px;font-size:13.5px}
+#eC{margin:0 0 12px}
+.dh2{font-size:12px;margin:0 0 6px}
+.dc{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:6px}
+.dcol{display:grid;grid-template-rows:14px 38px 14px;justify-items:center;font-size:11px;color:var(--mut)}
+.dn{font-weight:700;color:var(--text);line-height:14px}
+.dtr{width:100%;display:flex;align-items:flex-end}
+.dtr i{display:block;width:100%;min-height:4px;border-radius:4px;background:var(--key);transition:height .8s ease,background .4s}
+.dl{line-height:14px}
+#end .btns .btn{padding:11px 16px}
+.elinks{display:flex;justify-content:center;align-items:center;gap:2px;margin-top:2px}
+.elinks .lnk{margin:0;display:inline-block;padding:8px 12px;font-size:13px}
+.elinks .sp{color:var(--line)}
+@media(max-height:720px){#end .card{padding:14px 16px 8px}#end .words{margin:8px 0 10px}#eD small{display:none}.dcol{grid-template-rows:13px 28px 13px}#eX,#eC,#eD{margin-bottom:9px}.lvup{margin-top:5px}}
+@media(max-height:600px){#eC{display:none!important}.xpl b{font-size:22px}}
+@media(max-width:420px){.card{padding:20px 18px 18px}}
+
 </style>
 </head>
 <body>
@@ -340,7 +422,7 @@ body.tight #play{min-height:auto}
 <footer class="ft">Fan-made, not affiliated with The New York Times or Wordle. Play the word of the day on the <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank" rel="noopener noreferrer">original Wordle</a>, then come back for more. <button type="button" id="dcl">Disclaimer</button></footer>
 </div>
 <div id="toast"></div>
-<div id="end" hidden><div class="card"><h2 id="eT"></h2><p id="eS"></p><div class="words" id="eW"></div><div id="eD" hidden><div class="dh"><b id="dW"></b><span id="dP"></span><button class="dA" id="dA" type="button" aria-label="Hear the word"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button></div><p id="dM"></p><small>Definitions: Wiktionary</small></div><div id="eX" hidden><div class="xpl" id="xpH"><b id="xpN"></b><span id="xpD"></span></div><div class="xlv"><b id="xpL"></b><span id="xpT"></span></div><div class="xbar"><i id="xpF"></i></div><div class="lvup" id="xpU" hidden></div><div id="xpA"></div></div><div id="eC" hidden></div><div class="btns"><button class="btn alt" id="eShare">Share</button><button class="btn" id="eB"></button></div><button class="lnk" id="eView">View board</button></div></div>
+<div id="end" hidden><div class="card"><h2 id="eT"></h2><p id="eS"></p><div class="words" id="eW"></div><div id="eD" hidden><div class="dh"><b id="dW"></b><span id="dP"></span><button class="dA" id="dA" type="button" aria-label="Hear the word"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button></div><p id="dM"></p><small>Definitions: Wiktionary</small></div><div id="eX" hidden><div class="xpl" id="xpH"><b id="xpN"></b><span id="xpD"></span></div><div class="xlv"><b id="xpL"></b><span id="xpT"></span></div><div class="xbar"><i id="xpF"></i></div><div class="lvup" id="xpU" hidden></div><div id="xpA"></div></div><div id="eC" hidden></div><div class="btns"><button class="btn alt" id="eShare">Share</button><button class="btn" id="eB"></button></div><div class="elinks"><button class="lnk" id="eView">View board</button><span class="sp">|</span><button class="lnk" id="eMore" type="button">Your stats</button></div></div></div>
 <div id="how" hidden><div class="card how"><h2>How to play</h2>
 <p class="hs">Guess the hidden word. After every guess, each tile changes color:</p>
 <div class="hx"><div class="ex"><i class="g">C</i><i>R</i><i>A</i><i>N</i><i>E</i></div><p><b style="color:var(--g)">Green</b>: the letter is in the word and in the right spot.</p></div>
@@ -624,15 +706,16 @@ $('#dA').onclick=()=>{const w=$('#dW').textContent,u=$('#dA').dataset.a;if(u){co
 const BARC=['#f2c14e','#c5d24a','#8fcf55','#35b777','#2a9d68','#228657','#1b7048'];
 function showDist(q,n,G){
   const C=$('#eC'),mx=Math.max(1,...Object.values(q.dist));
-  let h='<div class="dh2">Guesses per win</div>';
+  let h='<div class="dh2">Guesses per win</div><div class="dc" style="--n:'+G+'">';
+  const bc=i=>BARC[Math.min(i,7)-1];
   for(let i=1;i<=G;i++){const c=q.dist[i]||0,o=i==n?c-1:c;
-    h+=`<div class="db sm"><span>${i}</span><i data-i="${i}" class="${o?'on':''}" style="width:${o?Math.max(10,o/mx*100):6}%${o?';background:'+BARC[Math.min(i,7)-1]+';color:'+(i>=6?'#fff':'#0e0f12'):''}">${o||''}</i></div>`}
-  h+='<button class="lnk2" id="eMore" type="button">Check your Profile for more stats</button>';
+    h+=`<div class="dcol"><span class="dn">${o||''}</span><div class="dtr"><i data-i="${i}" style="height:${o?Math.max(12,o/mx*100):0}%${o?';background:'+bc(i):''}"></i></div><span class="dl">${i}</span></div>`}
+  h+='</div>';
   C.innerHTML=h;C.hidden=false;
   const bar=C.querySelector(`i[data-i="${n}"]`),c=q.dist[n]||1,grow=()=>{
-    bar.style.width=Math.max(10,c/mx*100)+'%';bar.style.background=BARC[Math.min(n,7)-1];bar.style.color=n>=6?'#fff':'#0e0f12';bar.classList.add('on');bar.textContent=c};
+    bar.style.height=Math.max(12,c/mx*100)+'%';bar.style.background=bc(n);bar.closest('.dcol').querySelector('.dn').textContent=c};
   if(P.fast)grow();else setTimeout(grow,900)}
-$('#eC').addEventListener('click',e=>{if(e.target.id=='eMore'){viewBoard();pTab='stats';goProfile()}});
+$('#eMore').addEventListener('click',()=>{viewBoard();pTab='stats';goProfile()});
 async function finish(won,g,A,sk){
   S.over=true;persist();hintUi();$('#eC').hidden=true;
   S.ans.forEach((a,b)=>boardEl(b).classList.toggle('done',solveIdx(b)>=0));
