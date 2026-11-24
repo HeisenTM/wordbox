@@ -239,6 +239,10 @@ a.btn{display:block;text-align:center;text-decoration:none}
 .mseg button{height:28px;min-width:66px;padding:0 10px;border-radius:8px;font-size:13px;font-weight:600;color:var(--mut);transition:background .15s,color .15s}
 .mseg button.on{background:var(--key);color:var(--text)}
 #boards.blind .tile.g,#boards.blind .tile.y,#boards.blind .tile.a{color:transparent!important}
+#eC{margin:0 0 18px;text-align:left}
+.dh2{font-size:13px;color:var(--mut);font-weight:600;margin:0 0 6px}
+.db.sm{margin:3px 0}.db.sm i{height:18px;line-height:18px;font-size:11px;transition:width .8s ease,background .4s}
+#eC .lnk2{margin:8px auto 0;text-align:center}
 li.hd{color:var(--mut);font-size:12px;padding:4px 12px}
 li .r{color:var(--mut);font-weight:700}
 li:nth-child(n+2):nth-child(-n+4) .r{color:var(--y)}
@@ -336,7 +340,7 @@ body.tight #play{min-height:auto}
 <footer class="ft">Fan-made, not affiliated with The New York Times or Wordle. Play the word of the day on the <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank" rel="noopener noreferrer">original Wordle</a>, then come back for more. <button type="button" id="dcl">Disclaimer</button></footer>
 </div>
 <div id="toast"></div>
-<div id="end" hidden><div class="card"><h2 id="eT"></h2><p id="eS"></p><div class="words" id="eW"></div><div id="eD" hidden><div class="dh"><b id="dW"></b><span id="dP"></span><button class="dA" id="dA" type="button" aria-label="Hear the word"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button></div><p id="dM"></p><small>Definitions: Wiktionary</small></div><div id="eX" hidden><div class="xpl" id="xpH"><b id="xpN"></b><span id="xpD"></span></div><div class="xlv"><b id="xpL"></b><span id="xpT"></span></div><div class="xbar"><i id="xpF"></i></div><div class="lvup" id="xpU" hidden></div><div id="xpA"></div></div><div class="btns"><button class="btn alt" id="eShare">Share</button><button class="btn" id="eB"></button></div><button class="lnk" id="eView">View board</button></div></div>
+<div id="end" hidden><div class="card"><h2 id="eT"></h2><p id="eS"></p><div class="words" id="eW"></div><div id="eD" hidden><div class="dh"><b id="dW"></b><span id="dP"></span><button class="dA" id="dA" type="button" aria-label="Hear the word"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button></div><p id="dM"></p><small>Definitions: Wiktionary</small></div><div id="eX" hidden><div class="xpl" id="xpH"><b id="xpN"></b><span id="xpD"></span></div><div class="xlv"><b id="xpL"></b><span id="xpT"></span></div><div class="xbar"><i id="xpF"></i></div><div class="lvup" id="xpU" hidden></div><div id="xpA"></div></div><div id="eC" hidden></div><div class="btns"><button class="btn alt" id="eShare">Share</button><button class="btn" id="eB"></button></div><button class="lnk" id="eView">View board</button></div></div>
 <div id="how" hidden><div class="card how"><h2>How to play</h2>
 <p class="hs">Guess the hidden word. After every guess, each tile changes color:</p>
 <div class="hx"><div class="ex"><i class="g">C</i><i>R</i><i>A</i><i>N</i><i>E</i></div><p><b style="color:var(--g)">Green</b>: the letter is in the word and in the right spot.</p></div>
@@ -617,8 +621,20 @@ function renderDef(w,d){
   $('#dM').innerHTML=d.none?'No definition found.':(d.pos?'<i>'+esc(d.pos)+'</i> ':'')+esc(d.m);
   const b=$('#dA');b.dataset.a=d.a||'';b.hidden=!(d.a||window.speechSynthesis)}
 $('#dA').onclick=()=>{const w=$('#dW').textContent,u=$('#dA').dataset.a;if(u){const a=new Audio(u);a.play().catch(()=>say(w))}else say(w)};
+const BARC=['#f2c14e','#c5d24a','#8fcf55','#35b777','#2a9d68','#228657','#1b7048'];
+function showDist(q,n,G){
+  const C=$('#eC'),mx=Math.max(1,...Object.values(q.dist));
+  let h='<div class="dh2">Guesses per win</div>';
+  for(let i=1;i<=G;i++){const c=q.dist[i]||0,o=i==n?c-1:c;
+    h+=`<div class="db sm"><span>${i}</span><i data-i="${i}" class="${o?'on':''}" style="width:${o?Math.max(10,o/mx*100):6}%${o?';background:'+BARC[Math.min(i,7)-1]+';color:'+(i>=6?'#fff':'#0e0f12'):''}">${o||''}</i></div>`}
+  h+='<button class="lnk2" id="eMore" type="button">Check your Profile for more stats</button>';
+  C.innerHTML=h;C.hidden=false;
+  const bar=C.querySelector(`i[data-i="${n}"]`),c=q.dist[n]||1,grow=()=>{
+    bar.style.width=Math.max(10,c/mx*100)+'%';bar.style.background=BARC[Math.min(n,7)-1];bar.style.color=n>=6?'#fff':'#0e0f12';bar.classList.add('on');bar.textContent=c};
+  if(P.fast)grow();else setTimeout(grow,900)}
+$('#eC').addEventListener('click',e=>{if(e.target.id=='eMore'){viewBoard();pTab='stats';goProfile()}});
 async function finish(won,g,A,sk){
-  S.over=true;persist();hintUi();
+  S.over=true;persist();hintUi();$('#eC').hidden=true;
   S.ans.forEach((a,b)=>boardEl(b).classList.toggle('done',solveIdx(b)>=0));
   A.filter(b=>S.ans[b]==g).forEach(b=>{for(let c=0;c<S.L;c++){const t=tile(b,S.gs.length-1,c);t.style.setProperty('--i',c);t.classList.remove('flip');t.classList.add('bounce')}});
   const n=S.gs.length,q=stM(S.mode||'n',S.L),ctx={won,n,G:S.G,L:S.L,prevLoss:P.cnt.last=='l',hinted:(S.hn||0)>0},paid=S.hn||0,lv0=lvInfo(P.xp);let gain=null;
@@ -651,6 +667,7 @@ async function finish(won,g,A,sk){
       if(got.length)setTimeout(SFX.ach,500);
       if(up)setTimeout(SFX.level,700);
     },P.fast?0:350)}
+  if(won)showDist(q,n,S.G);
   dp.then(d=>{if(S&&S.ans[0]==w0)renderDef(w0,d)});
   $('#end').hidden=false;$('#eB').focus();
 }
@@ -951,7 +968,7 @@ async function cuFinish(won,why){
   $('#eT').textContent=won?'Solved':(why=='time'?"Time's up":(why=='skip'?'Skipped':'Out of guesses'));
   $('#eS').textContent='Word '+(c.i+1)+' of '+c.words.length+' \u00b7 '+(won?S.gs.length+' / '+S.G+' guesses':'unsolved');
   $('#eW').innerHTML='';const sp=document.createElement('span');sp.textContent=w0;if(won)sp.className='ok';$('#eW').appendChild(sp);
-  $('#eX').hidden=true;$('#eD').hidden=true;$('#eShare').hidden=true;$('#eB').textContent=last?'See results':'Next word';
+  $('#eX').hidden=true;$('#eC').hidden=true;$('#eD').hidden=true;$('#eShare').hidden=true;$('#eB').textContent=last?'See results':'Next word';
   dp.then(d=>{if(S&&S.ans[0]==w0)renderDef(w0,d)});
   $('#end').hidden=false;$('#eB').focus()}
 function cuNext(){const c=S.cu;c.i++;if(c.i>=c.words.length)return cuResults();startWord(c)}
