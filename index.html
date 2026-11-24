@@ -329,17 +329,19 @@ body.tight #play{min-height:auto}
 .au{padding:7px 12px;margin-top:6px;font-size:13.5px}
 #eC{margin:0 0 12px}
 .dh2{font-size:12px;margin:0 0 6px}
-.dc{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:6px}
-.dcol{display:grid;grid-template-rows:14px 38px 14px;justify-items:center;font-size:11px;color:var(--mut)}
-.dn{font-weight:700;color:var(--text);line-height:14px}
-.dtr{width:100%;display:flex;align-items:flex-end}
-.dtr i{display:block;width:100%;min-height:4px;border-radius:4px;background:var(--key);transition:height .8s ease,background .4s}
-.dl{line-height:14px}
+.dc{--bm:40px;display:grid;grid-template-columns:repeat(var(--n),1fr);gap:6px;padding:2px 2px 0}
+.dcol{display:flex;flex-direction:column;align-items:stretch;gap:5px;min-width:0}
+.dtr{height:calc(var(--bm) + 20px);display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:3px}
+.dn{font:700 11px/14px system-ui,sans-serif;color:var(--text);white-space:nowrap;min-height:14px}
+.dtr i{display:block;width:100%;min-height:4px;border-radius:6px 6px 3px 3px;background:var(--key);box-shadow:inset 0 1px 0 rgba(255,255,255,.18);transition:height .8s cubic-bezier(.2,.8,.2,1),background .4s}
+.dl{font-size:11px;line-height:14px;text-align:center;color:var(--mut)}
+.dcol.cur .dl{color:var(--text);font-weight:700}
+.dcol.cur .dtr i{box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 0 0 2px var(--panel),0 0 0 3.5px var(--mut)}
 #end .btns .btn{padding:11px 16px}
 .elinks{display:flex;justify-content:center;align-items:center;gap:2px;margin-top:2px}
 .elinks .lnk{margin:0;display:inline-block;padding:8px 12px;font-size:13px}
 .elinks .sp{color:var(--line)}
-@media(max-height:720px){#end .card{padding:14px 16px 8px}#end .words{margin:8px 0 10px}#eD small{display:none}.dcol{grid-template-rows:13px 28px 13px}#eX,#eC,#eD{margin-bottom:9px}.lvup{margin-top:5px}}
+@media(max-height:720px){#end .card{padding:14px 16px 8px}#end .words{margin:8px 0 10px}#eD small{display:none}.dc{--bm:26px}#eX,#eC,#eD{margin-bottom:9px}.lvup{margin-top:5px}}
 @media(max-height:600px){#eC{display:none!important}.xpl b{font-size:22px}}
 @media(max-width:420px){.card{padding:20px 18px 18px}}
 
@@ -871,15 +873,15 @@ function renderDef(w,d){
 $('#dA').onclick=()=>{const w=$('#dW').textContent,u=$('#dA').dataset.a;if(u){const a=new Audio(u);a.play().catch(()=>say(w))}else say(w)};
 const BARC=['#f2c14e','#c5d24a','#8fcf55','#35b777','#2a9d68','#228657','#1b7048'];
 function showDist(q,n,G){
-  const C=$('#eC'),mx=Math.max(1,...Object.values(q.dist));
+  const C=$('#eC'),mx=Math.max(1,...Object.values(q.dist)),bc=i=>BARC[Math.min(i,7)-1];
+  const fmt=c=>c>=1e3?(c/1e3).toFixed(c>=1e5?0:1).replace(/\.0$/,'')+'k':String(c),hh=c=>'calc(var(--bm) * '+(c/mx).toFixed(3)+')';
   let h='<div class="dh2">Guesses per win</div><div class="dc" style="--n:'+G+'">';
-  const bc=i=>BARC[Math.min(i,7)-1];
   for(let i=1;i<=G;i++){const c=q.dist[i]||0,o=i==n?c-1:c;
-    h+=`<div class="dcol"><span class="dn">${o||''}</span><div class="dtr"><i data-i="${i}" style="height:${o?Math.max(12,o/mx*100):0}%${o?';background:'+bc(i):''}"></i></div><span class="dl">${i}</span></div>`}
+    h+=`<div class="dcol${i==n?' cur':''}"><div class="dtr"><span class="dn">${o?fmt(o):''}</span><i data-i="${i}" style="height:${o?hh(o):'4px'}${o?';background:'+bc(i):''}"></i></div><span class="dl">${i}</span></div>`}
   h+='</div>';
   C.innerHTML=h;C.hidden=false;
   const bar=C.querySelector(`i[data-i="${n}"]`),c=q.dist[n]||1,grow=()=>{
-    bar.style.height=Math.max(12,c/mx*100)+'%';bar.style.background=bc(n);bar.closest('.dcol').querySelector('.dn').textContent=c};
+    bar.style.height=hh(c);bar.style.background=bc(n);bar.closest('.dtr').querySelector('.dn').textContent=fmt(c)};
   if(P.fast)grow();else setTimeout(grow,900)}
 $('#eMore').addEventListener('click',()=>{viewBoard();pTab='stats';goProfile()});
 async function finish(won,g,A,sk){
