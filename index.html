@@ -178,6 +178,7 @@ li[data-k]{cursor:pointer}li[data-k]:hover{background:var(--panel);border-radius
 .tile.pk{border-color:#5a6170;cursor:pointer}
 .tile.pk:hover{border-color:#7ee2ab}
 .hb.plain{background:none;border:0;padding:0 0 4px;font-size:13px}
+.hb.plain.big{font-size:15px;font-weight:600;color:var(--text);padding:2px 0 6px}
 .tile.gh{color:#59606d;border-style:dashed;border-color:#3b414c}
 html.fast *,html.fast *::before,html.fast *::after{animation:none!important;transition:none!important}
 .srow{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 0;border-bottom:1px solid var(--line);text-align:left}
@@ -248,6 +249,10 @@ li.hd span:nth-child(n+3){text-align:right}
 .tabs button{padding:7px 14px;border-radius:8px;color:var(--mut);font-weight:700;transition:background .15s,color .15s}
 .tabs button.on{background:var(--key);color:var(--text)}
 @media(max-height:700px){.tag{display:none}}
+@media(max-height:560px){.k{height:38px}#kb{gap:4px;padding:4px 0 6px}.kr{gap:4px}.bar{padding:6px 2px 4px}.stat{padding:3px 10px}.lvc{padding:5px 10px 6px}.mrow,.hrow{padding-bottom:4px}}
+#app{overflow-y:auto}
+body.tight #play{min-height:auto}
+@media(max-height:700px){header{padding:8px 2px}.bar{padding:8px 2px 4px}.mseg button{height:24px}.mrow,.hrow{padding-bottom:4px}.hbtn{padding:3px 12px}.ft{font-size:10px;padding:2px 6px 4px}.k{height:46px}}
 @media(max-height:620px){.k{height:44px}.bar{padding:6px 0 2px}}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-delay:0s!important}}
 @media(max-width:620px){.lvc{grid-column:1;grid-row:2}}
@@ -484,7 +489,7 @@ function render(){
       bd.appendChild(row)}
     el.appendChild(bd)});
   S.gs.forEach((g,r)=>S.ans.forEach((_,b)=>{if(shown(b,r))paint(b,r,g,false)}));
-  showCur();fit();keys();stats();hintUi();
+  hintUi();showCur();fit();keys();stats();
   S.ans.forEach((_,b)=>boardEl(b).classList.toggle('done',solveIdx(b)>=0));
 }
 
@@ -504,10 +509,13 @@ function fit(){
   const W=el.clientWidth,H=el.clientHeight,{N,L,G}=S;
   const cols=N==1?1:N==2?2:N==3?(W>620?3:2):(W>840?4:2),rows=Math.ceil(N/cols);
   const t1=((W-(cols-1)*14)/cols-(L-1)*4)/L,t2=((H-8-(rows-1)*14)/rows-(G-1)*4)/G;
-  const t=Math.max(18,Math.floor(Math.min(58,t1,t2)));
+  let t=Math.max(14,Math.floor(Math.min(58,t1,t2)));
   el.style.setProperty('--t',t+'px');el.style.setProperty('--L',L);
-  el.style.gridTemplateColumns=`repeat(${cols},auto)`}
+  el.style.gridTemplateColumns=`repeat(${cols},auto)`;
+  while(t>14&&(el.scrollHeight>el.clientHeight+1||el.scrollWidth>el.clientWidth+1)){t-=2;el.style.setProperty('--t',t+'px')}
+  el.style.minHeight=t<=14?(rows*(G*t+(G-1)*4)+(rows-1)*14+8)+'px':'';document.body.classList.toggle('tight',t<=14)}
 addEventListener('resize',fit);
+new ResizeObserver(()=>{if(S)fit()}).observe($('#boards'));
 
 function keys(){
   if(S.mode=='b'&&!S.over){document.querySelectorAll('.k[data-k]').forEach(k=>k.classList.remove('g','y','a'));return}
@@ -804,8 +812,8 @@ function hintUi(){
   const hb=$('#hBtn');hb.disabled=h>=2;
   hb.textContent=h>=2?'No hints left':hintPick?'Cancel hint':'Hint \u00b7 '+(2-h)+' left';
   const box=$('#hb'),vis=on&&(!!S.hd||hintPick),was=!box.hidden;
-  box.classList.toggle('plain',!!hintPick);
-  if(hintPick)box.textContent='Tap an empty box to reveal its letter';
+  const big=!!hintPick&&(P.pickN||0)<=2;box.classList.toggle('plain',!!hintPick);box.classList.toggle('big',big);
+  if(hintPick)box.textContent=big?'Now tap an empty box in your row to reveal its letter':'Tap an empty box to reveal its letter';
   else if(S.hd)box.innerHTML='<b>Hint</b> <i>'+esc(S.hd.pos||'')+'</i> '+esc(S.hd.m);
   box.hidden=!vis;if(was!==vis||cwas!==cvis)fit()}
 function pickHint(c){
@@ -816,7 +824,7 @@ function pickHint(c){
   persist();showCur();hintUi();SFX.hint();toast('Hint used: this win earns 25% less XP')}
 async function hintIntro(){
   const m=S.mode||'n',q=stM(m,S.L),f=k=>winXp(S.L,3,S.G,q.streak+1,k,m).total;
-  const ok=await askConfirm('Hints cost XP','Each hint you use takes 25% off the XP for that win.\n\nExample: a win in 3 guesses is worth '+f(0)+' XP here. With one hint it is worth '+f(1)+', and with two hints '+f(2)+'.\n\nHint 1 reveals a letter in a box you choose. Hint 2 shows the meaning. Hinted wins also skip the guess-based achievements.','Use a hint');
+  const ok=await askConfirm('How hints work','Each hint you use takes 25% off the XP for that win.\n\nExample: a win in 3 guesses is worth '+f(0)+' XP here. With one hint it is worth '+f(1)+', and with two hints '+f(2)+'.\n\nHint 1: after you tap "Use a hint", tap any empty box in your row. That box shows its correct letter.\nHint 2: shows the meaning of the word.\n\nHinted wins also skip the guess-based achievements.','Use a hint');
   if(ok){P.hintSeen=1;save()}
   return ok}
 async function useHint(e){
@@ -826,6 +834,7 @@ async function useHint(e){
     if(hintPick){hintPick=false;showCur();hintUi();return}
     if(!S.cur.some(x=>!x)){toast('Clear a box first, then pick it');return}
     if(!P.hintSeen){if(!await hintIntro())return;if(busy||S.over)return}
+    P.pickN=(P.pickN||0)+1;save();
     hintPick=true;showCur();hintUi();return}
   const w=S.ans[0];hintBusy=true;
   lookup(w).then(d=>{
