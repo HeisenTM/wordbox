@@ -46,7 +46,7 @@ section{flex:1;min-height:0;display:flex;flex-direction:column}
 .lnk{display:block;margin:12px auto 0;color:var(--mut);font-weight:700;padding:6px 12px;border-radius:8px}.lnk:hover{color:var(--text)}
 #after{padding:8px 0 14px}
 .btns{display:flex;gap:8px}
-#shr,#spn,#set,#dcm,#cint,#csh,#cres{z-index:10}
+#shr,#spn,#set,#dcm,#cint,#csh,#cres,#hhm{z-index:10}
 #cfm{z-index:11}
 #cfP{white-space:pre-line}.shc{width:min(400px,100%)}.shc img{display:block;max-width:100%;max-height:58dvh;width:auto;margin:0 auto 16px;border-radius:12px;background:var(--bg)}
 .btn:disabled{opacity:.5;pointer-events:none}.btns .btn{flex:1}
@@ -219,7 +219,7 @@ a.btn{display:block;text-align:center;text-decoration:none}
 .stp button{width:34px;height:34px;border-radius:8px;background:var(--key);color:var(--text);font-weight:700;display:grid;place-items:center}
 .cuact{display:flex;gap:10px;align-items:center;margin-top:20px}.cuact .btn{margin-left:auto}
 .cmi{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:8px;font-size:14px}
-.cmi span{color:var(--mut)}.cmi .hbtn{margin-left:auto}
+.cmi span{color:var(--mut)}.cmi .hbtn{margin-left:auto}.cmi .hbtn+.hbtn{margin-left:0}
 .crc{width:min(420px,100%)}
 .crr{display:flex;align-items:center;gap:10px;background:var(--a);border-radius:10px;padding:8px 12px;margin-top:8px;text-align:left}
 .crr i{font-style:normal;width:22px;height:22px;border-radius:6px;display:grid;place-items:center;font-weight:800;color:var(--og);background:var(--g);font-size:13px}.crr i.no{background:#e0697a}
@@ -440,6 +440,54 @@ html[data-theme="paper"] .gmn{background-image:linear-gradient(100deg,#9a6a08 0%
 #nPr .crn{margin-left:4px;vertical-align:-2px}
 #pT .crn{margin-left:8px;vertical-align:-2px}
 
+/* ===== v7: custom challenges (per-round settings, clues, head-to-head) ===== */
+.wg{margin-top:10px}.wg .wr{margin-top:0;padding-right:4px}
+.wo{width:36px;height:36px;border-radius:9px;display:grid;place-items:center;color:var(--mut);position:relative;flex:none;transition:color .15s,background .15s}
+.wo:hover{color:var(--text);background:var(--key)}
+.wo.on{color:var(--y)}.wo.on:after{content:"";position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:var(--y)}
+.wsum{margin:6px 6px 0 14px;font-size:12.5px;color:var(--mut)}
+.wp{background:var(--a);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:6px;display:grid;gap:14px;text-align:left}
+.wl{display:grid;gap:7px;color:var(--mut);font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.sg2{display:flex;flex-wrap:wrap;gap:6px}
+.sg2 button{padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--mut);font-size:13px;font-weight:600;text-transform:none;letter-spacing:0}
+.sg2 button.on{background:var(--g);color:var(--og);border-color:transparent}
+.wp input.wcl{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--text);font:500 14px system-ui,sans-serif;outline:0;text-transform:none;letter-spacing:0}
+.wp input.wcl:focus{border-color:var(--bs)}
+.cutip{margin-top:12px}
+.clue{margin:0 auto 8px;max-width:520px;display:flex;gap:10px;align-items:baseline;text-align:left;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--y);border-radius:10px;padding:8px 12px;font-size:14px}
+.clue[hidden]{display:none}
+.clue i{font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--y);flex:none}
+.clue span{color:var(--text);overflow-wrap:anywhere}
+#hhm{position:fixed;inset:0;display:grid;place-items:center;background:var(--ov);backdrop-filter:blur(4px);z-index:10;padding:16px}
+#hhm[hidden]{display:none}
+.hhc{position:relative;text-align:left}
+.hhc .x{position:absolute;top:10px;right:12px;width:32px;height:32px;border-radius:8px;color:var(--mut);font-size:22px;line-height:1}
+.hhc h2{margin:0 36px 2px 0}
+.card.crc{width:min(480px,100%)}
+.hh{text-align:left}#crH{margin-top:6px}
+.hhn{color:var(--mut);font-size:13.5px;line-height:1.5;margin:10px 0 0}.hhn.err{color:#e0697a}
+.hhs{display:grid;gap:6px;margin-top:8px}
+.hhr{display:grid;grid-template-columns:20px 1fr auto;gap:10px;align-items:center;background:var(--a);border-radius:10px;padding:9px 12px;font-size:13px}
+.hhr.me{box-shadow:inset 0 0 0 1px var(--g)}
+.hhk{color:var(--mut);font-weight:700}
+.hhr b{font-size:14px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.hhr em,.hhr .hhw{font-style:normal;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;border-radius:5px;padding:1px 6px}
+.hhr em{background:var(--g);color:var(--og)}
+.hhr .hhw{background:linear-gradient(135deg,#f6d57a,#e0ad1f);color:#1a1200}
+.hhv{display:block;font-size:12px;color:var(--mut);margin-top:2px}.hhv.up{color:var(--g)}.hhv.dn{color:#e0697a}
+.hhz{text-align:right}.hhz b{display:block;font-size:14px}.hhz span{color:var(--mut);font-size:12px;white-space:nowrap}
+.hht{overflow-x:auto;margin-top:8px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.hht table{border-collapse:collapse;width:100%;font-size:12.5px}
+.hht th,.hht td{padding:8px 8px;text-align:center;white-space:nowrap;border-bottom:1px solid var(--line)}
+.hht tr:last-child>*{border-bottom:0}
+.hht thead th{color:var(--mut);font-size:12px;font-weight:700}.hht thead th.me{color:var(--g)}
+.hht tbody th{text-align:left;position:sticky;left:0;background:var(--panel);font-weight:600}
+.hht tbody th b{text-transform:uppercase;letter-spacing:.04em}
+.hht th small{display:block;color:var(--mut);font-weight:500;font-size:11px;margin-top:2px;max-width:120px;overflow:hidden;text-overflow:ellipsis}
+.hht th small.cl{font-style:italic}
+.hht td.best{background:var(--g);color:var(--og);font-weight:700}.hht td.no{color:#e0697a}
+.hhre{margin-top:12px}
+
 </style>
 </head>
 <body>
@@ -459,6 +507,7 @@ html[data-theme="paper"] .gmn{background-image:linear-gradient(100deg,#9a6a08 0%
   <div class="mrow" id="mr"><div class="mseg" id="sM"></div></div>
   <div class="hrow" id="hr"><button class="hbtn" id="hBtn" type="button" title="A letter first, then the meaning. Each hint costs 25% of the XP for a win.">Hint</button><button class="hbtn" id="sBtn" type="button" title="Counts as a loss: no XP and your streak resets.">Skip</button><button class="hbtn" id="qBtn" type="button" hidden>Quit challenge</button></div>
   <div class="hb" id="cub" hidden></div>
+  <div class="clue" id="clue" hidden></div>
   <div class="hb" id="hb" hidden></div>
   <div id="boards"></div>
   <div id="kb"></div>
@@ -489,6 +538,7 @@ html[data-theme="paper"] .gmn{background-image:linear-gradient(100deg,#9a6a08 0%
       <div class="rl"><span>Mode</span><div class="stp"><button data-s="m-" type="button" aria-label="Previous mode">&larr;</button><b id="vm">Normal</b><button data-s="m+" type="button" aria-label="Next mode">&rarr;</button></div></div>
       <div class="rl"><span>Dictionary</span><div class="stp"><button data-s="d" type="button" aria-label="Toggle dictionary">&larr;</button><b id="vd">Enabled</b><button data-s="d" type="button" aria-label="Toggle dictionary">&rarr;</button></div></div>
     </div>
+    <p class="note cutip">Tip: tap the sliders on a word to give that round its own mode or time limit, or to add a clue.</p>
     <p class="note" id="cuMsg" style="margin-top:14px"></p>
     <div class="cuact"><span class="note" id="cuNote"></span><button class="btn" id="cuMk" type="button">Create</button></div>
     <h3 class="sh" id="cuMh" hidden>Your recent challenges</h3><div id="cuMine"></div>
@@ -548,11 +598,13 @@ html[data-theme="paper"] .gmn{background-image:linear-gradient(100deg,#9a6a08 0%
 <div id="cint" hidden><div class="card cic"><button class="x" id="ciX" type="button" aria-label="Close">&times;</button><h2>Custom wordbox</h2>
 <div id="ciBody"><div class="cib"><small>CREATED BY</small><div class="cby"><span id="ciBy"></span><em class="lvb" id="ciLv" hidden></em></div></div>
 <div class="cib"><small>RULES</small><div class="cir"><span>Words</span><b id="ciW"></b></div><div class="cir"><span>Letters</span><b id="ciLt"></b></div><div class="cir"><span>Max guesses</span><b id="ciG"></b></div><div class="cir"><span>Time limit</span><b id="ciT"></b></div><div class="cir"><span>Mode</span><b id="ciM"></b></div><div class="cir"><span>Dictionary</span><b id="ciD"></b></div></div>
+<div class="cib" id="ciRB" hidden><small>ROUNDS</small><div id="ciR"></div></div>
 <p class="cin">This challenge's words and rules were picked by another player. wordbox hasn't reviewed or endorsed them.</p></div>
 <p class="note err" id="ciE" hidden style="text-align:center;margin:14px 0">This challenge could not be loaded. The link may be wrong, or it was removed.</p>
 <button class="btn" id="ciP" type="button" style="width:100%">Play</button></div></div>
 <div id="csh" hidden><div class="card csc"><h2>Share with friends</h2><p>Anyone with this link can play your challenge.</p><input id="cshL" readonly aria-label="Challenge link"><div class="btns"><button class="btn alt" id="cshS" type="button" hidden>Share</button><button class="btn" id="cshC" type="button">Copy</button></div><button class="lnk" id="cshX" type="button">Close</button></div></div>
-<div id="cres" hidden><div class="card crc"><h2 id="crT"></h2><p id="crS"></p><p id="crX" hidden></p><div id="crL"></div><div class="btns" style="margin-top:18px"><button class="btn alt" id="crC" type="button">Copy result</button><button class="btn" id="crD" type="button">Done</button></div></div></div>
+<div id="cres" hidden><div class="card crc"><h2 id="crT"></h2><p id="crS"></p><p id="crX" hidden></p><div id="crL"></div><div id="crH" class="hh"></div><div class="btns" style="margin-top:18px"><button class="btn alt" id="crC" type="button">Copy result</button><button class="btn" id="crD" type="button">Done</button></div></div></div>
+<div id="hhm" hidden><div class="card crc hhc"><button class="x" id="hhX" type="button" aria-label="Close">&times;</button><h2 id="hhT">Results</h2><div id="hhB" class="hh"></div></div></div>
 <canvas id="cf"></canvas>
 
 <script>
@@ -1156,8 +1208,11 @@ function hintUi(){
   if(!S)return;
   const cu=!!S.cu;$('#hBtn').hidden=cu;$('#qBtn').hidden=!cu;$('#mr').hidden=cu;$('#boards').classList.toggle('blind',S.mode=='b'&&!S.over);
   const cb=$('#cub'),cvis=cu&&!S.over,cwas=!cb.hidden;
-  if(cu){const c=S.cu;cb.innerHTML='Custom challenge by <b>'+esc(c.by)+'</b>'+(c.rules.m&&c.rules.m!='n'?' &middot; '+MN[c.rules.m]:'')+' &middot; Word '+(c.i+1)+' of '+c.words.length+(c.dl?'<span id="cut"></span>':'')}
+  if(cu){const c=S.cu;cb.innerHTML='Custom challenge by <b>'+esc(c.by)+'</b>'+(cuRd(c).m!='n'?' &middot; '+MN[cuRd(c).m]:'')+' &middot; Word '+(c.i+1)+' of '+c.words.length+(c.dl?'<span id="cut"></span>':'')}
   cb.hidden=!cvis;
+  const cl=$('#clue'),clw=!cl.hidden,clt=cu&&!S.over?cuRd(S.cu).c:'';
+  if(clt){cl.innerHTML='<i>Clue</i><span></span>';cl.lastChild.textContent=clt}
+  cl.hidden=!clt;
   const h=S.hn||0,on=!S.over;
   $('#hr').hidden=!on;
   const hb=$('#hBtn');hb.disabled=h>=2;
@@ -1166,7 +1221,7 @@ function hintUi(){
   const big=!!hintPick&&(P.pickN||0)<=2;box.classList.toggle('plain',!!hintPick);box.classList.toggle('big',big);
   if(hintPick)box.textContent=big?'Now tap an empty box in your row to reveal its letter':'Tap an empty box to reveal its letter';
   else if(S.hd)box.innerHTML='<b>Hint</b> <i>'+esc(S.hd.pos||'')+'</i> '+esc(S.hd.m);
-  box.hidden=!vis;if(was!==vis||cwas!==cvis)fit()}
+  box.hidden=!vis;if(was!==vis||cwas!==cvis||clw!==cl.hidden)fit()}
 function pickHint(c){
   const known=new Set();S.gs.forEach(g=>evaluate(g,S.ans[0]).forEach((r,i)=>{if(r=='g')known.add(i)}));
   if(S.cur[c]){toast('Pick an empty box');return}
@@ -1211,7 +1266,7 @@ const genCode=()=>[...crypto.getRandomValues(new Uint8Array(5))].map(x=>CODEA[x%
 const fmtT=ms=>{const t=Math.round(ms/1000);return Math.floor(t/60)+':'+String(t%60).padStart(2,'0')};
 const chLink=c=>location.origin+location.pathname+'?c='+c;
 const TRASH='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></svg>';
-let CU={w:[''],g:6,t:0,d:1,m:'n'},CHI=null;
+let CU={w:[''],g:6,t:0,d:1,m:'n',r:[{m:'',t:null,c:''}],o:[false]},CHI=null;
 const remoteOK={};
 async function isValid(g){
   if(!S.cu)return valid(g);
@@ -1220,22 +1275,84 @@ async function isValid(g){
   if(DICT[S.L]){if(!dicts[S.L])dicts[S.L]=new Set(DICT[S.L].split(' '));return dicts[S.L].has(g)}
   if(g in remoteOK)return remoteOK[g];
   try{const r=await fetch('https://api.datamuse.com/words?sp='+g+'&max=1'),j=await r.json();return remoteOK[g]=!!(j[0]&&j[0].word==g)}catch{return true}}
+// ---- custom challenges v2: per-round settings, clues, head-to-head ----
+const MO=[['','Default'],['n','Normal'],['h','Hard'],['b','Blind']];
+const RT=[[null,'Default'],[0,'None'],[30,'30s'],[60,'1m'],[120,'2m'],[180,'3m'],[300,'5m']];
+const SLID='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>';
+const rdTags=r=>[r.m?MN[r.m]+' mode':'',r.t!=null?(r.t?TLN[TLS.indexOf(r.t)]+' limit':'No limit'):'',r.c?'Clue':''].filter(Boolean).join(' \u00b7 ');
+const cuRd=c=>{const r=(c.rounds&&c.rounds[c.i])||{};return{m:r.m||c.rules.m||'n',t:r.t!=null?r.t:c.rules.t,c:r.c||''}};
+const parseR=s=>String(s||'').split('|').slice(0,6).map(p=>{const a=p.split('.');return{w:a[0]=='1',n:Math.max(0,+a[1]||0),s:Math.max(0,+a[2]||0)}});
+const NOR={w:false,n:99,s:9999};
+function cmpR(a,b){                      // >0 when a beat b: solved first, then fewer guesses, then faster
+  if(a.w!=b.w)return a.w?1:-1;if(!a.w)return 0;
+  if(a.n!=b.n)return a.n<b.n?1:-1;if(a.s!=b.s)return a.s<b.s?1:-1;return 0}
+function h2hRows(d){
+  return Object.values(d||{}).filter(x=>x&&typeof x.name=='string'&&/^[A-Za-z0-9_]{3,16}$/.test(x.name))
+    .map(x=>({name:x.name,s:+x.s||0,g:+x.g||0,t:+x.t||0,c:+x.c||0,r:parseR(x.r)}))
+    .sort((a,b)=>b.s-a.s||a.g-b.g||a.t-b.t||a.c-b.c).slice(0,12)}
+function h2hHtml(ch,rows,me){
+  const N=ch.words.length,mk=me?rows.find(x=>x.name.toLowerCase()==me.toLowerCase()):null,rc=(x,k)=>x.r[k]||NOR;
+  if(!rows.length)return '<p class="hhn">No results yet. When friends finish this challenge, their scores show up here.</p>';
+  let h='<h3 class="sh">Head-to-head</h3><div class="hhs">';
+  rows.forEach((x,i)=>{
+    const you=x===mk;let vs='';
+    if(mk&&!you){let w=0,l=0,t=0;for(let k=0;k<N;k++){const c=cmpR(rc(mk,k),rc(x,k));if(c>0)w++;else if(c<0)l++;else t++}
+      vs=`<span class="hhv ${w>l?'up':w<l?'dn':''}">${w>l?'You lead '+w+'\u2013'+l:w<l?'They lead '+l+'\u2013'+w:'Level '+w+'\u2013'+l}${t?' \u00b7 '+t+' tied':''}</span>`}
+    h+=`<div class="hhr${you?' me':''}"><span class="hhk">${i+1}</span><div><b>${esc(x.name)}${you?'<em>you</em>':''}${i==0&&rows.length>1?'<i class="hhw">Leader</i>':''}</b>${vs}</div><div class="hhz"><b>${x.s}/${N}</b><span>${x.g} guesses \u00b7 ${fmtT(x.t)}</span></div></div>`});
+  h+='</div><h3 class="sh">Round by round</h3><div class="hht"><table><thead><tr><th></th>'+rows.map(x=>`<th class="${x===mk?'me':''}">${esc(x.name)}</th>`).join('')+'</tr></thead><tbody>';
+  ch.words.forEach((w,k)=>{
+    const cells=rows.map(x=>rc(x,k)),rd=(ch.rounds&&ch.rounds[k])||{},tg=rdTags({m:rd.m,t:rd.t}).replace(' limit','').replace(' mode','');
+    h+=`<tr><th><b>${esc(w.toUpperCase())}</b>${tg?`<small>${esc(tg)}</small>`:''}${rd.c?`<small class="cl">${esc(rd.c)}</small>`:''}</th>`
+      +cells.map(c=>{const top=c.w&&cells.every(o=>cmpR(c,o)>=0)&&cells.some(o=>cmpR(c,o)>0);return `<td class="${c.w?(top?'best':''):'no'}">${c.w?c.n+' \u00b7 '+fmtT(c.s*1000):'\u2715'}</td>`}).join('')+'</tr>'});
+  h+='</tbody></table></div><p class="hhn">Cells show guesses and time. A green cell won the round: fewer guesses first, then speed. Each player\u2019s first attempt counts.</p>';
+  if(!mk)h+='<p class="hhn">'+(P.name?'You haven\u2019t finished this challenge yet, so you are not on the board.':'Join with a name on the Profile tab to show up here next time.')+'</p>';
+  return h}
+async function loadH2H(host,ch){
+  host._ch=ch;host.innerHTML='<p class="hhn">Loading head-to-head...</p>';
+  try{
+    const r=await fetch(`${DB}/results/${ch.code}.json`,{cache:'no-store'});
+    if(r.status==401||r.status==403){if(host._ch===ch)host.innerHTML='<p class="hhn">Head-to-head is not switched on for this board yet.</p>';return}
+    if(!r.ok)throw 0;
+    const rows=h2hRows(await r.json());
+    if(host._ch===ch)host.innerHTML=h2hHtml(ch,rows,P.name)+'<button class="hbtn hhre" data-hh="r" type="button">Refresh</button>'
+  }catch{if(host._ch===ch)host.innerHTML='<p class="hhn err">Could not load results.</p><button class="hbtn hhre" data-hh="r" type="button">Try again</button>'}}
+async function submitResult(c){
+  if(!DB||!P.name)return;
+  const rs=c.res,rr=rs.map(r=>[r.won?1:0,Math.min(r.n,99),Math.min(3599,Math.round(r.t/1000))].join('.')).join('|');
+  const body=JSON.stringify({name:P.name,s:rs.filter(r=>r.won).length,g:Math.min(60,rs.reduce((a,r)=>a+r.n,0)),t:Math.min(3600000,rs.reduce((a,r)=>a+r.t,0)),r:rr,c:Date.now()});
+  try{await fetch(`${DB}/results/${c.code}/${P.name.toLowerCase()}.json`,{method:'PUT',body})}catch{}}
+async function openH2H(code){
+  const m=$('#hhm'),b=$('#hhB');m.hidden=false;$('#hhT').textContent='Results';b._ch=null;b.innerHTML='<p class="hhn">Loading...</p>';
+  const ch=await loadChallenge(code);
+  if(!ch){b.innerHTML='<p class="hhn err">Could not load this challenge.</p>';return}
+  $('#hhT').textContent='Challenge '+code;loadH2H(b,ch)}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-hh]');if(!b)return;const h=b.closest('.hh');if(h&&h._ch)loadH2H(h,h._ch)});
+$('#hhX').onclick=()=>{$('#hhm').hidden=true};
+$('#hhm').addEventListener('click',e=>{if(e.target.id=='hhm')$('#hhm').hidden=true});
 function renderCustom(){
   $('#cuMsg').textContent='';
   $('#cuSub').textContent=P.name?'Make your own challenge and send the link to friends.':'Join with a name on the Profile tab to create challenges. Anyone can play one.';
-  $('#cuWords').innerHTML=CU.w.map((w,i)=>`<div class="wr"><span class="wn">${i+1})</span><input data-i="${i}" maxlength="9" value="${esc(w)}" placeholder="Type a word" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Word ${i+1}"><span class="wc${w.length&&w.length<3?' bad':''}">${w.length} / 9</span><button class="wd" data-del="${i}" type="button" aria-label="Remove word"${CU.w.length<2?' disabled':''}>${TRASH}</button></div>`).join('');
+  $('#cuWords').innerHTML=CU.w.map((w,i)=>{
+    const r=CU.r[i]||(CU.r[i]={m:'',t:null,c:''}),has=!!(r.m||r.t!=null||r.c),open=!!CU.o[i];
+    return `<div class="wg"><div class="wr"><span class="wn">${i+1})</span><input data-i="${i}" maxlength="9" value="${esc(w)}" placeholder="Type a word" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Word ${i+1}"><span class="wc${w.length&&w.length<3?' bad':''}">${w.length} / 9</span><button class="wo${has?' on':''}" data-opt="${i}" type="button" aria-label="Round options for word ${i+1}" aria-expanded="${open}">${SLID}</button><button class="wd" data-del="${i}" type="button" aria-label="Remove word"${CU.w.length<2?' disabled':''}>${TRASH}</button></div>`
+    +(open?`<div class="wp"><div class="wl"><span>Mode for this round</span><div class="sg2">${MO.map(([v,l])=>`<button type="button" data-rm="${i}" data-v="${v}" class="${(r.m||'')==v?'on':''}">${l}</button>`).join('')}</div></div><div class="wl"><span>Time limit for this round</span><div class="sg2">${RT.map(([v,l])=>`<button type="button" data-rt="${i}" data-v="${v==null?'':v}" class="${r.t===v?'on':''}">${l}</button>`).join('')}</div></div><div class="wl"><span>Clue or note</span><input class="wcl" data-ci="${i}" maxlength="60" value="${esc(r.c||'')}" placeholder="Optional. Shown above the board" autocomplete="off" aria-label="Clue for word ${i+1}"></div></div>`:(has?`<div class="wsum">${esc(rdTags(r))}</div>`:''))+'</div>'}).join('');
   $('#cuAdd').hidden=CU.w.length>=6;$('#cuNote').textContent=CU.w.length+' / 6 words';
   $('#vg').textContent=CU.g;$('#vt').textContent=TLN[TLS.indexOf(CU.t)];$('#vd').textContent=CU.d?'Enabled':'Disabled';$('#vm').textContent=MN[CU.m];
   const mine=P.ch||[];$('#cuMh').hidden=!mine.length;
-  $('#cuMine').innerHTML=mine.slice(0,5).map(x=>`<div class="cmi"><b>${esc(x.c)}</b><span>${x.n} word${x.n>1?'s':''}</span><button class="hbtn" data-copy="${esc(x.c)}" type="button">Copy link</button></div>`).join('')}
+  $('#cuMine').innerHTML=mine.slice(0,5).map(x=>`<div class="cmi"><b>${esc(x.c)}</b><span>${x.n} word${x.n>1?'s':''}</span><button class="hbtn" data-res="${esc(x.c)}" type="button">Results</button><button class="hbtn" data-copy="${esc(x.c)}" type="button">Copy link</button></div>`).join('')}
 $('#cuWords').addEventListener('input',e=>{
   const i=e.target.dataset.i;if(i==null)return;
   $('#cuMsg').textContent='';
   const raw=e.target.value,v=raw.replace(/[^a-zA-Z]/g,'').toLowerCase().slice(0,9);
   if(v!==raw.toLowerCase())e.target.value=v;
   CU.w[i]=v;const wc=e.target.parentElement.querySelector('.wc');wc.textContent=v.length+' / 9';wc.classList.toggle('bad',v.length>0&&v.length<3)});
-$('#cuWords').addEventListener('click',e=>{const b=e.target.closest('[data-del]');if(!b)return;CU.w.splice(+b.dataset.del,1);if(!CU.w.length)CU.w=[''];renderCustom()});
-$('#cuAdd').onclick=()=>{if(CU.w.length>=6)return;CU.w.push('');renderCustom();const ins=$('#cuWords').querySelectorAll('input');ins[ins.length-1].focus()};
+$('#cuWords').addEventListener('click',e=>{const b=e.target.closest('[data-del]');if(!b)return;const di=+b.dataset.del;CU.w.splice(di,1);CU.r.splice(di,1);CU.o.splice(di,1);if(!CU.w.length){CU.w=[''];CU.r=[{m:'',t:null,c:''}];CU.o=[false]}renderCustom()});
+$('#cuWords').addEventListener('click',e=>{
+  const o=e.target.closest('[data-opt]');if(o){const i=+o.dataset.opt;CU.o[i]=!CU.o[i];renderCustom();return}
+  const m=e.target.closest('[data-rm]');if(m){CU.r[+m.dataset.rm].m=m.dataset.v;renderCustom();return}
+  const t=e.target.closest('[data-rt]');if(t){const v=t.dataset.v;CU.r[+t.dataset.rt].t=v===''?null:+v;renderCustom()}});
+$('#cuWords').addEventListener('input',e=>{const i=e.target.dataset.ci;if(i==null)return;CU.r[i].c=e.target.value.replace(/[<>\u0000-\u001f]/g,'').slice(0,60);$('#cuMsg').textContent=''});
+$('#cuAdd').onclick=()=>{if(CU.w.length>=6)return;CU.w.push('');CU.r.push({m:'',t:null,c:''});CU.o.push(false);renderCustom();const ins=$('#cuWords').querySelectorAll('input');ins[ins.length-1].focus()};
 document.querySelector('.rules').addEventListener('click',e=>{
   const b=e.target.closest('[data-s]');if(!b)return;const k=b.dataset.s;
   if(k=='g-')CU.g=Math.max(3,CU.g-1);else if(k=='g+')CU.g=Math.min(10,CU.g+1);
@@ -1243,7 +1360,7 @@ document.querySelector('.rules').addEventListener('click',e=>{
   else if(k=='d')CU.d=CU.d?0:1;
   else if(k=='m-'||k=='m+'){const i=MODES.indexOf(CU.m)+(k=='m+'?1:-1);CU.m=MODES[(i+3)%3]}
   renderCustom()});
-$('#cuMine').addEventListener('click',async e=>{const b=e.target.closest('[data-copy]');if(!b)return;try{await navigator.clipboard.writeText(chLink(b.dataset.copy));toast('Link copied')}catch{}});
+$('#cuMine').addEventListener('click',async e=>{const r=e.target.closest('[data-res]');if(r){openH2H(r.dataset.res);return}const b=e.target.closest('[data-copy]');if(!b)return;try{await navigator.clipboard.writeText(chLink(b.dataset.copy));toast('Link copied')}catch{}});
 function openCsh(code){$('#cshL').value=chLink(code);$('#cshS').hidden=!navigator.share;$('#csh').hidden=false}
 const closeCsh=()=>{$('#csh').hidden=true};
 $('#cshC').onclick=async()=>{try{await navigator.clipboard.writeText($('#cshL').value);toast('Link copied')}catch{$('#cshL').select()}};
@@ -1257,20 +1374,24 @@ $('#cuMk').onclick=async()=>{
   if(!ws.length)return bad('Add at least one word.');
   if(ws.some(w=>w.length<3||w.length>9))return bad('Every word needs 3 to 9 letters.');
   if(ws.some(w=>BAD.has(w)))return bad('Please choose different words.');
+  const ki=CU.w.map((x,i)=>x.trim()?i:-1).filter(i=>i>=0),rds=ki.map(i=>CU.r[i]||{m:'',t:null,c:''});
+  if(rds.some(r=>(r.c||'').toLowerCase().split(/[^a-z]+/).some(t=>BAD.has(t))))return bad('Please choose a different clue.');
   $('#cuMk').disabled=true;m.textContent='Creating...';
-  const body=JSON.stringify({by:P.name,w:enc(ws.join(',')),g:CU.g,t:CU.t,d:CU.d,m:CU.m,c:Date.now()});
+  const xs=rds.some(r=>r.m||r.t!=null||(r.c||'').trim())?JSON.stringify(rds.map(r=>[r.m||'',r.t==null?'':r.t,(r.c||'').trim()])):null,
+    body=JSON.stringify(Object.assign({by:P.name,w:enc(ws.join(',')),g:CU.g,t:CU.t,d:CU.d,m:CU.m,c:Date.now()},xs?{x:xs}:{}));
   let code=null;
   try{for(let i=0;i<5&&!code;i++){const c=genCode(),r=await fetch(`${DB}/challenges/${c}.json`,{method:'PUT',body});if(r.ok)code=c;else if(![401,403,412].includes(r.status))throw 0}}catch{}
   $('#cuMk').disabled=false;
   if(!code)return bad('Could not create the link. Check the database rules and try again.');
   m.textContent='';P.ch=[{c:code,n:ws.length},...(P.ch||[])].slice(0,20);P.cnt.made++;save();ev2(null);
-  CU={w:[''],g:CU.g,t:CU.t,d:CU.d,m:CU.m};renderCustom();openCsh(code)};
+  CU={w:[''],g:CU.g,t:CU.t,d:CU.d,m:CU.m,r:[{m:'',t:null,c:''}],o:[false]};renderCustom();openCsh(code)};
 async function loadChallenge(code){
   try{
     const r=await fetch(`${DB}/challenges/${code}.json`);if(!r.ok)return null;
     const d=await r.json();if(!d||!d.w)return null;
     const ws=dec(d.w).split(',').filter(x=>/^[a-z]{3,9}$/.test(x)).slice(0,6);if(!ws.length)return null;
-    return{code,by:String(d.by||'Someone').slice(0,16),words:ws,g:Math.min(10,Math.max(3,+d.g||6)),t:TLS.includes(+d.t)?+d.t:0,d:d.d?1:0,m:MODES.includes(d.m)?d.m:'n'}
+    let rounds=[];try{const a=JSON.parse(d.x||'[]');if(Array.isArray(a))rounds=ws.map((_,i)=>{const e=Array.isArray(a[i])?a[i]:[];return{m:MODES.includes(e[0])?e[0]:'',t:e[1]!==''&&e[1]!=null&&TLS.includes(+e[1])?+e[1]:null,c:typeof e[2]=='string'?e[2].replace(/[<>\u0000-\u001f]/g,'').trim().slice(0,60):''}})}catch{}
+    return{code,by:String(d.by||'Someone').slice(0,16),words:ws,g:Math.min(10,Math.max(3,+d.g||6)),t:TLS.includes(+d.t)?+d.t:0,d:d.d?1:0,m:MODES.includes(d.m)?d.m:'n',rounds}
   }catch{return null}}
 async function openChallenge(code){
   if(!DB){toast('This site is not connected to the online board.');return}
@@ -1282,16 +1403,23 @@ async function openChallenge(code){
   fetch(`${DB}/scores/${ch.by.toLowerCase()}.json`).then(r=>r.ok?r.json():null).then(sc=>{if(sc&&CHI==ch){$('#ciLv').textContent='Lv '+lvInfo(sc.xp||0).L;$('#ciLv').hidden=false}}).catch(()=>{});
   const ls=ch.words.map(w=>w.length),lo=Math.min(...ls),hi=Math.max(...ls);
   $('#ciW').textContent=ch.words.length;$('#ciLt').textContent=lo==hi?lo:lo+' to '+hi;$('#ciG').textContent=ch.g;
-  $('#ciT').textContent=TLN[TLS.indexOf(ch.t)]+(ch.t?' per word':'');$('#ciD').textContent=ch.d?'Enabled':'Disabled';$('#ciM').textContent=MN[ch.m]}
+  $('#ciT').textContent=TLN[TLS.indexOf(ch.t)]+(ch.t?' per word':'');$('#ciD').textContent=ch.d?'Enabled':'Disabled';$('#ciM').textContent=MN[ch.m];
+  const rr=ch.rounds||[],ov=rr.some(r=>r.m||r.t!=null||r.c);
+  if(rr.some(r=>r.m&&r.m!=ch.m))$('#ciM').textContent=MN[ch.m]+' + varies';
+  if(rr.some(r=>r.t!=null&&r.t!=ch.t))$('#ciT').textContent=TLN[TLS.indexOf(ch.t)]+(ch.t?' per word':'')+' + varies';
+  $('#ciRB').hidden=!ov;
+  if(ov)$('#ciR').innerHTML=ch.words.map((w,i)=>{const r=rr[i]||{},tg=[r.m?MN[r.m]:'',r.t!=null?(r.t?TLN[TLS.indexOf(r.t)]:'No limit'):'',r.c?'Clue':''].filter(Boolean).join(' \u00b7 ')||'Standard';return `<div class="cir"><span>Round ${i+1} \u00b7 ${w.length} letters</span><b>${tg}</b></div>`}).join('')}
 function closeInt(){$('#cint').hidden=true;try{history.replaceState(null,'',location.pathname+location.hash)}catch{}}
 $('#ciX').onclick=closeInt;$('#cint').addEventListener('click',e=>{if(e.target.id=='cint')closeInt()});
 $('#ciP').onclick=()=>{if(CHI){const ch=CHI;closeInt();startCustom(ch)}};
-function startCustom(ch){startWord({code:ch.code,by:ch.by,words:ch.words,rules:{g:ch.g,t:ch.t,d:ch.d,m:ch.m},i:0,res:[],fin:false,paid:0,note:''})}
+function startCustom(ch){startWord({code:ch.code,by:ch.by,words:ch.words,rules:{g:ch.g,t:ch.t,d:ch.d,m:ch.m},rounds:ch.rounds||[],i:0,res:[],fin:false,paid:0,note:''})}
 function startWord(c){
-  const w=c.words[c.i];c.t0=Date.now();c.dl=c.rules.t?c.t0+c.rules.t*1000:0;
-  S={L:w.length,N:1,G:c.rules.g,mode:c.rules.m||'n',ans:[w],gs:[],cur:Array(w.length).fill(''),pos:0,over:false,hn:0,hf:false,hp:-1,hl:'',hd:null,cu:c};
+  const w=c.words[c.i],rd=cuRd(c);c.t0=Date.now();c.dl=rd.t?c.t0+rd.t*1000:0;
+  S={L:w.length,N:1,G:c.rules.g,mode:rd.m,ans:[w],gs:[],cur:Array(w.length).fill(''),pos:0,over:false,hn:0,hf:false,hp:-1,hl:'',hd:null,cu:c};
   $('#end').hidden=true;$('#after').hidden=true;$('#kb').hidden=false;
-  persist();view('play');render()}
+  persist();view('play');render();
+  const ro=(c.rounds&&c.rounds[c.i])||{},tg=[];if(ro.m&&ro.m!=c.rules.m)tg.push(MN[ro.m]+' mode');if(ro.t!=null&&ro.t!=c.rules.t)tg.push(ro.t?TLN[TLS.indexOf(ro.t)]+' limit':'No time limit');
+  if(tg.length)toast('Round '+(c.i+1)+': '+tg.join(' \u00b7 '))}
 async function cuFinish(won,why){
   const c=S.cu,w0=S.ans[0];
   S.over=true;c.res.push({w:w0,won,n:S.gs.length,t:Date.now()-c.t0,gs:S.gs.slice(),why:why||''});persist();hintUi();
@@ -1308,11 +1436,12 @@ async function cuFinish(won,why){
 function cuNext(){const c=S.cu;c.i++;if(c.i>=c.words.length)return cuResults();startWord(c)}
 const CB={3:8,4:10,5:14,6:20,7:26,8:32,9:38};
 function cuXp(c){
-  const r=c.rules,mm={n:1,h:1.5,b:2}[r.m||'n'],tm=r.t?(r.t<=60?1.3:1.15):1,gm=Math.min(1.4,Math.max(.8,1+(6-r.g)*.08)),dm=r.d?1:.9;
-  const sv=c.res.filter(x=>x.won);
-  let x=sv.reduce((a,w)=>a+(CB[w.w.length]||10)+Math.max(0,r.g-w.n)*2,0);
-  if(sv.length&&sv.length==c.res.length)x+=5*c.res.length;
-  return Math.round(x*mm*tm*gm*dm)}
+  const r=c.rules,gm=Math.min(1.4,Math.max(.8,1+(6-r.g)*.08)),dm=r.d?1:.9,sv=c.res.filter(x=>x.won),all=sv.length&&sv.length==c.res.length;
+  let x=0;
+  c.res.forEach((w,i)=>{if(!w.won)return;
+    const rd=(c.rounds&&c.rounds[i])||{},m=rd.m||r.m||'n',t=rd.t!=null?rd.t:r.t,mm={n:1,h:1.5,b:2}[m],tm=t?(t<=60?1.3:1.15):1;
+    x+=((CB[w.w.length]||10)+Math.max(0,r.g-w.n)*2+(all?5:0))*mm*tm});
+  return Math.round(x*gm*dm)}
 function cuResults(){
   const c=S.cu;c.fin=true;
   const rs=c.res,solved=rs.filter(r=>r.won).length,gu=rs.reduce((a,r)=>a+r.n,0),tt=rs.reduce((a,r)=>a+r.t,0);
@@ -1331,6 +1460,7 @@ function cuResults(){
   $('#crS').textContent=solved+' of '+rs.length+' solved \u00b7 '+gu+' guesses \u00b7 '+fmtT(tt);
   $('#crX').textContent=c.note;$('#crX').hidden=!c.note;
   $('#crL').innerHTML=rs.map(r=>`<div class="crr"><i class="${r.won?'':'no'}">${r.won?'&#10003;':'&times;'}</i><b>${esc(r.w)}</b><span>${r.won?r.n+' / '+c.rules.g+' \u00b7 ':''}${fmtT(r.t)}</span></div>`).join('');
+  {const host=$('#crH');if(!c.sub){c.sub=1;persist();host._ch=c;host.innerHTML='<p class="hhn">Saving your result...</p>';submitResult(c).then(()=>loadH2H(host,c))}else loadH2H(host,c)}
   $('#end').hidden=true;$('#cres').hidden=false;if(solved==rs.length)confetti()}
 function cuText(){
   const c=S.cu,E={g:'\u{1F7E9}',y:'\u{1F7E8}',a:'\u2B1B'},rs=c.res,solved=rs.filter(r=>r.won).length,gu=rs.reduce((a,r)=>a+r.n,0),tt=rs.reduce((a,r)=>a+r.t,0);
