@@ -417,6 +417,29 @@ html[data-theme="gold"] .tile{border-radius:4px}
 .swt.cur{border-color:var(--text)}.swt.lk{opacity:.35}
 .swi{display:block;width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,var(--bg) 0 50%,var(--g) 50% 100%);box-shadow:0 0 0 1px rgba(128,128,128,.5)}
 
+/* ===== v5: rare achievements + grandmaster badge ===== */
+[data-theme="royal"]{--bg:#110c1d;--panel:#1a1329;--line:#47356a;--text:#f7eeff;--mut:#ab97cf;--g:#f2c14e;--y:#b388ff;--a:#241a37;--key:#2e2244;--og:#1a1200;--tg:#1a1200;--bf:#7a5fb0;--bt:#a58be0;--bs:#f2c14e;--bh:#56427f;--kp:#46336a;--ka:#0d0916;--kat:#5e4d86;--ghc:#5e4d86;--ov:rgba(8,5,16,.84)}
+html[data-theme="royal"] .tile.g{box-shadow:0 0 16px rgba(242,193,78,.45)}
+html[data-theme="royal"] .tile.y{box-shadow:0 0 14px rgba(179,136,255,.35)}
+.rare{font-style:normal;font-size:9.5px;font-weight:800;letter-spacing:.06em;color:#1a1200;background:linear-gradient(135deg,#f6d57a,#e0ad1f);border-radius:5px;padding:1px 5px;margin-left:7px;vertical-align:middle}
+.crn{color:#f2c14e;vertical-align:-3px;margin-left:5px;filter:drop-shadow(0 0 5px rgba(242,193,78,.45));flex:none}
+.gmn{font-weight:800;background:linear-gradient(100deg,#e0ad1f 0%,#fff0b8 35%,#e0ad1f 55%,#c98a12 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:gmsh 5s linear infinite}
+@keyframes gmsh{to{background-position:-220% 0}}
+html[data-theme="paper"] .gmn{background-image:linear-gradient(100deg,#9a6a08 0%,#d9a02a 40%,#9a6a08 70%,#b9820e 100%)}
+.gmc{display:flex;gap:14px;align-items:flex-start;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:16px;background:var(--panel)}
+.gmc>.crn{margin:2px 0 0;opacity:.45;filter:none;flex:none}
+.gmc b{display:block;font-size:15px}
+.gmc span{display:block;color:var(--mut);font-size:13px;margin-top:2px;line-height:1.4}
+.gmc .xbar{margin-top:9px}.gmc small{display:block;color:var(--mut);font-size:12px;margin-top:5px}
+.gmc.on{border-color:#f2c14e;background:linear-gradient(135deg,rgba(242,193,78,.18),rgba(242,193,78,.04))}
+.gmc.on>.crn{opacity:1;filter:drop-shadow(0 0 8px rgba(242,193,78,.6))}.gmc.on b{color:#f2c14e}
+.ac.gmk.on{border-color:#f2c14e}.ac.gmk.on .ai{background:#f2c14e}.ac.gmk.on em{color:#f2c14e}
+.au.gm{background:linear-gradient(135deg,rgba(242,193,78,.28),rgba(242,193,78,.08));border:1px solid rgba(242,193,78,.55)}
+.au.gm b{color:#f2c14e}.au.gm .crn{margin:0 7px 0 0}.au .rare{margin-left:6px}
+#list li.gm{box-shadow:inset 3px 0 0 #f2c14e}
+#nPr .crn{margin-left:4px;vertical-align:-2px}
+#pT .crn{margin-left:8px;vertical-align:-2px}
+
 </style>
 </head>
 <body>
@@ -551,7 +574,7 @@ const $=s=>document.querySelector(s), sleep=ms=>new Promise(r=>setTimeout(r,ms))
 const LS={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}},del(k){try{localStorage.removeItem(k)}catch{}}};
 const lists={};for(const l in WORDS)lists[l]=[...new Set(WORDS[l].split(' ').filter(w=>w.length==l&&/^[a-z]+$/.test(w)))];
 let P=Object.assign({rc:0,L:5,N:1,name:'',xp:0,ach:{},mode:'n'},LS.get('wb_p',{}));
-P.cnt=Object.assign({inv:0,edit:0,shares:0,spins:0,jack:0,made:0,cdone:0,last:''},P.cnt);
+P.cnt=Object.assign({inv:0,edit:0,shares:0,spins:0,jack:0,made:0,cdone:0,last:'',seq:[],clean:0,cleanBest:0,fast:0,fastBest:0,nh:0,dw:null,dwBest:0},P.cnt);
 const LENS=[4,5,6];
 if(!P.st&&!P.sm){ // first run with per-length stats: earlier games count as 5-letter
   const w=Math.max(P.wins||0,P.best||0),g=Math.max(P.games||0,w);
@@ -570,6 +593,21 @@ MODES.forEach(m=>LENS.forEach(L=>stM(m,L)));
 const need=L=>50+30*L;
 function lvInfo(xp){let L=1,r=xp;while(r>=need(L)){r-=need(L);L++}return{L,cur:r,next:need(L),pct:r/need(L)}}
 function winXp(L,n,G,st,paid,mode){const base={4:20,5:30,6:45}[L],fast=(G-n)*5,sk=Math.min(st,10)*3,mult={n:1,h:1.5,b:2}[mode||'n'],scaled=Math.round((base+fast+sk)*mult),total=Math.round(scaled*(1-.25*(paid||0)));return{base,fast,st:sk,mult,total,cut:scaled-total}}
+// ---- grandmaster crown + run tracking for the new achievements ----
+const CROWN=(s=14)=>`<svg class="crn" viewBox="0 0 24 24" width="${s}" height="${s}" fill="currentColor" role="img" aria-label="Grandmaster"><path d="M2.5 7.5l4.8 4.2L12 4l4.7 7.7 4.8-4.2-1.9 10.5H4.4z"/><rect x="4.6" y="19.6" width="14.8" height="2.2" rx="1.1"/></svg>`;
+const nameH=(n,gm)=>gm?`<span class="gmn">${esc(n)}</span>${CROWN(14)}`:esc(n);
+function trackRun(c){
+  if(S&&S.cu)return;
+  const k=P.cnt,clean=c.won&&!c.hinted;
+  k.seq=(k.seq||[]).concat({w:c.won?1:0,L:c.L,m:c.m,h:c.hinted?1:0,n:c.n}).slice(-8);
+  if(clean){k.nh=(k.nh||0)+1;k.clean=(k.clean||0)+1;k.cleanBest=Math.max(k.cleanBest||0,k.clean)}else k.clean=0;
+  if(clean&&c.n<=3){k.fast=(k.fast||0)+1;k.fastBest=Math.max(k.fastBest||0,k.fast)}else k.fast=0;
+  if(c.won){const d=dayNo();if(!k.dw||k.dw.d!=d)k.dw={d,n:0};k.dw.n++;k.dwBest=Math.max(k.dwBest||0,k.dw.n)}}
+const sq=k=>{const s=(P.cnt.seq||[]).slice(-k);return s.length==k&&s.every(e=>e.w&&!e.h)?s:null};
+const nLen=s=>new Set(s.map(e=>e.L)).size;
+const distHas=n=>MODES.some(m=>LENS.some(L=>(stM(m,L).dist[n]||0)>0));
+const fastW=(c,s,m)=>!!c&&c.won&&!c.hinted&&c.sec!=null&&c.sec>=2&&c.sec<s&&(!m||c.m==m);
+const achN=()=>ACH.filter(a=>a.id!='master'&&P.ach[a.id]).length;
 const ACH=[
  {id:'first_win',c:'Wins',n:'First Steps',d:'Win your first game',x:50,t:()=>sum('w')>=1},
  {id:'wins_10',c:'Wins',n:'Regular',d:'Win 10 games',x:100,t:()=>sum('w')>=10,p:()=>[sum('w'),10]},
@@ -597,17 +635,59 @@ const ACH=[
  {id:'board',c:'Mistakes and more',n:'On the Board',d:'Join the leaderboard with a name',x:50,t:()=>!!P.name},
  {id:'backup',c:'Mistakes and more',n:'Backed Up',d:'Create a recovery code',x:40,t:()=>!!P.rc},
  {id:'spin',c:'Mistakes and more',n:'Feeling Lucky',d:'Take your first daily spin',x:30,t:()=>P.cnt.spins>=1},
- {id:'jackpot',c:'Mistakes and more',n:'Jackpot',d:'Hit the 500 XP daily spin',x:250,t:()=>P.cnt.jack>=1},
  {id:'hard_win',c:'Modes',n:'Hard Hitter',d:'Win a game in Hard mode',x:80,t:()=>wM('h')>=1},
  {id:'blind_win',c:'Modes',n:'Blindfolded',d:'Win a game in Blind mode',x:100,t:()=>wM('b')>=1},
  {id:'hard_streak',c:'Modes',n:'Stubborn',d:'Reach a 5-win streak in Hard mode',x:200,t:()=>bM('h')>=5,p:()=>[bM('h'),5]},
  {id:'blind_streak',c:'Modes',n:'Memory Master',d:'Reach a 3-win streak in Blind mode',x:250,t:()=>bM('b')>=3,p:()=>[bM('b'),3]},
  {id:'mk',c:'Challenges',n:'Challenger',d:'Create a custom challenge',x:40,t:()=>P.cnt.made>=1},
  {id:'cd',c:'Challenges',n:'Friendly Rival',d:"Finish someone else's challenge",x:40,t:()=>P.cnt.cdone>=1},
- {id:'lvl10',c:'Mistakes and more',n:'Rising Star',d:'Reach level 10',x:150,t:()=>lvInfo(P.xp).L>=10,p:()=>[lvInfo(P.xp).L,10]}
+ {id:'lvl10',c:'Mistakes and more',n:'Rising Star',d:'Reach level 10',x:150,t:()=>lvInfo(P.xp).L>=10,p:()=>[lvInfo(P.xp).L,10]},
+ {id:'trio',c:'Combos',n:'Triple Threat',d:'Win a 4, 5 and 6-letter game back to back, no hints',x:200,t:()=>{const s=sq(3);return !!s&&nLen(s)==3}},
+ {id:'climb',c:'Combos',n:'Staircase',d:'Win 4, then 5, then 6 letters back to back, no hints',x:300,r:1,t:()=>{const s=sq(3);return !!s&&s[0].L==4&&s[1].L==5&&s[2].L==6}},
+ {id:'shape',c:'Combos',n:'Shapeshifter',d:'Win in Normal, Hard and Blind back to back, no hints',x:300,r:1,t:()=>{const s=sq(3);return !!s&&new Set(s.map(e=>e.m)).size==3}},
+ {id:'hat3',c:'Combos',n:'Hat Trick',d:'Win 3 games in a row, each in 3 guesses or fewer, no hints',x:400,r:1,t:()=>{const s=sq(3);return !!s&&s.every(e=>e.n<=3)}},
+ {id:'hard_trio',c:'Combos',n:'Iron Will',d:'Win 4, 5 and 6 letters back to back in Hard mode, no hints',x:700,r:1,t:()=>{const s=sq(3);return !!s&&nLen(s)==3&&s.every(e=>e.m=='h')}},
+ {id:'blind_trio',c:'Combos',n:'Eyes Closed',d:'Win 4, 5 and 6 letters back to back in Blind mode, no hints',x:1000,r:1,t:()=>{const s=sq(3);return !!s&&nLen(s)==3&&s.every(e=>e.m=='b')}},
+ {id:'triple_crown',c:'Combos',n:'Triple Crown',d:'Reach a 5-win streak in Normal, Hard and Blind',x:500,r:1,t:()=>MODES.every(m=>bM(m)>=5),p:()=>[MODES.filter(m=>bM(m)>=5).length,3]},
+ {id:'clean_10',c:'No hints',n:'Self Reliant',d:'Win 10 games in a row without a hint',x:250,t:()=>(P.cnt.cleanBest||0)>=10,p:()=>[P.cnt.cleanBest||0,10]},
+ {id:'clean_25',c:'No hints',n:'Pure Mind',d:'Win 25 games in a row without a hint',x:700,r:1,t:()=>(P.cnt.cleanBest||0)>=25,p:()=>[P.cnt.cleanBest||0,25]},
+ {id:'clean_50',c:'No hints',n:'Unassisted',d:'Win 50 games in a row without a hint',x:1500,r:1,t:()=>(P.cnt.cleanBest||0)>=50,p:()=>[P.cnt.cleanBest||0,50]},
+ {id:'nh_100',c:'No hints',n:'No Help Needed',d:'Win 100 games without using a hint',x:400,t:()=>(P.cnt.nh||0)>=100,p:()=>[P.cnt.nh||0,100]},
+ {id:'sniper',c:'No hints',n:'Sniper',d:'Win 5 games in a row in 3 guesses or fewer, no hints',x:1000,r:1,t:()=>(P.cnt.fastBest||0)>=5,p:()=>[P.cnt.fastBest||0,5]},
+ {id:'six_fast',c:'Skill shots',n:'Six Sense',d:'Win a 6-letter game in 3 guesses or fewer, no hints',x:250,r:1,t:c=>!!c&&c.won&&!c.hinted&&c.L==6&&c.n<=3},
+ {id:'hard_fast',c:'Skill shots',n:'Sharp Mind',d:'Win a Hard game in 3 guesses or fewer, no hints',x:250,t:c=>!!c&&c.won&&!c.hinted&&c.m=='h'&&c.n<=3},
+ {id:'blind_fast',c:'Skill shots',n:'Blind Genius',d:'Win a Blind game in 3 guesses or fewer, no hints',x:400,r:1,t:c=>!!c&&c.won&&!c.hinted&&c.m=='b'&&c.n<=3},
+ {id:'blind_clutch',c:'Skill shots',n:'Sweat It Out',d:'Win a Blind game on your very last guess',x:200,t:c=>!!c&&c.won&&c.m=='b'&&c.n==c.G},
+ {id:'grand_tour',c:'Skill shots',n:'Grand Tour',d:'Win at least once in every mode and every word length',x:600,r:1,t:()=>MODES.every(m=>LENS.every(L=>stM(m,L).w>=1)),p:()=>[MODES.reduce((a,m)=>a+LENS.filter(L=>stM(m,L).w>=1).length,0),9]},
+ {id:'spectrum',c:'Skill shots',n:'Full Spectrum',d:'Win in 1, 2, 3, 4, 5 and 6 guesses at least once each',x:1000,r:1,t:()=>[1,2,3,4,5,6].every(distHas),p:()=>[[1,2,3,4,5,6].filter(distHas).length,6]},
+ {id:'speed30',c:'Speed',n:'Quick Draw',d:'Win in under 30 seconds, no hints',x:150,t:c=>fastW(c,30)},
+ {id:'speed15',c:'Speed',n:'Lightning',d:'Win in under 15 seconds, no hints',x:500,r:1,t:c=>fastW(c,15)},
+ {id:'speed_hard',c:'Speed',n:'Pressure Cooker',d:'Win a Hard game in under 45 seconds, no hints',x:300,r:1,t:c=>fastW(c,45,'h')},
+ {id:'ds_3',c:'Daily',n:'Back Again',d:'Reach a 3-day daily streak',x:60,t:()=>P.ds.best>=3,p:()=>[Math.min(P.ds.best,3),3]},
+ {id:'ds_7',c:'Daily',n:'Weekly Ritual',d:'Reach a 7-day daily streak',x:150,t:()=>P.ds.best>=7,p:()=>[Math.min(P.ds.best,7),7]},
+ {id:'ds_30',c:'Daily',n:'Monthly Master',d:'Reach a 30-day daily streak',x:600,r:1,t:()=>P.ds.best>=30,p:()=>[Math.min(P.ds.best,30),30]},
+ {id:'ds_100',c:'Daily',n:'Hundred Days',d:'Reach a 100-day daily streak',x:2000,r:1,t:()=>P.ds.best>=100,p:()=>[Math.min(P.ds.best,100),100]},
+ {id:'day_10',c:'Daily',n:'Marathon',d:'Win 10 games in a single day',x:150,t:()=>(P.cnt.dwBest||0)>=10,p:()=>[Math.min(P.cnt.dwBest||0,10),10]},
+ {id:'day_25',c:'Daily',n:'Ultramarathon',d:'Win 25 games in a single day',x:600,r:1,t:()=>(P.cnt.dwBest||0)>=25,p:()=>[Math.min(P.cnt.dwBest||0,25),25]},
+ {id:'owl',c:'Rare finds',n:'Night Owl',d:'Win a game between midnight and 4 am',x:100,s:1,t:c=>!!c&&c.won&&c.hr<4},
+ {id:'early',c:'Rare finds',n:'Early Bird',d:'Win a game between 5 and 7 am',x:100,s:1,t:c=>!!c&&c.won&&c.hr>=5&&c.hr<7},
+ {id:'wins_500',c:'Rare finds',n:'Word Wizard',d:'Win 500 games',x:1500,t:()=>sum('w')>=500,p:()=>[sum('w'),500]},
+ {id:'wins_1000',c:'Rare finds',n:'Living Lexicon',d:'Win 1000 games',x:3000,r:1,t:()=>sum('w')>=1000,p:()=>[sum('w'),1000]},
+ {id:'streak_100',c:'Rare finds',n:'Eternal',d:'Reach a 100-win streak',x:3000,r:1,t:()=>maxBest()>=100,p:()=>[maxBest(),100]},
+ {id:'lvl25',c:'Rare finds',n:'Seasoned',d:'Reach level 25',x:400,t:()=>lvInfo(P.xp).L>=25,p:()=>[lvInfo(P.xp).L,25]},
+ {id:'lvl50',c:'Rare finds',n:'Elder',d:'Reach level 50',x:1500,r:1,t:()=>lvInfo(P.xp).L>=50,p:()=>[lvInfo(P.xp).L,50]},
+ {id:'themes_all',c:'Rare finds',n:'Fashionista',d:'Unlock every board theme',x:500,r:1,t:()=>THEMES.filter(x=>!x.r||x.r.k!='gm').every(thOk),p:()=>[THEMES.filter(x=>!x.r||x.r.k!='gm').filter(thOk).length,THEMES.filter(x=>!x.r||x.r.k!='gm').length]},
+ {id:'ach_30',c:'Rare finds',n:'Collector',d:'Earn 30 achievements',x:200,t:()=>achN()>=30,p:()=>[Math.min(achN(),30),30]},
+ {id:'ach_50',c:'Rare finds',n:'Hunter',d:'Earn 50 achievements',x:600,r:1,t:()=>achN()>=50,p:()=>[Math.min(achN(),50),50]},
+ {id:'master',c:'Grandmaster',n:'Grandmaster',d:'Unlock every other achievement. Earns a golden crown on your name',x:3000,r:1,t:()=>ACH.every(a=>a.id=='master'||P.ach[a.id]),p:()=>[achN(),ACH.length-1]}
 ];
 function evalAch(ctx){const got=[];let ch=true;while(ch){ch=false;for(const a of ACH)if(!P.ach[a.id]&&a.t(ctx)){P.ach[a.id]=Date.now();P.xp+=a.x;got.push(a);ch=true}}return got}
 function ev2(ctx){const got=evalAch(ctx);if(!got.length)return;save();stats();pushScore();got.forEach((a,i)=>setTimeout(()=>{toast('Achievement: '+a.n+' +'+a.x+' XP');SFX.ach()},i*1400))}
+function achRows(got){
+  const row=a=>a.id=='master'?`<div class="au gm"><span>${CROWN(15)}Grandmaster unlocked</span><b>+${a.x} XP</b></div>`:`<div class="au"><span>${a.n}${a.r?'<i class="rare">RARE</i>':''}</span><b>+${a.x} XP</b></div>`;
+  if(got.length<=3)return got.map(row).join('');
+  const m=got.find(a=>a.id=='master'),oth=got.filter(a=>a!==m).sort((a,b)=>b.x-a.x),top=oth.slice(0,m?2:3),rest=oth.slice(top.length);
+  return (m?row(m):'')+top.map(row).join('')+(rest.length?`<div class="au"><span>+${rest.length} more achievement${rest.length>1?'s':''}</span><b>+${rest.reduce((s,a)=>s+a.x,0)} XP</b></div>`:'')}
 function countUp(el,to){if(P.fast){el.textContent='+'+to+' XP';return}const t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/700);el.textContent='+'+Math.round(to*(1-Math.pow(1-k,3)))+' XP';if(k<1)requestAnimationFrame(f)})(t0)}
 let sortBy='best',lbLen='all',lbMode='all';
 let S=null,busy=false,dict=null;
@@ -631,11 +711,12 @@ const THEMES=[
   {id:'blueprint',n:'Blueprint',d:'White lines on drafting blue.',r:{k:'ds',v:7}},
   {id:'sunset',n:'Sunset',d:'Rose and gold after dark.',r:{k:'lv',v:10}},
   {id:'neon',n:'Midnight Neon',d:'Glowing tiles in the dark.',r:{k:'ds',v:14}},
-  {id:'gold',n:'Gold Leaf',d:'Black and gold. The big flex.',r:{k:'ds',v:30}}];
-const thOk=x=>!x.r||(x.r.k=='ds'?P.ds.best>=x.r.v:lvInfo(P.xp).L>=x.r.v);
-const thProg=x=>[x.r.k=='ds'?Math.min(dsNow(),x.r.v):Math.min(lvInfo(P.xp).L,x.r.v),x.r.v];
-const thReq=x=>x.r.k=='ds'?x.r.v+'-day daily streak':'Reach level '+x.r.v;
-const thUnit=(x,n)=>x.r.k=='ds'?(n==1?'day':'days'):(n==1?'level':'levels');
+  {id:'gold',n:'Gold Leaf',d:'Black and gold. The big flex.',r:{k:'ds',v:30}},
+  {id:'royal',n:'Royal Crown',d:'Gold and violet. Grandmasters only.',r:{k:'gm'}}];
+const thOk=x=>!x.r||(x.r.k=='gm'?!!P.ach.master:x.r.k=='ds'?P.ds.best>=x.r.v:lvInfo(P.xp).L>=x.r.v);
+const thProg=x=>x.r.k=='gm'?[achN(),ACH.length-1]:[x.r.k=='ds'?Math.min(dsNow(),x.r.v):Math.min(lvInfo(P.xp).L,x.r.v),x.r.v];
+const thReq=x=>x.r.k=='gm'?'Become a Grandmaster':x.r.k=='ds'?x.r.v+'-day daily streak':'Reach level '+x.r.v;
+const thUnit=(x,n)=>x.r.k=='gm'?'achievements':x.r.k=='ds'?(n==1?'day':'days'):(n==1?'level':'levels');
 function themeCheck(){const n=THEMES.filter(x=>x.r&&thOk(x)&&!P.tu[x.id]);n.forEach(x=>P.tu[x.id]=Date.now());return n}
 function nextTheme(){
   let b=null;
@@ -729,7 +810,7 @@ function pick(L,N){
   return out}
 
 function newGame(){
-  S={L:P.L,N:1,G:P.L+1,mode:P.mode||'n',ans:pick(P.L,1),gs:[],cur:Array(P.L).fill(''),pos:0,over:false,hn:0,hf:false,hp:-1,hl:'',hd:null};
+  S={L:P.L,N:1,G:P.L+1,mode:P.mode||'n',ans:pick(P.L,1),gs:[],cur:Array(P.L).fill(''),pos:0,over:false,hn:0,hf:false,hp:-1,hl:'',hd:null,t0:Date.now()};
   persist();render();
 }
 const persist=()=>{if(S&&S.cu){LS.set('wb_cg',S);return}S&&!S.over?LS.set('wb_g',S):LS.del('wb_g')};
@@ -888,11 +969,12 @@ async function finish(won,g,A,sk){
   S.over=true;persist();hintUi();$('#eC').hidden=true;
   S.ans.forEach((a,b)=>boardEl(b).classList.toggle('done',solveIdx(b)>=0));
   A.filter(b=>S.ans[b]==g).forEach(b=>{for(let c=0;c<S.L;c++){const t=tile(b,S.gs.length-1,c);t.style.setProperty('--i',c);t.classList.remove('flip');t.classList.add('bounce')}});
-  const n=S.gs.length,q=stM(S.mode||'n',S.L),ctx={won,n,G:S.G,L:S.L,prevLoss:P.cnt.last=='l',hinted:(S.hn||0)>0},paid=S.hn||0,lv0=lvInfo(P.xp);let gain=null,dsf=false;
+  const n=S.gs.length,q=stM(S.mode||'n',S.L),ctx={won,n,G:S.G,L:S.L,prevLoss:P.cnt.last=='l',hinted:(S.hn||0)>0,m:S.mode||'n',sec:S.t0?(Date.now()-S.t0)/1000:null,hr:new Date().getHours()},paid=S.hn||0,lv0=lvInfo(P.xp);let gain=null,dsf=false;
   q.g++;
   if(won){dsf=dsWin();q.w++;q.streak++;if(q.streak>q.best)q.best=q.streak;q.dist[n]=(q.dist[n]||0)+1;gain=winXp(S.L,n,S.G,q.streak,paid,S.mode||'n');P.xp+=gain.total;confetti();SFX.win()}else{q.streak=0;SFX.lose()}
   P.cnt.last=won?'w':'l';
   const w0=S.ans[0],dp=lookup(w0).catch(()=>null);$('#eD').hidden=true;
+  trackRun(ctx);
   const got=evalAch(ctx),lv1=lvInfo(P.xp),th=won?themeCheck():[];
   pushScore();save();stats();
   if(won){const e=$('#stc');e.classList.remove('pop');void e.offsetWidth;e.classList.add('pop')}
@@ -906,7 +988,7 @@ async function finish(won,g,A,sk){
   if(!X.hidden){
     $('#xpH').hidden=!gain;
     if(gain){$('#xpN').textContent='+0 XP';$('#xpD').textContent='Win '+gain.base+(gain.fast?' + Fast '+gain.fast:'')+(gain.st?' + Streak '+gain.st:'')+(gain.mult>1?' x'+gain.mult+' '+MN[S.mode||'n']:'')+(gain.cut?' - Hints '+gain.cut:'')}
-    $('#xpA').innerHTML=got.map(a=>`<div class="au"><span>${a.n}</span><b>+${a.x} XP</b></div>`).join('');
+    $('#xpA').innerHTML=achRows(got);
     const up=lv1.L>lv0.L;$('#xpU').hidden=!up;$('#xpU').textContent='Level up! You reached level '+lv1.L;
     const F=$('#xpF'),fmt=l=>l.cur+' / '+l.next+' XP';
     F.style.transition='none';F.style.width=Math.round(lv0.pct*100)+'%';$('#xpL').textContent='Level '+lv0.L;$('#xpT').textContent=fmt(lv0);
@@ -915,7 +997,7 @@ async function finish(won,g,A,sk){
       F.style.transition='';
       if(up&&!P.fast){F.style.width='100%';setTimeout(()=>{F.style.transition='none';F.style.width='0%';$('#xpL').textContent='Level '+lv1.L;void F.offsetWidth;F.style.transition='';F.style.width=Math.round(lv1.pct*100)+'%';$('#xpT').textContent=fmt(lv1)},650)}
       else{F.style.width=Math.round(lv1.pct*100)+'%';$('#xpL').textContent='Level '+lv1.L;$('#xpT').textContent=fmt(lv1)}
-      if(got.length)setTimeout(SFX.ach,500);
+      if(got.length)setTimeout(SFX.ach,500);if(got.some(a=>a.id=='master')&&!P.fast)setTimeout(()=>{confetti();setTimeout(confetti,500)},800);
       if(up)setTimeout(SFX.level,700);
     },P.fast?0:350)}
   if(won)showDist(q,n,S.G);
@@ -1334,7 +1416,7 @@ $('#nPr').onclick=goProfile;$('#lvc').onclick=goProfile;$('#cb').onclick=goProfi
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function pushScore(){
   if(!DB||!P.name)return;
-  const k=P.name.toLowerCase(),mb=maxBest(),o={name:P.name,best:mb,wins:Math.max(sum('w'),mb),xp:P.xp,t:Date.now()};
+  const k=P.name.toLowerCase(),mb=maxBest(),o={name:P.name,best:mb,wins:Math.max(sum('w'),mb),xp:P.xp,t:Date.now()};if(P.ach.master)o.bd=1;
   LENS.forEach(L=>{const b=bL(L);o['b'+L]=b;o['w'+L]=Math.max(wL(L),b)});
   MODES.forEach(m=>{let bm=0,wm=0;LENS.forEach(L=>{const q=stM(m,L),w=Math.max(q.w,q.best);o['b'+m+L]=q.best;o['w'+m+L]=w;bm=Math.max(bm,q.best);wm+=w});o['b'+m]=bm;o['w'+m]=wm});
   fetch(`${DB}/scores/${k}.json`,{method:'PUT',body:JSON.stringify(o)}).catch(()=>{});
@@ -1376,7 +1458,7 @@ $('#rf').addEventListener('submit',async e=>{
     save();stats();pushScore();$('#rf').hidden=true;m.textContent='Welcome back, '+P.name+'.';renderProfile();
   }catch{bad('Could not reach the board. Try again.')}});
 let pTab='stats',pLen='5',pMode='all',PV=null;
-const navLabel=()=>{$('#nPr').textContent=P.name||'Profile'};
+const navLabel=()=>{const n=$('#nPr');n.textContent=P.name||'Profile';if(P.name&&P.ach.master)n.insertAdjacentHTML('beforeend',CROWN(13))};
 function subj(){
   if(!PV)return{own:true,xp:P.xp,sm:P.sm,ach:P.ach};
   const d=PV.data||{};return{own:false,name:PV.name,xp:d.xp||0,sm:d.sm||(d.st?{n:d.st}:null),ach:d.ach||{},loading:PV.loading,fail:PV.fail}}
@@ -1394,17 +1476,20 @@ function statsHtml(s0){
   for(let i=1;i<=top;i++){const n=a.d[i]||0;h+=`<div class="db"><span>${i}</span><i class="${n?'on':''}" style="width:${n?Math.max(10,n/mx*100):6}%${n?';background:'+BC[i-1]+';color:'+(i>=6?'#fff':'#0e0f12'):''}">${n||''}</i></div>`}
   return h}
 function achHtml(s0){
-  const cats=[...new Set(ACH.map(a=>a.c))],got=ACH.filter(a=>s0.ach[a.id]).length;
-  let h=`<p class="note" style="margin-top:14px">${got} / ${ACH.length} unlocked</p>`;
+  const cats=[...new Set(ACH.map(a=>a.c))],got=ACH.filter(a=>s0.ach[a.id]).length,gm=!!s0.ach.master;
+  const oth=ACH.filter(a=>a.id!='master'&&s0.ach[a.id]).length,tot=ACH.length-1;
+  let h=gm?`<div class="gmc on">${CROWN(28)}<div><b>Grandmaster</b><span>${s0.own?'You have':'This player has'} unlocked every achievement.</span></div></div>`
+    :`<div class="gmc">${CROWN(28)}<div><b>Road to Grandmaster</b><span>Unlock every achievement to earn a golden crown next to your name.</span><span class="xbar sm"><i style="width:${Math.round(oth/tot*100)}%"></i></span><small>${oth} / ${tot}</small></div></div>`;
+  h+=`<p class="note" style="margin-top:14px">${got} / ${ACH.length} unlocked</p>`;
   cats.forEach(c=>{h+=`<h3 class="sh">${c}</h3>`;ACH.filter(a=>a.c==c).forEach(a=>{
-    const u=!!s0.ach[a.id];let pr='';
-    if(s0.own&&!u&&a.p){const[cu,t]=a.p();pr=`<span class="xbar sm"><i style="width:${Math.min(100,cu/t*100)}%"></i></span><small>${Math.min(cu,t)} / ${t}</small>`}
-    h+=`<div class="ac ${u?'on':''}"><span class="ai">${u?'&#10003;':''}</span><div><b>${a.n}</b><span>${a.d}</span>${pr}</div><em>+${a.x} XP</em></div>`})});
+    const u=!!s0.ach[a.id],sec=!!a.s&&!u;let pr='';
+    if(s0.own&&!u&&a.p&&!sec){const[cu,t]=a.p();pr=`<span class="xbar sm"><i style="width:${Math.min(100,cu/t*100)}%"></i></span><small>${Math.min(cu,t)} / ${t}</small>`}
+    h+=`<div class="ac ${u?'on':''}${a.id=='master'?' gmk':''}"><span class="ai">${u?'&#10003;':''}</span><div><b>${sec?'Secret achievement':a.n}${a.r?'<i class="rare">RARE</i>':''}</b><span>${sec?'Keep playing to discover this one.':a.d}</span>${pr}</div><em>+${a.x} XP</em></div>`})});
   return h}
 function renderProfile(){
   const s0=subj(),own=s0.own,j=!!P.name,acc=own&&j,busy2=!own&&(s0.loading||s0.fail);navLabel();
   $('#pBack').hidden=own;
-  $('#pT').textContent=own?(j?P.name:'Profile'):(s0.name||'Player');
+  {const pt=$('#pT'),nm=own?(j?P.name:'Profile'):(s0.name||'Player'),gm=!busy2&&!!s0.ach&&!!s0.ach.master&&(!own||j);pt.textContent='';const sp=document.createElement('span');sp.textContent=nm;if(gm)sp.className='gmn';pt.append(sp);if(gm)pt.insertAdjacentHTML('beforeend',CROWN(20))}
   const xi=lvInfo(s0.xp);$('#pLv').textContent='Lv '+xi.L;$('#pLv').hidden=busy2;
   $('#pSub').hidden=!own||j;
   const form=own&&!j;
@@ -1466,7 +1551,7 @@ async function loadLB(){
     if((L!='all'||M!='all')&&sortBy!='xp')rows=rows.filter(o=>lbv(o.x,'best',L,M)>0||lbv(o.x,'wins',L,M)>0);
     rows.sort((a,b)=>key(b)-key(a)||alt(b)-alt(a)||(a.x.t||0)-(b.x.t||0));rows=rows.slice(0,50);
     list.innerHTML=rows.length?'<li class="hd"><span></span><span>Player</span><span>Streak</span><span>Wins</span></li>'+rows.map((o,i)=>{const x=o.x;
-      return `<li data-k="${esc(o.k)}" data-n="${esc(x.name)}" class="${x.name==P.name?'me':''}"><span class="r">${i+1}</span><span>${esc(x.name)}<em class="lvb ${sortBy=='xp'?'on':''}">Lv ${lvInfo(x.xp||0).L}</em></span><b class="${sortBy=='best'?'hl':''}">${lbv(x,'best',L,M)}</b><b class="${sortBy=='wins'?'hl':''}">${lbv(x,'wins',L,M)}</b></li>`}).join(''):'<li><span></span><span class="note">No players yet. Be the first.</span></li>';
+      return `<li data-k="${esc(o.k)}" data-n="${esc(x.name)}" class="${x.name==P.name?'me':''}${x.bd===1?' gm':''}"><span class="r">${i+1}</span><span>${nameH(x.name,x.bd===1)}<em class="lvb ${sortBy=='xp'?'on':''}">Lv ${lvInfo(x.xp||0).L}</em></span><b class="${sortBy=='best'?'hl':''}">${lbv(x,'best',L,M)}</b><b class="${sortBy=='wins'?'hl':''}">${lbv(x,'wins',L,M)}</b></li>`}).join(''):'<li><span></span><span class="note">No players yet. Be the first.</span></li>';
   }catch{list.innerHTML='<li><span></span><span class="note err">Could not load the board. Try again later.</span></li>'}
 }
 $('#list').addEventListener('click',e=>{const li=e.target.closest('li[data-k]');if(li)openPlayer(li.dataset.k,li.dataset.n)});
