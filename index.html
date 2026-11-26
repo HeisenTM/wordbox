@@ -106,7 +106,7 @@ section{flex:1;min-height:0;display:flex;flex-direction:column}
 .btn{background:var(--g);color:var(--og);font-weight:800;padding:12px 20px;border-radius:11px;transition:transform .08s,filter .15s}
 .btn:hover{filter:brightness(1.08)}.btn:active{transform:scale(.97)}
 .btn.alt{background:var(--key);color:var(--text)}
-#lb,#pf,#cp{overflow:auto;padding:18px 2px 24px}
+#lb,#pf,#cp,#sp{overflow:auto;padding:18px 2px 24px}
 .lbw{max-width:480px;margin:auto}
 .lbw h1{font-size:24px;letter-spacing:-.02em}
 .join{display:flex;gap:8px;margin:14px 0 6px}
@@ -129,7 +129,7 @@ li.me{background:var(--panel);border-radius:11px;border-color:transparent}
 .db i{display:block;height:22px;background:var(--key);border-radius:6px;color:var(--text);font-style:normal;font-weight:700;padding:0 8px;line-height:22px;font-size:12px;text-align:right}
 .db i.on{background:var(--g);color:var(--og)}
 #pAcc{margin-top:16px}
-@media(max-width:560px){header{flex-wrap:wrap;row-gap:8px;padding:10px 2px 8px}.logo{order:1}.tools{order:2;margin-left:auto}nav{order:3;flex-basis:100%;margin-left:0}nav button{flex:1;padding:7px 4px;text-align:center}#nPr{max-width:none}}
+@media(max-width:840px){header{flex-wrap:wrap;row-gap:8px;padding:10px 2px 8px}.logo{order:1}.tools{order:2;margin-left:auto}nav{order:3;flex-basis:100%;margin-left:0}nav button{flex:1;padding:7px 2px;text-align:center}#nPr{max-width:none;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
 
 .lvc{grid-column:1;grid-row:1;justify-self:start;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:7px 12px 9px;min-width:116px;text-align:left;line-height:1.1;transition:border-color .15s}
 .lvc:hover{border-color:var(--bh)}
@@ -488,13 +488,74 @@ html[data-theme="paper"] .gmn{background-image:linear-gradient(100deg,#9a6a08 0%
 .hht td.best{background:var(--g);color:var(--og);font-weight:700}.hht td.no{color:#e0697a}
 .hhre{margin-top:12px}
 
+/* ===== v8: speedrun ===== */
+.spc{display:grid;gap:18px;margin-top:20px}
+.spr2{display:grid;gap:8px}
+.spr2>span{color:var(--mut);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--mut);font-weight:600;font-size:14px;transition:color .15s,border-color .15s,background .15s}
+.chips button:hover{color:var(--text);border-color:var(--bh)}
+.chips button.on{background:var(--g);color:var(--og);border-color:transparent}
+.spw{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.spw .stp b{min-width:48px;font-size:18px}
+.sppb{margin-top:18px;padding:12px 14px;border-radius:12px;background:var(--panel);border:1px solid var(--line);color:var(--mut);font-size:13.5px}
+#spGo{width:100%;margin-top:14px;padding:14px;font-size:16px}
+.sprules{margin-top:16px;color:var(--mut);font-size:13px;line-height:1.55}
+.spd{margin-left:auto!important;font-size:12px}
+/* word rows: word, then a bar coloured by speed with the time inside (green fast, red slow) */
+.sps{display:flex;align-items:center;gap:10px;margin-top:5px;font-size:13px}
+.sps>b{flex:none;min-width:62px;font:700 13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.02em}
+.sps .sk{flex:none;width:20px;text-align:center;color:var(--mut);font-weight:700;font-size:12px}
+.sps .spb{font-style:normal;display:block;flex:1;min-width:0;height:22px}
+.sps .spb u{display:flex;align-items:center;height:100%;border-radius:4px;padding:0 8px;text-decoration:none;color:#fff;font-weight:700;font-size:12.5px;font-variant-numeric:tabular-nums;white-space:nowrap;min-width:max-content}
+.sps em{flex:none;font-style:normal;color:var(--mut);font-size:12px;min-width:56px;text-align:right;font-variant-numeric:tabular-nums}
+.spe{color:var(--mut);font-size:12.5px;margin:6px 0}
+/* live run bar */
+.spbar{margin:0 auto 8px;max-width:520px}.spbar[hidden]{display:none}
+.spt{display:flex;gap:8px}
+.spt>div{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:6px 10px;text-align:center;min-width:0}
+.spt small{display:block;font-size:10px;font-weight:800;letter-spacing:.09em;color:var(--mut)}
+.spt b{display:block;font:700 22px/1.15 Goldman,system-ui,sans-serif;color:var(--text);white-space:nowrap}
+.spt>div:first-child b{color:var(--g)}
+.spsl{display:flex;gap:6px;margin-top:6px;overflow-x:auto;min-height:30px;align-items:center;scrollbar-width:none}
+.spsl::-webkit-scrollbar{display:none}
+.spc2{flex:none;display:inline-flex;align-items:center;gap:7px;background:var(--c,var(--a));color:#fff;border-radius:7px;padding:4px 9px;font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums}
+.spc2 b{font:700 11.5px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;opacity:.9}
+#spsp{display:none}
+@media(min-width:980px){
+  #spsp:not([hidden]){display:block;position:fixed;top:168px;left:calc(50% + 290px);width:230px;max-height:calc(100dvh - 210px);overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;z-index:5}
+  #spsp h3{margin:0 0 4px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+  #spsp .spf{margin-top:8px;color:var(--mut);font-size:12px}
+  .spsl{display:none}
+}
+#spLogW{margin-top:22px}
+#spLog{max-height:300px;overflow:auto;padding-right:6px;border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:8px 12px 10px}
+#spLogF{margin-top:8px;color:var(--mut);font-size:12.5px}
+#spk{position:fixed;inset:0;z-index:12;display:grid;place-items:center;background:var(--ov)}
+#spk[hidden]{display:none}
+#spkN{font:800 130px/1 Goldman,system-ui,sans-serif;color:var(--text)}
+#spkN.go{color:var(--g)}
+#spr{position:fixed;inset:0;display:grid;place-items:center;background:var(--ov);backdrop-filter:blur(4px);z-index:10;padding:16px}
+#spr[hidden]{display:none}
+.card.src{width:min(480px,100%);text-align:left}
+.src h2{text-align:center}.src #srS{text-align:center;margin-top:4px;font-size:13.5px}
+#srTot{text-align:center;font:800 46px/1.1 Goldman,system-ui,sans-serif;margin:14px 0 2px;letter-spacing:.01em}
+.srpb{text-align:center;color:var(--mut);font-size:13.5px;margin-bottom:14px}.srpb.up{color:var(--g);font-weight:700}
+.srg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.srg>div{background:var(--a);border-radius:10px;padding:10px 6px;text-align:center}
+.srg b{display:block;font-size:16px}.srg span{font-size:11px;color:var(--mut)}
+.srn{color:var(--mut);font-size:12px;line-height:1.5;margin-top:10px}
+.src .btns .btn{padding:12px 8px;font-size:14px;white-space:nowrap}
+.src .btns{gap:8px}
+@media(max-width:840px){nav button{font-size:13px}}
+
 </style>
 </head>
 <body>
 <div id="app">
 <header>
   <button class="logo" id="lg" aria-label="wordbox home"><i></i>wordbox</button>
-  <nav><button id="nP" class="on">Play</button><button id="nL">Leaderboard</button><button id="nCu">Custom</button><button id="nPr">Profile</button></nav>
+  <nav><button id="nP" class="on">Play</button><button id="nL">Leaderboard</button><button id="nCu">Custom</button><button id="nSp">Speedrun</button><button id="nPr">Profile</button></nav>
   <div class="tools"><button id="nF" type="button" aria-label="Daily streak"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg><b id="nFn">0</b></button><button id="nD" aria-label="Daily spin"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg><i class="dot" hidden></i></button><button id="nG" aria-label="Settings"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></button><button id="nH" aria-label="How to play">?</button></div>
 </header>
 
@@ -508,6 +569,8 @@ html[data-theme="paper"] .gmn{background-image:linear-gradient(100deg,#9a6a08 0%
   <div class="hrow" id="hr"><button class="hbtn" id="hBtn" type="button" title="A letter first, then the meaning. Each hint costs 25% of the XP for a win.">Hint</button><button class="hbtn" id="sBtn" type="button" title="Counts as a loss: no XP and your streak resets.">Skip</button><button class="hbtn" id="qBtn" type="button" hidden>Quit challenge</button></div>
   <div class="hb" id="cub" hidden></div>
   <div class="clue" id="clue" hidden></div>
+  <div class="spbar" id="spbar" hidden><div class="spt"><div><small>TOTAL</small><b id="spTot">0:00.0</b></div><div><small>WORD</small><b id="spWrd">0:00.0</b></div><div><small>PROGRESS</small><b id="spN2">1/10</b></div></div><div class="spsl" id="spsl"></div></div>
+  <aside id="spsp" hidden><h3>Splits</h3><div class="spl"></div><div class="spf"></div></aside>
   <div class="hb" id="hb" hidden></div>
   <div id="boards"></div>
   <div id="kb"></div>
@@ -544,6 +607,22 @@ html[data-theme="paper"] .gmn{background-image:linear-gradient(100deg,#9a6a08 0%
     <h3 class="sh" id="cuMh" hidden>Your recent challenges</h3><div id="cuMine"></div>
   </div></div>
 </section>
+<section id="spd" hidden>
+  <div id="sp"><div class="lbw">
+    <h1>Speedrun</h1>
+    <p class="note">Race the clock on random words. This one is just for you: no XP, only records and badges.</p>
+    <div class="spc">
+      <div class="spr2"><span>Words</span><div class="spw"><div class="stp"><button data-sp="w-" type="button" aria-label="Fewer words">&minus;</button><b id="spW">10</b><button data-sp="w+" type="button" aria-label="More words">+</button></div><div class="chips" id="spN"></div></div></div>
+      <div class="spr2"><span>Mode</span><div class="chips" id="spM"></div></div>
+      <div class="spr2"><span>Word length</span><div class="chips" id="spL"></div></div>
+    </div>
+    <div class="sppb" id="spPb"></div>
+    <button class="btn" id="spGo" type="button">Start speedrun</button>
+    <p class="sprules">One clock runs from the first word to the last and never stops. Press Enter on your last guess and that word’s split is saved while the next word starts at once. Words you fail or skip count as unsolved, but their time still counts. Hints and animations are switched off for the run.</p>
+    <h3 class="sh" id="spRh" hidden>Recent runs</h3><div id="spRecent"></div>
+    <div id="spLogW" hidden><h3 class="sh">Word log</h3><div id="spLog"></div><div id="spLogF"></div></div>
+  </div></div>
+</section>
 <section id="prs" hidden>
   <div id="pf"><div class="lbw">
     <button class="lnk2" id="pBack" type="button" hidden>&larr; Back to leaderboard</button>
@@ -578,14 +657,14 @@ html[data-theme="paper"] .gmn{background-image:linear-gradient(100deg,#9a6a08 0%
 <div class="hx"><div class="ex"><i>C</i><i class="y">R</i><i>A</i><i>N</i><i>E</i></div><p><b style="color:var(--y)">Yellow</b>: the letter is in the word, but in the wrong spot.</p></div>
 <div class="hx"><div class="ex"><i>C</i><i>R</i><i>A</i><i>N</i><i>E</i></div><p><b style="color:var(--text)">Gray</b>: the letter is not in the word.</p></div>
 <h3 class="sh">Good to know</h3>
-<ul><li>You get <b>letters + 1</b> tries, with 4, 5 or 6 letters. Every guess must be a real word.</li><li>Click a box in your row to fix just that letter.</li><li>Wins earn XP, and faster wins earn more. Your streak grows with every win.</li><li><b>Hint</b> shows a letter, then the meaning, for 25% less XP each. <b>Skip</b> counts as a loss.</li><li><b>Hard</b> mode makes you reuse revealed hints. <b>Blind</b> mode hides past letters, so only colors stay. Both earn more XP.</li><li>Solve at least one word a day to build a <b>daily streak</b> and unlock board <b>themes</b>.</li><li>Join the <b>Leaderboard</b> with a unique name to compete.</li></ul>
+<ul><li>You get <b>letters + 1</b> tries, with 4, 5 or 6 letters. Every guess must be a real word.</li><li>Click a box in your row to fix just that letter.</li><li>Wins earn XP, and faster wins earn more. Your streak grows with every win.</li><li><b>Hint</b> shows a letter, then the meaning, for 25% less XP each. <b>Skip</b> counts as a loss.</li><li><b>Hard</b> mode makes you reuse revealed hints. <b>Blind</b> mode hides past letters, so only colors stay. Both earn more XP.</li><li>Try <b>Speedrun</b> for timed runs on random words. No XP, just records and badges.</li><li>Solve at least one word a day to build a <b>daily streak</b> and unlock board <b>themes</b>.</li><li>Join the <b>Leaderboard</b> with a unique name to compete.</li></ul>
 <button class="btn" id="hB" style="width:100%">Got it</button></div></div>
 <div id="shr" hidden><div class="card shc"><img id="shi" alt="Your wordbox result card"><div class="btns"><button class="btn alt" id="shT" type="button">Copy text</button><button class="btn" id="shB" type="button" disabled>Share image</button></div><button class="lnk" id="shX" type="button">Close</button></div></div>
 <div id="spn" hidden><div class="card spc"><h2>Daily spin</h2><p id="spS">One free spin every day.</p><canvas id="spc"></canvas><div class="spr" id="spR"></div><div class="btns"><button class="btn" id="spB" type="button">Spin</button></div><button class="lnk" id="spX" type="button">Close</button><p class="spo" id="spO"></p></div></div>
 <div id="set" hidden><div class="card stc"><h2>Settings</h2>
 <div class="srow"><div><b>Sound</b><span>Key clicks, reveals and wins</span></div><button class="sw" id="swS" type="button" role="switch" aria-checked="true" aria-label="Sound"></button></div>
 <div class="srow"><div><b>Volume</b><span id="volT">100%</span></div><input type="range" id="vol" min="0" max="100" step="5" aria-label="Volume"></div>
-<div class="srow"><div><b>Speedrun mode</b><span>No animations. Results show instantly.</span></div><button class="sw" id="swF" type="button" role="switch" aria-checked="false" aria-label="Speedrun mode"></button></div>
+<div class="srow"><div><b>Instant mode</b><span>No animations. Results show instantly.</span></div><button class="sw" id="swF" type="button" role="switch" aria-checked="false" aria-label="Instant mode"></button></div>
 <div class="srow col"><div><b>Board theme</b><span id="thT">Classic</span></div><div class="sws" id="sws"></div></div>
 <button class="btn" id="stX" type="button" style="width:100%;margin-top:16px">Done</button></div></div>
 <div id="cfm" hidden><div class="card cfc"><h2 id="cfT"></h2><p id="cfP"></p><div class="btns" style="margin-top:18px"><button class="btn alt" id="cfN" type="button">Cancel</button><button class="btn" id="cfY" type="button">OK</button></div></div></div>
@@ -604,6 +683,8 @@ html[data-theme="paper"] .gmn{background-image:linear-gradient(100deg,#9a6a08 0%
 <button class="btn" id="ciP" type="button" style="width:100%">Play</button></div></div>
 <div id="csh" hidden><div class="card csc"><h2>Share with friends</h2><p>Anyone with this link can play your challenge.</p><input id="cshL" readonly aria-label="Challenge link"><div class="btns"><button class="btn alt" id="cshS" type="button" hidden>Share</button><button class="btn" id="cshC" type="button">Copy</button></div><button class="lnk" id="cshX" type="button">Close</button></div></div>
 <div id="cres" hidden><div class="card crc"><h2 id="crT"></h2><p id="crS"></p><p id="crX" hidden></p><div id="crL"></div><div id="crH" class="hh"></div><div class="btns" style="margin-top:18px"><button class="btn alt" id="crC" type="button">Copy result</button><button class="btn" id="crD" type="button">Done</button></div></div></div>
+<div id="spk" hidden><div id="spkN">3</div></div>
+<div id="spr" hidden><div class="card src"><h2 id="srT">Speedrun</h2><p id="srS"></p><div id="srTot"></div><div class="srpb" id="srPb"></div><div class="srg" id="srG"></div><h3 class="sh">Word by word</h3><div id="srL"></div><p class="srn">Each bar is that word’s split. Green is quicker than your average and red is slower. The grey time on the right is your running total.</p><div id="srA"></div><div class="btns" style="margin-top:18px"><button class="btn alt" id="srC" type="button">Copy result</button><button class="btn alt" id="srAgain" type="button">Run again</button><button class="btn" id="srDone" type="button">Done</button></div></div></div>
 <div id="hhm" hidden><div class="card crc hhc"><button class="x" id="hhX" type="button" aria-label="Close">&times;</button><h2 id="hhT">Results</h2><div id="hhB" class="hh"></div></div></div>
 <canvas id="cf"></canvas>
 
@@ -660,6 +741,16 @@ const nLen=s=>new Set(s.map(e=>e.L)).size;
 const distHas=n=>MODES.some(m=>LENS.some(L=>(stM(m,L).dist[n]||0)>0));
 const fastW=(c,s,m)=>!!c&&c.won&&!c.hinted&&c.sec!=null&&c.sec>=2&&c.sec<s&&(!m||c.m==m);
 const achN=()=>ACH.filter(a=>a.id!='master'&&P.ach[a.id]).length;
+// ---- speedrun: saved data (local, plus a small copy in the profile for recovery) ----
+const SRL=[['4','4 letters'],['5','5 letters'],['6','6 letters'],['x','Mixed']];
+const SRN=[5,10,15,20];
+P.sr=Object.assign({cfg:{},runs:[],pb:{},c:{},hist:[]},P.sr);
+P.sr.cfg=Object.assign({n:10,m:'n',L:'5'},P.sr.cfg);delete P.sr.cfg.t;P.sr.c=Object.assign({runs:0,words:0,perfect:0},P.sr.c);
+if(!P.sr.pb||typeof P.sr.pb!='object')P.sr.pb={};if(!Array.isArray(P.sr.runs))P.sr.runs=[];if(!Array.isArray(P.sr.hist))P.sr.hist=[];
+if(P.sr.fw!=null){P.fast=P.sr.fw?1:0;P.sr.fw=null}   // a speedrun was interrupted: give the player their own animation setting back
+let spCtx=null;
+const spOk=f=>!!spCtx&&f(spCtx);
+const spKey=g=>g.n+'|'+g.L+'|'+g.m;
 const ACH=[
  {id:'first_win',c:'Wins',n:'First Steps',d:'Win your first game',x:50,t:()=>sum('w')>=1},
  {id:'wins_10',c:'Wins',n:'Regular',d:'Win 10 games',x:100,t:()=>sum('w')>=10,p:()=>[sum('w'),10]},
@@ -731,15 +822,31 @@ const ACH=[
  {id:'themes_all',c:'Rare finds',n:'Fashionista',d:'Unlock every board theme',x:500,r:1,t:()=>THEMES.filter(x=>!x.r||x.r.k!='gm').every(thOk),p:()=>[THEMES.filter(x=>!x.r||x.r.k!='gm').filter(thOk).length,THEMES.filter(x=>!x.r||x.r.k!='gm').length]},
  {id:'ach_30',c:'Rare finds',n:'Collector',d:'Earn 30 achievements',x:200,t:()=>achN()>=30,p:()=>[Math.min(achN(),30),30]},
  {id:'ach_50',c:'Rare finds',n:'Hunter',d:'Earn 50 achievements',x:600,r:1,t:()=>achN()>=50,p:()=>[Math.min(achN(),50),50]},
+ {id:'sr_first',c:'Speedrun',n:'Off the Blocks',d:'Finish a speedrun',x:0,t:()=>P.sr.c.runs>=1},
+ {id:'sr_clean',c:'Speedrun',n:'Clean Sheet',d:'Solve every word in a speedrun of 5 or more words',x:0,t:()=>spOk(s=>s.perfect&&s.n>=5)},
+ {id:'sr_ten',c:'Speedrun',n:'Ten Out of Ten',d:'Solve every word in a speedrun of 10 or more words',x:0,t:()=>spOk(s=>s.perfect&&s.n>=10)},
+ {id:'sr_twenty',c:'Speedrun',n:'Twenty Strong',d:'Solve every word in a speedrun of 20 or more words',x:0,r:1,t:()=>spOk(s=>s.perfect&&s.n>=20)},
+ {id:'sr_avg15',c:'Speedrun',n:'Quick Hands',d:'Solve every word in a 5+ word speedrun, averaging under 15 seconds a word',x:0,t:()=>spOk(s=>s.perfect&&s.n>=5&&s.avg<15000)},
+ {id:'sr_avg8',c:'Speedrun',n:'Blur',d:'Solve every word in a 5+ word speedrun, averaging under 8 seconds a word',x:0,r:1,t:()=>spOk(s=>s.perfect&&s.n>=5&&s.avg<8000)},
+ {id:'sr_blink',c:'Speedrun',n:'Blink',d:'Solve a single word in under 5 seconds',x:0,t:()=>spOk(s=>s.best>0&&s.best<5000)},
+ {id:'sr_flash',c:'Speedrun',n:'Flash',d:'Solve a single word in under 3 seconds',x:0,s:1,r:1,t:()=>spOk(s=>s.best>0&&s.best<3000)},
+ {id:'sr_hard',c:'Speedrun',n:'Hard Sprint',d:'Solve every word in a Hard speedrun of 5 or more words',x:0,t:()=>spOk(s=>s.perfect&&s.n>=5&&s.cfg.m=='h')},
+ {id:'sr_blind',c:'Speedrun',n:'Blind Sprint',d:'Solve every word in a Blind speedrun of 5 or more words',x:0,r:1,t:()=>spOk(s=>s.perfect&&s.n>=5&&s.cfg.m=='b')},
+ {id:'sr_mixed',c:'Speedrun',n:'All Lengths',d:'Solve every word in a Mixed-letters speedrun of 10 or more words',x:0,r:1,t:()=>spOk(s=>s.perfect&&s.n>=10&&s.cfg.L=='x')},
+ {id:'sr_steady',c:'Speedrun',n:'Steady Hands',d:'Solve every word in a 5+ word speedrun with no split slower than 10 seconds',x:0,r:1,t:()=>spOk(s=>s.perfect&&s.n>=5&&s.worst<=10000)},
+ {id:'sr_sharp',c:'Speedrun',n:'Sharpshooter',d:'Solve every word in a 10+ word speedrun using 3 guesses or fewer on average',x:0,r:1,t:()=>spOk(s=>s.perfect&&s.n>=10&&s.avgG<=3)},
+ {id:'sr_pb',c:'Speedrun',n:'Personal Best',d:'Beat your own record for a speedrun setup',x:0,t:()=>spOk(s=>s.newPb)},
+ {id:'sr_25',c:'Speedrun',n:'Regular Runner',d:'Finish 25 speedruns',x:0,t:()=>P.sr.c.runs>=25,p:()=>[Math.min(P.sr.c.runs,25),25]},
+ {id:'sr_200',c:'Speedrun',n:'Speed Reader',d:'Solve 200 words in speedruns',x:0,r:1,t:()=>P.sr.c.words>=200,p:()=>[Math.min(P.sr.c.words,200),200]},
  {id:'master',c:'Grandmaster',n:'Grandmaster',d:'Unlock every other achievement. Earns a golden crown on your name',x:3000,r:1,t:()=>ACH.every(a=>a.id=='master'||P.ach[a.id]),p:()=>[achN(),ACH.length-1]}
 ];
 function evalAch(ctx){const got=[];let ch=true;while(ch){ch=false;for(const a of ACH)if(!P.ach[a.id]&&a.t(ctx)){P.ach[a.id]=Date.now();P.xp+=a.x;got.push(a);ch=true}}return got}
-function ev2(ctx){const got=evalAch(ctx);if(!got.length)return;save();stats();pushScore();got.forEach((a,i)=>setTimeout(()=>{toast('Achievement: '+a.n+' +'+a.x+' XP');SFX.ach()},i*1400))}
+function ev2(ctx){const got=evalAch(ctx);if(!got.length)return;save();stats();pushScore();got.forEach((a,i)=>setTimeout(()=>{toast('Achievement: '+a.n+(a.x?' +'+a.x+' XP':''));SFX.ach()},i*1400))}
 function achRows(got){
-  const row=a=>a.id=='master'?`<div class="au gm"><span>${CROWN(15)}Grandmaster unlocked</span><b>+${a.x} XP</b></div>`:`<div class="au"><span>${a.n}${a.r?'<i class="rare">RARE</i>':''}</span><b>+${a.x} XP</b></div>`;
+  const row=a=>a.id=='master'?`<div class="au gm"><span>${CROWN(15)}Grandmaster unlocked</span><b>+${a.x} XP</b></div>`:`<div class="au"><span>${a.n}${a.r?'<i class="rare">RARE</i>':''}</span><b>${a.x?'+'+a.x+' XP':'Badge'}</b></div>`;
   if(got.length<=3)return got.map(row).join('');
   const m=got.find(a=>a.id=='master'),oth=got.filter(a=>a!==m).sort((a,b)=>b.x-a.x),top=oth.slice(0,m?2:3),rest=oth.slice(top.length);
-  return (m?row(m):'')+top.map(row).join('')+(rest.length?`<div class="au"><span>+${rest.length} more achievement${rest.length>1?'s':''}</span><b>+${rest.reduce((s,a)=>s+a.x,0)} XP</b></div>`:'')}
+  return (m?row(m):'')+top.map(row).join('')+(rest.length?`<div class="au"><span>+${rest.length} more achievement${rest.length>1?'s':''}</span><b>${rest.reduce((s,a)=>s+a.x,0)?'+'+rest.reduce((s,a)=>s+a.x,0)+' XP':'Badges'}</b></div>`:'')}
 function countUp(el,to){if(P.fast){el.textContent='+'+to+' XP';return}const t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/700);el.textContent='+'+Math.round(to*(1-Math.pow(1-k,3)))+' XP';if(k<1)requestAnimationFrame(f)})(t0)}
 let sortBy='best',lbLen='all',lbMode='all';
 let S=null,busy=false,dict=null;
@@ -821,6 +928,7 @@ $('#nF').onclick=goThemes;
 // merge a daily streak (and theme) from the online profile. Never lowers anything; joins runs that touch or overlap.
 function mergeDs(pr,quiet){
   if(!pr||typeof pr!='object')return;
+  mergeSr(pr.sr);
   const t=dayNo(),d=P.ds,r=pr.ds,fin=Number.isFinite,cl=(v,m)=>fin(v)?Math.max(0,Math.min(m,Math.floor(v))):0;
   if(r&&typeof r=='object'){
     const rn=cl(r.n,100000),rb=Math.max(cl(r.best,100000),rn),rl=fin(r.last)?Math.min(Math.floor(r.last),t+1):-99999;
@@ -945,7 +1053,7 @@ async function submit(){
   if(!okw){busy=false;if(!S.cu){P.cnt.inv++;save();ev2(null)}return bad('Not in word list')}
   if(S.over){busy=false;return}
   const r=S.gs.length,A=act();
-  S.cur=Array(S.L).fill('');S.pos=0;S.gs.push(g);
+  S.cur=Array(S.L).fill('');S.pos=0;S.gs.push(g);if(S.cu&&S.cu.sp)S.cu.tg=Date.now();
   A.forEach(b=>paint(b,r,g,true));
   await sleep(P.fast?40:S.L*130+420);
   keys();
@@ -1207,12 +1315,14 @@ const maskWord=(m,w)=>m.replace(new RegExp(w,'ig'),'_____');
 function hintUi(){
   if(!S)return;
   const cu=!!S.cu;$('#hBtn').hidden=cu;$('#qBtn').hidden=!cu;$('#mr').hidden=cu;$('#boards').classList.toggle('blind',S.mode=='b'&&!S.over);
-  const cb=$('#cub'),cvis=cu&&!S.over,cwas=!cb.hidden;
+  const cb=$('#cub'),cvis=cu&&!S.over&&!S.cu.sp,cwas=!cb.hidden;
   if(cu){const c=S.cu;cb.innerHTML='Custom challenge by <b>'+esc(c.by)+'</b>'+(cuRd(c).m!='n'?' &middot; '+MN[cuRd(c).m]:'')+' &middot; Word '+(c.i+1)+' of '+c.words.length+(c.dl?'<span id="cut"></span>':'')}
   cb.hidden=!cvis;
   const cl=$('#clue'),clw=!cl.hidden,clt=cu&&!S.over?cuRd(S.cu).c:'';
   if(clt){cl.innerHTML='<i>Clue</i><span></span>';cl.lastChild.textContent=clt}
   cl.hidden=!clt;
+  const sb=$('#spbar'),sbw=!sb.hidden,spOn=cu&&!!S.cu.sp&&!S.over;sb.hidden=!spOn;$('#spsp').hidden=!spOn;
+  $('#qBtn').textContent=cu&&S.cu.sp?'Quit run':'Quit challenge';
   const h=S.hn||0,on=!S.over;
   $('#hr').hidden=!on;
   const hb=$('#hBtn');hb.disabled=h>=2;
@@ -1221,7 +1331,7 @@ function hintUi(){
   const big=!!hintPick&&(P.pickN||0)<=2;box.classList.toggle('plain',!!hintPick);box.classList.toggle('big',big);
   if(hintPick)box.textContent=big?'Now tap an empty box in your row to reveal its letter':'Tap an empty box to reveal its letter';
   else if(S.hd)box.innerHTML='<b>Hint</b> <i>'+esc(S.hd.pos||'')+'</i> '+esc(S.hd.m);
-  box.hidden=!vis;if(was!==vis||cwas!==cvis||clw!==cl.hidden)fit()}
+  box.hidden=!vis;if(was!==vis||cwas!==cvis||clw!==cl.hidden||sbw!==sb.hidden)fit()}
 function pickHint(c){
   const known=new Set();S.gs.forEach(g=>evaluate(g,S.ans[0]).forEach((r,i)=>{if(r=='g')known.add(i)}));
   if(S.cur[c]){toast('Pick an empty box');return}
@@ -1250,7 +1360,7 @@ async function useHint(e){
 async function skipGame(e){
   if(e&&e.currentTarget)e.currentTarget.blur();
   if(busy||S.over)return;
-  if(S.cu){if(!await askConfirm('Skip this word?','It will count as unsolved.','Skip',true))return;if(busy||S.over)return;busy=true;await cuFinish(false,'skip');busy=false;return}
+  if(S.cu){if(!S.cu.sp&&!await askConfirm('Skip this word?','It will count as unsolved.','Skip',true))return;if(busy||S.over)return;busy=true;await cuFinish(false,'skip');busy=false;return}
   const k=stM(S.mode||'n',S.L).streak;
   if(!await askConfirm('Skip this word?','It counts as a loss: no XP'+(k?' and your streak of '+k+' resets to 0.':'.'),'Skip',true))return;
   if(busy||S.over)return;
@@ -1414,14 +1524,15 @@ $('#ciX').onclick=closeInt;$('#cint').addEventListener('click',e=>{if(e.target.i
 $('#ciP').onclick=()=>{if(CHI){const ch=CHI;closeInt();startCustom(ch)}};
 function startCustom(ch){startWord({code:ch.code,by:ch.by,words:ch.words,rules:{g:ch.g,t:ch.t,d:ch.d,m:ch.m},rounds:ch.rounds||[],i:0,res:[],fin:false,paid:0,note:''})}
 function startWord(c){
-  const w=c.words[c.i],rd=cuRd(c);c.t0=Date.now();c.dl=rd.t?c.t0+rd.t*1000:0;
-  S={L:w.length,N:1,G:c.rules.g,mode:rd.m,ans:[w],gs:[],cur:Array(w.length).fill(''),pos:0,over:false,hn:0,hf:false,hp:-1,hl:'',hd:null,cu:c};
+  const w=c.words[c.i],rd=cuRd(c);c.t0=c.sp&&c.nextT0?c.nextT0:Date.now();c.nextT0=0;c.tg=0;if(c.sp&&!c.rs)c.rs=c.t0;c.dl=rd.t?c.t0+rd.t*1000:0;
+  S={L:w.length,N:1,G:c.sp?w.length+1:c.rules.g,mode:rd.m,ans:[w],gs:[],cur:Array(w.length).fill(''),pos:0,over:false,hn:0,hf:false,hp:-1,hl:'',hd:null,cu:c};
   $('#end').hidden=true;$('#after').hidden=true;$('#kb').hidden=false;
   persist();view('play');render();
   const ro=(c.rounds&&c.rounds[c.i])||{},tg=[];if(ro.m&&ro.m!=c.rules.m)tg.push(MN[ro.m]+' mode');if(ro.t!=null&&ro.t!=c.rules.t)tg.push(ro.t?TLN[TLS.indexOf(ro.t)]+' limit':'No time limit');
-  if(tg.length)toast('Round '+(c.i+1)+': '+tg.join(' \u00b7 '))}
+  if(tg.length)toast('Round '+(c.i+1)+': '+tg.join(' \u00b7 '));if(c.sp)spLive()}
 async function cuFinish(won,why){
   const c=S.cu,w0=S.ans[0];
+  if(c.sp)return spFinish(c,w0,won,why);
   S.over=true;c.res.push({w:w0,won,n:S.gs.length,t:Date.now()-c.t0,gs:S.gs.slice(),why:why||''});persist();hintUi();
   if(won)SFX.win();else SFX.lose();
   const dp=lookup(w0).catch(()=>null);
@@ -1443,7 +1554,7 @@ function cuXp(c){
     x+=((CB[w.w.length]||10)+Math.max(0,r.g-w.n)*2+(all?5:0))*mm*tm});
   return Math.round(x*gm*dm)}
 function cuResults(){
-  const c=S.cu;c.fin=true;
+  const c=S.cu;if(c.sp)return spResults(c);c.fin=true;
   const rs=c.res,solved=rs.filter(r=>r.won).length,gu=rs.reduce((a,r)=>a+r.n,0),tt=rs.reduce((a,r)=>a+r.t,0);
   if(!c.paid){
     c.paid=1;const own=P.name&&P.name.toLowerCase()==c.by.toLowerCase();P.cd=P.cd||{};
@@ -1468,16 +1579,138 @@ function cuText(){
 function cuLeave(){
   LS.del('wb_cg');$('#cres').hidden=true;$('#end').hidden=true;$('#after').hidden=true;$('#kb').hidden=false;
   try{history.replaceState(null,'',location.pathname+location.hash)}catch{}
-  S=null;restoreNormal();view('play')}
+  const sp0=S&&S.cu&&S.cu.sp;S=null;restoreNormal();if(sp0)spFastOff();view(sp0?'speedrun':'play')}
 $('#crC').onclick=async()=>{try{await navigator.clipboard.writeText(cuText());toast('Result copied')}catch{}};
 $('#crD').onclick=cuLeave;
-$('#qBtn').onclick=async e=>{e.currentTarget.blur();if(!S||!S.cu)return;if(!await askConfirm('Quit this challenge?','Your progress in it will be lost. Your normal game will continue where you left it.','Quit',true))return;cuLeave()};
+$('#qBtn').onclick=async e=>{e.currentTarget.blur();if(!S||!S.cu)return;const sp=!!S.cu.sp;if(!await askConfirm(sp?'Quit this speedrun?':'Quit this challenge?',sp?'This run will not be saved. Your normal game will continue where you left it.':'Your progress in it will be lost. Your normal game will continue where you left it.','Quit',true))return;cuLeave()};
 setInterval(()=>{
   if(!S||!S.cu||S.over)return;
   const c=S.cu;if(!c.dl)return;
   const r=Math.max(0,Math.ceil((c.dl-Date.now())/1000)),el=$('#cut');
   if(el)el.textContent=Math.floor(r/60)+':'+String(r%60).padStart(2,'0');
   if(r<=0&&!busy){busy=true;cuFinish(false,'time').finally(()=>{busy=false})}},250);
+
+// ---- speedrun: setup, run, results ----
+const fmtSp=ms=>{const t=Math.floor(Math.max(0,ms)/10);return Math.floor(t/6000)+':'+String(Math.floor(t/100)%60).padStart(2,'0')+'.'+String(t%100).padStart(2,'0')};
+const fmtSl=ms=>{ms=Math.max(0,ms);return Math.floor(ms/60000)+':'+String(Math.floor(ms/1000)%60).padStart(2,'0')+'.'+(Math.floor(ms/100)%10)};
+const spSec=ms=>ms<60000?(ms/1000).toFixed(2):fmtSp(ms);
+const srLn=L=>L=='x'?'mixed letters':L+' letters';
+const spHue=(t,ref)=>Math.max(0,Math.min(120,120-(t/ref-.6)*100));
+function spRow(w,t,ok,ref,mx,idx,cum){
+  const col=ok?`hsl(${Math.round(spHue(t,ref))} 62% 34%)`:'#8a3140';
+  return `<div class="sps">${idx?`<span class="sk">${idx}</span>`:''}<b>${esc(w)}</b><i class="spb"><u style="width:${Math.max(30,Math.round(t/mx*100))}%;background:${col}"><span>${ok?spSec(t):'\u2715 '+spSec(t)}</span></u></i>${cum!=null?`<em>${fmtSp(cum)}</em>`:''}</div>`}
+function spRef(rs){const sv=rs.filter(r=>r.won);return sv.length?sv.reduce((a,r)=>a+r.t,0)/sv.length:6000}
+// no animation while a speedrun is running: borrow Instant mode, then hand the player's own setting back
+function spFastOn(){if(P.sr.fw==null)P.sr.fw=P.fast?1:0;P.fast=1;document.documentElement.classList.add('fast');save()}
+function spFastOff(){if(P.sr.fw!=null){P.fast=P.sr.fw?1:0;P.sr.fw=null}document.documentElement.classList.toggle('fast',!!P.fast);save()}
+function spWords(g){
+  const out=[],rec=LS.get('wb_recent',[]);
+  for(let i=0;i<g.n;i++){
+    const L=g.L=='x'?[4,5,6][Math.random()*3|0]:+g.L,pool=lists[L];
+    let f=pool.filter(w=>!out.includes(w)&&!rec.includes(w));if(f.length<5)f=pool.filter(w=>!out.includes(w));
+    out.push(f[Math.random()*f.length|0])}
+  return out}
+function renderSpeedrun(){
+  const g=P.sr.cfg,pb=P.sr.pb[spKey(g)],on=(a,b)=>a==b?'on':'';
+  $('#spW').textContent=g.n;
+  $('#spN').innerHTML=SRN.map(n=>`<button type="button" data-sn="${n}" class="${on(g.n,n)}">${n}</button>`).join('');
+  $('#spM').innerHTML=MODES.map(m=>`<button type="button" data-sm="${m}" class="${on(g.m,m)}">${MN[m]}</button>`).join('');
+  $('#spL').innerHTML=SRL.map(([v,l])=>`<button type="button" data-sl="${v}" class="${on(g.L,v)}">${l}</button>`).join('');
+  $('#spPb').textContent=pb!=null?'Your best for these settings: '+fmtSp(pb):'No record for these settings yet. Solve every word to set one.';
+  const rs=P.sr.runs;$('#spRh').hidden=!rs.length;
+  $('#spRecent').innerHTML=rs.slice(0,6).map(r=>`<div class="cmi"><b>${fmtSp(r.tot)}</b><span>${r.s}/${r.n} \u00b7 ${r.L=='x'?'Mixed':r.L+' letters'} \u00b7 ${MN[r.m]||'Normal'}</span><span class="spd">${new Date(r.t).toLocaleDateString(undefined,{month:'short',day:'numeric'})}</span></div>`).join('');
+  const h=P.sr.hist;$('#spLogW').hidden=!h.length;
+  if(h.length){const ts=h.map(x=>x[1]),avg=ts.reduce((a,b)=>a+b,0)/ts.length,mx=Math.max(...ts);
+    $('#spLog').innerHTML=h.map(x=>spRow(x[0].toUpperCase(),x[1],true,avg,mx)).join('');
+    $('#spLogF').textContent='last '+h.length+' \u00b7 average '+spSec(avg)+' \u00b7 best '+spSec(Math.min(...ts))}}
+$('#sp').addEventListener('click',e=>{
+  const g=P.sr.cfg,q=s=>e.target.closest(s);let ch=true;
+  if(q('[data-sp="w-"]'))g.n=Math.max(1,g.n-1);
+  else if(q('[data-sp="w+"]'))g.n=Math.min(25,g.n+1);
+  else if(q('[data-sn]'))g.n=+q('[data-sn]').dataset.sn;
+  else if(q('[data-sm]'))g.m=q('[data-sm]').dataset.sm;
+  else if(q('[data-sl]'))g.L=q('[data-sl]').dataset.sl;
+  else ch=false;
+  if(ch){save();renderSpeedrun()}});
+$('#spGo').onclick=()=>spStart(Object.assign({},P.sr.cfg));
+let spBusy=false;
+function spCountdown(){
+  return new Promise(res=>{
+    const o=$('#spk'),n=$('#spkN'),show=t=>{n.textContent=t;n.classList.toggle('go',t=='Go!')};
+    o.hidden=false;let k=3;show(k);
+    const tick=()=>{k--;if(k>0){show(k);setTimeout(tick,600)}else if(k==0){show('Go!');setTimeout(tick,350)}else{o.hidden=true;res()}};
+    setTimeout(tick,600)})}
+async function spStart(cfg){
+  if(spBusy)return;
+  if(S&&S.cu&&!S.cu.fin){toast('Finish or quit your '+(S.cu.sp?'speedrun':'challenge')+' first');view('play');return}
+  spBusy=true;
+  const c={sp:1,code:'',by:'',words:spWords(cfg),rules:{g:6,t:0,d:1,m:cfg.m},rounds:[],i:0,res:[],fin:false,paid:1,note:'',cfg:Object.assign({},cfg),tg:0,nextT0:0,rs:0};
+  $('#spr').hidden=true;spFastOn();
+  await spCountdown();spBusy=false;startWord(c)}
+// every word ends the moment Enter is pressed on its last guess; the next word starts at that same instant
+function spFinish(c,w0,won,why){
+  const end=(c.tg>c.t0&&!why)?c.tg:Date.now();
+  S.over=true;c.res.push({w:w0,won,n:S.gs.length,t:end-c.t0,gs:S.gs.slice(),why:why||''});
+  c.nextT0=end;
+  if(!won)toast('It was '+w0.toUpperCase());
+  if(c.i+1>=c.words.length){c.end=end;persist();hintUi();SFX.win();return spResults(c)}
+  c.i++;startWord(c)}
+function spLive(){
+  const c=S&&S.cu;if(!c||!c.sp)return;
+  const rs=c.res,ref=spRef(rs),mx=Math.max(1,...rs.map(r=>r.t)),rev=rs.slice().reverse(),sv=rs.filter(r=>r.won);
+  $('#spsp .spl').innerHTML=rev.map(r=>spRow(r.w.toUpperCase(),r.t,r.won,ref,mx)).join('')||'<p class="spe">Your splits show up here as you finish each word.</p>';
+  $('#spsp .spf').textContent=sv.length?'average '+spSec(ref)+' \u00b7 best '+spSec(Math.min(...sv.map(r=>r.t))):'';
+  $('#spsl').innerHTML=rev.map(r=>`<span class="spc2" style="--c:${r.won?`hsl(${Math.round(spHue(r.t,ref))} 62% 38%)`:'#8a3140'}"><b>${esc(r.w.toUpperCase())}</b>${r.won?'':'\u2715 '}${spSec(r.t)}</span>`).join('')||'<span class="spe">Splits appear here</span>'}
+function spStats(c){
+  const rs=c.res,sv=rs.filter(r=>r.won),tot=rs.reduce((a,r)=>a+r.t,0),ts=sv.map(r=>r.t);
+  return{n:rs.length,solved:sv.length,tot,avg:rs.length?tot/rs.length:0,best:ts.length?Math.min(...ts):0,worst:ts.length?Math.max(...ts):0,
+    gu:rs.reduce((a,r)=>a+r.n,0),avgG:sv.length?sv.reduce((a,r)=>a+r.n,0)/sv.length:99,perfect:sv.length==rs.length&&rs.length>0,cfg:c.cfg}}
+function spResults(c){
+  c.fin=true;
+  if(!c.done){
+    c.done=1;const st=spStats(c),key=spKey(c.cfg),prev=P.sr.pb[key];
+    st.prev=prev==null?null:prev;st.newPb=st.perfect&&prev!=null&&st.tot<prev;st.first=st.perfect&&prev==null;
+    if(st.perfect&&(prev==null||st.tot<prev))P.sr.pb[key]=st.tot;
+    const k=P.sr.c;k.runs++;k.words+=st.solved;if(st.perfect)k.perfect++;
+    P.sr.runs.unshift({t:Date.now(),n:st.n,L:c.cfg.L,m:c.cfg.m,s:st.solved,tot:st.tot});P.sr.runs=P.sr.runs.slice(0,12);
+    P.sr.hist=c.res.filter(r=>r.won).map(r=>[r.w,r.t]).reverse().concat(P.sr.hist).slice(0,100);
+    spCtx=st;let got=[];try{got=evalAch(null)}finally{spCtx=null}
+    c.st=st;c.got=got.map(a=>a.id);save();stats();pushScore();persist()}
+  const st=c.st,g=c.cfg,rs=c.res,mx=Math.max(1,...rs.map(r=>r.t)),ref=spRef(rs);
+  $('#srT').textContent=st.perfect?'Speedrun complete':'Speedrun finished';
+  $('#srS').textContent=st.n+(st.n==1?' word':' words')+' \u00b7 '+srLn(g.L)+' \u00b7 '+MN[g.m];
+  $('#srTot').textContent=fmtSp(st.tot);
+  const pb=$('#srPb');pb.className='srpb';
+  if(st.newPb){pb.textContent='New personal best! '+fmtSp(st.prev-st.tot)+' faster than before';pb.classList.add('up')}
+  else if(st.first){pb.textContent='First record for these settings';pb.classList.add('up')}
+  else if(st.perfect&&st.prev!=null)pb.textContent='Your best is '+fmtSp(st.prev)+' ('+fmtSp(st.tot-st.prev)+' slower)';
+  else pb.textContent='Solve every word to set a record for these settings';
+  const T=(k,v)=>`<div><b>${v}</b><span>${k}</span></div>`;
+  $('#srG').innerHTML=T('Solved',st.solved+' / '+st.n)+T('Average',fmtSp(st.avg))+T('Fastest',st.solved?fmtSp(st.best):'-')+T('Slowest',st.solved?fmtSp(st.worst):'-')+T('Guesses',st.gu)+T('Avg guesses',st.solved?st.avgG.toFixed(1):'-');
+  let cum=0;$('#srL').innerHTML=rs.map((r,i)=>{cum+=r.t;return spRow(r.w.toUpperCase(),r.t,r.won,ref,mx,i+1,cum)}).join('');
+  const got=(c.got||[]).map(id=>ACH.find(a=>a.id==id)).filter(Boolean);
+  $('#srA').innerHTML=got.length?'<h3 class="sh">Unlocked</h3>'+achRows(got):'';
+  $('#end').hidden=true;$('#spr').hidden=false;$('#spr .card').scrollTop=0;
+  if(st.perfect)confetti();
+  if(got.length)setTimeout(()=>{SFX.ach()},400)}
+function spText(c){
+  const st=c.st,g=c.cfg;let cum=0;
+  return 'wordbox speedrun\n'+st.n+' words \u00b7 '+srLn(g.L)+' \u00b7 '+MN[g.m]+'\n'+st.solved+'/'+st.n+' solved \u00b7 total '+fmtSp(st.tot)+' \u00b7 avg '+fmtSp(st.avg)+(st.newPb?' \u00b7 new personal best':'')+'\n\n'
+   +c.res.map((r,i)=>{cum+=r.t;return (i+1)+'. '+(r.won?spSec(r.t):'\u2715 '+spSec(r.t))+'  ('+fmtSp(cum)+')'}).join('\n')+'\n\n'+location.origin+location.pathname}
+$('#srC').onclick=async()=>{if(!S||!S.cu||!S.cu.st)return;try{await navigator.clipboard.writeText(spText(S.cu));toast('Result copied')}catch{}};
+$('#srAgain').onclick=()=>{if(S&&S.cu&&S.cu.sp)spStart(Object.assign({},S.cu.cfg))};
+$('#srDone').onclick=()=>{$('#spr').hidden=true;cuLeave()};
+// live clock: TOTAL never stops; WORD restarts at every split
+setInterval(()=>{
+  if(!S||!S.cu||!S.cu.sp||S.over||S.cu.fin)return;
+  const c=S.cu,now=Date.now();
+  $('#spTot').textContent=fmtSl(now-c.rs);$('#spWrd').textContent=fmtSl(now-c.t0);$('#spN2').textContent=(c.i+1)+'/'+c.words.length},100);
+
+function mergeSr(r){
+  if(!r||typeof r!='object')return;const fin=Number.isFinite;
+  if(r.pb&&typeof r.pb=='object')Object.entries(r.pb).slice(0,80).forEach(([k,v])=>{if(/^\d{1,2}\|[4-6x]\|[nhb]$/.test(k)&&fin(v)&&v>0&&v<36e6&&(P.sr.pb[k]==null||v<P.sr.pb[k]))P.sr.pb[k]=Math.round(v)});
+  const c=r.c;if(c&&typeof c=='object')['runs','words','perfect'].forEach(k=>{if(fin(c[k]))P.sr.c[k]=Math.max(P.sr.c[k]||0,Math.min(1e6,Math.floor(c[k])))})}
+$('#nSp').onclick=()=>{location.hash='speedrun';view('speedrun')};
 
 // ---- daily spin ----
 const SPINS=[{x:10,w:30},{x:20,w:25},{x:30,w:18},{x:50,w:12},{x:75,w:8},{x:100,w:4},{x:200,w:2},{x:500,w:1}];
@@ -1530,11 +1763,11 @@ setInterval(()=>{dotUpd();if(!$('#spn').hidden)spinStatus()},30000);
 
 // ---- views ----
 function view(v){
-  const pg={play:'#play',leaderboard:'#lbs',custom:'#cus',profile:'#prs'};
+  const pg={play:'#play',leaderboard:'#lbs',custom:'#cus',speedrun:'#spd',profile:'#prs'};
   $('#rc').hidden=true;
   for(const k in pg)$(pg[k]).hidden=k!=v;
-  $('#nP').classList.toggle('on',v=='play');$('#nL').classList.toggle('on',v=='leaderboard');$('#nCu').classList.toggle('on',v=='custom');$('#nPr').classList.toggle('on',v=='profile');
-  if(v=='leaderboard')loadLB();else if(v=='profile')renderProfile();else if(v=='custom')renderCustom();else fit();
+  $('#nP').classList.toggle('on',v=='play');$('#nL').classList.toggle('on',v=='leaderboard');$('#nCu').classList.toggle('on',v=='custom');$('#nPr').classList.toggle('on',v=='profile');$('#nSp').classList.toggle('on',v=='speedrun');
+  if(v=='leaderboard')loadLB();else if(v=='profile')renderProfile();else if(v=='custom')renderCustom();else if(v=='speedrun')renderSpeedrun();else fit();
 }
 $('#nP').onclick=()=>{location.hash='';view('play')};
 $('#nL').onclick=()=>{location.hash='leaderboard';view('leaderboard')};
@@ -1550,7 +1783,7 @@ function pushScore(){
   LENS.forEach(L=>{const b=bL(L);o['b'+L]=b;o['w'+L]=Math.max(wL(L),b)});
   MODES.forEach(m=>{let bm=0,wm=0;LENS.forEach(L=>{const q=stM(m,L),w=Math.max(q.w,q.best);o['b'+m+L]=q.best;o['w'+m+L]=w;bm=Math.max(bm,q.best);wm+=w});o['b'+m]=bm;o['w'+m]=wm});
   fetch(`${DB}/scores/${k}.json`,{method:'PUT',body:JSON.stringify(o)}).catch(()=>{});
-  fetch(`${DB}/profiles/${k}.json`,{method:'PUT',body:JSON.stringify({name:P.name,xp:P.xp,sm:P.sm,ach:P.ach,ds:P.ds,th:P.th||'classic',t:Date.now()})}).catch(()=>{});
+  fetch(`${DB}/profiles/${k}.json`,{method:'PUT',body:JSON.stringify({name:P.name,xp:P.xp,sm:P.sm,ach:P.ach,ds:P.ds,th:P.th||'classic',sr:{pb:P.sr.pb,c:P.sr.c},t:Date.now()})}).catch(()=>{});
 }
 function mergeRemote(s,pr){
   s=s||{};pr=pr||{};
@@ -1614,7 +1847,7 @@ function achHtml(s0){
   cats.forEach(c=>{h+=`<h3 class="sh">${c}</h3>`;ACH.filter(a=>a.c==c).forEach(a=>{
     const u=!!s0.ach[a.id],sec=!!a.s&&!u;let pr='';
     if(s0.own&&!u&&a.p&&!sec){const[cu,t]=a.p();pr=`<span class="xbar sm"><i style="width:${Math.min(100,cu/t*100)}%"></i></span><small>${Math.min(cu,t)} / ${t}</small>`}
-    h+=`<div class="ac ${u?'on':''}${a.id=='master'?' gmk':''}"><span class="ai">${u?'&#10003;':''}</span><div><b>${sec?'Secret achievement':a.n}${a.r?'<i class="rare">RARE</i>':''}</b><span>${sec?'Keep playing to discover this one.':a.d}</span>${pr}</div><em>+${a.x} XP</em></div>`})});
+    h+=`<div class="ac ${u?'on':''}${a.id=='master'?' gmk':''}"><span class="ai">${u?'&#10003;':''}</span><div><b>${sec?'Secret achievement':a.n}${a.r?'<i class="rare">RARE</i>':''}</b><span>${sec?'Keep playing to discover this one.':a.d}</span>${pr}</div><em>${a.x?'+'+a.x+' XP':'Badge'}</em></div>`})});
   return h}
 function renderProfile(){
   const s0=subj(),own=s0.own,j=!!P.name,acc=own&&j,busy2=!own&&(s0.loading||s0.fail);navLabel();
@@ -1716,11 +1949,12 @@ function restoreNormal(){
 (function init(){
   P.N=1;if(![4,5,6].includes(+P.L))P.L=5;if(!MODES.includes(P.mode))P.mode='n';
   const cg=LS.get('wb_cg',null);
-  if(cg&&cg.cu&&cg.cu.words&&cg.ans){S=cg;S.cur=Array(S.L).fill('');S.pos=0;if(S.cu.fin)cuResults();else if(S.over)cuNext();else render()}
+  if(cg&&cg.cu&&cg.cu.sp&&!cg.cu.fin){LS.del('wb_cg');restoreNormal();setTimeout(()=>toast('Your speedrun was cancelled when the page reloaded'),700)}
+  else if(cg&&cg.cu&&cg.cu.words&&cg.ans){S=cg;S.cur=Array(S.L).fill('');S.pos=0;if(S.cu.fin)cuResults();else if(S.over)cuNext();else render()}
   else restoreNormal();
   pLen=String(P.L);navLabel();setUi();dotUpd();
   if(P.mig){evalAch(null);delete P.mig;save();stats();if(P.xp>0)setTimeout(()=>toast('Your past games earned '+P.xp+' XP'),700)}
-  if(location.hash=='#leaderboard')view('leaderboard');else if(location.hash=='#profile')view('profile');else if(location.hash=='#custom')view('custom');
+  if(location.hash=='#leaderboard')view('leaderboard');else if(location.hash=='#profile')view('profile');else if(location.hash=='#custom')view('custom');else if(location.hash=='#speedrun')view('speedrun');
   const qc=new URLSearchParams(location.search).get('c');if(qc&&/^[A-Za-z0-9]{5}$/.test(qc))openChallenge(qc.toUpperCase());
   if(P.name)pushScore();
 })();
