@@ -549,6 +549,13 @@ html[data-theme="paper"] .gmn{background-image:linear-gradient(100deg,#9a6a08 0%
 .src .btns{gap:8px}
 @media(max-width:840px){nav button{font-size:13px}}
 
+/* ===== v9: share as image ===== */
+#shr{z-index:14}
+.pshare{margin-left:auto;display:inline-flex;align-items:center;gap:6px;flex:none;color:var(--text)}
+.pshare svg{flex:none}
+.ph{flex-wrap:wrap}
+#shi:not([src]){display:block;width:min(100%,calc(58dvh*.8));aspect-ratio:4/5;visibility:hidden;margin:0 auto 16px}
+
 </style>
 </head>
 <body>
@@ -626,7 +633,7 @@ html[data-theme="paper"] .gmn{background-image:linear-gradient(100deg,#9a6a08 0%
 <section id="prs" hidden>
   <div id="pf"><div class="lbw">
     <button class="lnk2" id="pBack" type="button" hidden>&larr; Back to leaderboard</button>
-    <div class="ph"><h1 id="pT">Profile</h1><span class="lvb" id="pLv" hidden></span></div>
+    <div class="ph"><h1 id="pT">Profile</h1><span class="lvb" id="pLv" hidden></span><button class="hbtn pshare" id="pSh" type="button" hidden aria-label="Share stats as an image"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M8 7l4-4 4 4"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>Share</button></div>
     <p class="note" id="pSub">Pick a unique name to join the leaderboard.</p>
     <form class="join" id="jf" autocomplete="off">
       <input id="nm" maxlength="16" placeholder="Pick a unique name" aria-label="Name">
@@ -684,7 +691,7 @@ html[data-theme="paper"] .gmn{background-image:linear-gradient(100deg,#9a6a08 0%
 <div id="csh" hidden><div class="card csc"><h2>Share with friends</h2><p>Anyone with this link can play your challenge.</p><input id="cshL" readonly aria-label="Challenge link"><div class="btns"><button class="btn alt" id="cshS" type="button" hidden>Share</button><button class="btn" id="cshC" type="button">Copy</button></div><button class="lnk" id="cshX" type="button">Close</button></div></div>
 <div id="cres" hidden><div class="card crc"><h2 id="crT"></h2><p id="crS"></p><p id="crX" hidden></p><div id="crL"></div><div id="crH" class="hh"></div><div class="btns" style="margin-top:18px"><button class="btn alt" id="crC" type="button">Copy result</button><button class="btn" id="crD" type="button">Done</button></div></div></div>
 <div id="spk" hidden><div id="spkN">3</div></div>
-<div id="spr" hidden><div class="card src"><h2 id="srT">Speedrun</h2><p id="srS"></p><div id="srTot"></div><div class="srpb" id="srPb"></div><div class="srg" id="srG"></div><h3 class="sh">Word by word</h3><div id="srL"></div><p class="srn">Each bar is that word’s split. Green is quicker than your average and red is slower. The grey time on the right is your running total.</p><div id="srA"></div><div class="btns" style="margin-top:18px"><button class="btn alt" id="srC" type="button">Copy result</button><button class="btn alt" id="srAgain" type="button">Run again</button><button class="btn" id="srDone" type="button">Done</button></div></div></div>
+<div id="spr" hidden><div class="card src"><h2 id="srT">Speedrun</h2><p id="srS"></p><div id="srTot"></div><div class="srpb" id="srPb"></div><div class="srg" id="srG"></div><h3 class="sh">Word by word</h3><div id="srL"></div><p class="srn">Each bar is that word’s split. Green is quicker than your average and red is slower. The grey time on the right is your running total.</p><div id="srA"></div><div class="btns" style="margin-top:18px"><button class="btn alt" id="srC" type="button">Share</button><button class="btn alt" id="srAgain" type="button">Run again</button><button class="btn" id="srDone" type="button">Done</button></div></div></div>
 <div id="hhm" hidden><div class="card crc hhc"><button class="x" id="hhX" type="button" aria-label="Close">&times;</button><h2 id="hhT">Results</h2><div id="hhB" class="hh"></div></div></div>
 <canvas id="cf"></canvas>
 
@@ -1250,12 +1257,14 @@ async function drawCard(){
   x.fillStyle=V('--mut');x.font='500 30px system-ui, sans-serif';
   x.fillText(((location.host||'wordbox')+location.pathname.replace(/index\.html$/,'')).replace(/\/$/,''),W/2,1316);
   return c}
-let shUrl=null,shFile=null,shBlob=null;
-async function openShare(){
+let shUrl=null,shFile=null,shBlob=null,shSrc=null;
+async function openShare(src){
+  shSrc=src&&src.draw?src:{draw:drawCard,text:shareText,file:'wordbox-result.png',alt:'Your wordbox result card'};
+  $('#shi').alt=shSrc.alt;
   $('#shr').hidden=false;$('#shi').removeAttribute('src');$('#shB').disabled=true;
   try{
-    const c=await drawCard(),blob=await new Promise(r=>c.toBlob(r,'image/png'));
-    shBlob=blob;shFile=new File([blob],'wordbox-result.png',{type:'image/png'});
+    const c=await shSrc.draw(),blob=await new Promise(r=>c.toBlob(r,'image/png'));
+    shBlob=blob;shFile=new File([blob],shSrc.file,{type:'image/png'});
     if(shUrl)URL.revokeObjectURL(shUrl);shUrl=URL.createObjectURL(blob);$('#shi').src=shUrl;
     const can=!!(navigator.canShare&&navigator.canShare({files:[shFile]}));
     const mode=can?'share':(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write?'copy':'save');
@@ -1265,12 +1274,12 @@ async function openShare(){
 const closeShare=()=>{$('#shr').hidden=true};
 $('#shB').onclick=async()=>{
   if(!shFile)return;P.cnt.shares++;save();ev2(null);const mode=$('#shB').dataset.mode;
-  if(mode=='share'){try{await navigator.share({files:[shFile],text:shareText()})}catch{}return}
+  if(mode=='share'){try{await navigator.share({files:[shFile],text:shSrc.text()})}catch{}return}
   if(mode=='copy'){try{await navigator.clipboard.write([new ClipboardItem({'image/png':shBlob})]);toast('Image copied');return}catch{}}
-  const a=document.createElement('a');a.href=shUrl;a.download='wordbox-result.png';document.body.appendChild(a);a.click();a.remove();toast(mode=='copy'?'Could not copy, image saved instead':'Image saved')};
-$('#shT').onclick=async()=>{P.cnt.shares++;save();ev2(null);try{await navigator.clipboard.writeText(shareText());toast('Text copied')}catch{}};
+  const a=document.createElement('a');a.href=shUrl;a.download=shSrc.file;document.body.appendChild(a);a.click();a.remove();toast(mode=='copy'?'Could not copy, image saved instead':'Image saved')};
+$('#shT').onclick=async()=>{P.cnt.shares++;save();ev2(null);try{await navigator.clipboard.writeText(shSrc.text());toast('Text copied')}catch{}};
 $('#shX').onclick=closeShare;$('#shr').addEventListener('click',e=>{if(e.target.id=='shr')closeShare()});
-$('#eShare').onclick=$('#aShare').onclick=openShare;
+$('#eShare').onclick=$('#aShare').onclick=()=>openShare();
 const openHow=()=>{$('#how').hidden=false;$('#hB').focus()},closeHow=()=>{$('#how').hidden=true;LS.set('wb_seen',1)};
 $('#nH').onclick=openHow;$('#how').addEventListener('click',e=>{if(e.target.id=='how')closeHow()});$('#hB').onclick=closeHow;
 $('#lg').onclick=()=>{location.hash='';view('play')};
@@ -1597,7 +1606,7 @@ const spSec=ms=>ms<60000?(ms/1000).toFixed(2):fmtSp(ms);
 const srLn=L=>L=='x'?'mixed letters':L+' letters';
 const spHue=(t,ref)=>Math.max(0,Math.min(120,120-(t/ref-.6)*100));
 function spRow(w,t,ok,ref,mx,idx,cum){
-  const col=ok?`hsl(${Math.round(spHue(t,ref))} 62% 34%)`:'#8a3140';
+  const col=ok?`hsl(${Math.round(spHue(t,ref))},62%,34%)`:'#8a3140';
   return `<div class="sps">${idx?`<span class="sk">${idx}</span>`:''}<b>${esc(w)}</b><i class="spb"><u style="width:${Math.max(30,Math.round(t/mx*100))}%;background:${col}"><span>${ok?spSec(t):'\u2715 '+spSec(t)}</span></u></i>${cum!=null?`<em>${fmtSp(cum)}</em>`:''}</div>`}
 function spRef(rs){const sv=rs.filter(r=>r.won);return sv.length?sv.reduce((a,r)=>a+r.t,0)/sv.length:6000}
 // no animation while a speedrun is running: borrow Instant mode, then hand the player's own setting back
@@ -1660,7 +1669,7 @@ function spLive(){
   const rs=c.res,ref=spRef(rs),mx=Math.max(1,...rs.map(r=>r.t)),rev=rs.slice().reverse(),sv=rs.filter(r=>r.won);
   $('#spsp .spl').innerHTML=rev.map(r=>spRow(r.w.toUpperCase(),r.t,r.won,ref,mx)).join('')||'<p class="spe">Your splits show up here as you finish each word.</p>';
   $('#spsp .spf').textContent=sv.length?'average '+spSec(ref)+' \u00b7 best '+spSec(Math.min(...sv.map(r=>r.t))):'';
-  $('#spsl').innerHTML=rev.map(r=>`<span class="spc2" style="--c:${r.won?`hsl(${Math.round(spHue(r.t,ref))} 62% 38%)`:'#8a3140'}"><b>${esc(r.w.toUpperCase())}</b>${r.won?'':'\u2715 '}${spSec(r.t)}</span>`).join('')||'<span class="spe">Splits appear here</span>'}
+  $('#spsl').innerHTML=rev.map(r=>`<span class="spc2" style="--c:${r.won?`hsl(${Math.round(spHue(r.t,ref))},62%,38%)`:'#8a3140'}"><b>${esc(r.w.toUpperCase())}</b>${r.won?'':'\u2715 '}${spSec(r.t)}</span>`).join('')||'<span class="spe">Splits appear here</span>'}
 function spStats(c){
   const rs=c.res,sv=rs.filter(r=>r.won),tot=rs.reduce((a,r)=>a+r.t,0),ts=sv.map(r=>r.t);
   return{n:rs.length,solved:sv.length,tot,avg:rs.length?tot/rs.length:0,best:ts.length?Math.min(...ts):0,worst:ts.length?Math.max(...ts):0,
@@ -1697,7 +1706,7 @@ function spText(c){
   const st=c.st,g=c.cfg;let cum=0;
   return 'wordbox speedrun\n'+st.n+' words \u00b7 '+srLn(g.L)+' \u00b7 '+MN[g.m]+'\n'+st.solved+'/'+st.n+' solved \u00b7 total '+fmtSp(st.tot)+' \u00b7 avg '+fmtSp(st.avg)+(st.newPb?' \u00b7 new personal best':'')+'\n\n'
    +c.res.map((r,i)=>{cum+=r.t;return (i+1)+'. '+(r.won?spSec(r.t):'\u2715 '+spSec(r.t))+'  ('+fmtSp(cum)+')'}).join('\n')+'\n\n'+location.origin+location.pathname}
-$('#srC').onclick=async()=>{if(!S||!S.cu||!S.cu.st)return;try{await navigator.clipboard.writeText(spText(S.cu));toast('Result copied')}catch{}};
+$('#srC').onclick=()=>{if(!S||!S.cu||!S.cu.st)return;const c=S.cu;openShare({draw:()=>drawSpeedCard(c),text:()=>spText(c),file:'wordbox-speedrun.png',alt:'Your wordbox speedrun card'})};
 $('#srAgain').onclick=()=>{if(S&&S.cu&&S.cu.sp)spStart(Object.assign({},S.cu.cfg))};
 $('#srDone').onclick=()=>{$('#spr').hidden=true;cuLeave()};
 // live clock: TOTAL never stops; WORD restarts at every split
@@ -1711,6 +1720,96 @@ function mergeSr(r){
   if(r.pb&&typeof r.pb=='object')Object.entries(r.pb).slice(0,80).forEach(([k,v])=>{if(/^\d{1,2}\|[4-6x]\|[nhb]$/.test(k)&&fin(v)&&v>0&&v<36e6&&(P.sr.pb[k]==null||v<P.sr.pb[k]))P.sr.pb[k]=Math.round(v)});
   const c=r.c;if(c&&typeof c=='object')['runs','words','perfect'].forEach(k=>{if(fin(c[k]))P.sr.c[k]=Math.max(P.sr.c[k]||0,Math.min(1e6,Math.floor(c[k])))})}
 $('#nSp').onclick=()=>{location.hash='speedrun';view('speedrun')};
+
+// ---- share as image: profile stats + speedrun result ----
+const crownPath=()=>[new Path2D('M2.5 7.5l4.8 4.2L12 4l4.7 7.7 4.8-4.2-1.9 10.5H4.4z'),new Path2D('M5.7 19.6h12.6a1.1 1.1 0 0 1 0 2.2H5.7a1.1 1.1 0 0 1 0-2.2z')];
+function cardBase(x,W,H,glow){
+  const V=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim(),A=(h,al)=>{const n=parseInt(h.slice(1),16);return `rgba(${n>>16},${n>>8&255},${n&255},${al})`};
+  x.fillStyle=V('--bg');x.fillRect(0,0,W,H);
+  const gr=x.createRadialGradient(W/2,-80,0,W/2,-80,950);gr.addColorStop(0,A(glow||V('--g'),.26));gr.addColorStop(1,A(V('--bg'),0));x.fillStyle=gr;x.fillRect(0,0,W,H);
+  x.textAlign='left';x.textBaseline='alphabetic';x.font='700 64px Goldman, system-ui, sans-serif';
+  const tw=x.measureText('wordbox').width,lx=(W-(54+18+tw))/2;
+  rr(x,lx,82,54,54,15,V('--g'));rr(x,lx+16,98,22,22,5,V('--bg'));
+  x.fillStyle=V('--text');x.fillText('wordbox',lx+72,134);
+  return{V,A}}
+function cardFoot(x,W,V){x.textAlign='center';x.fillStyle=V('--mut');x.font='500 30px system-ui, sans-serif';
+  x.fillText(((location.host||'wordbox')+location.pathname.replace(/index\.html$/,'')).replace(/\/$/,''),W/2,1316)}
+// ----- profile stats card -----
+async function drawProfileCard(s0){
+  try{await document.fonts.load('700 40px Goldman')}catch{}
+  const W=1080,H=1350,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
+  const gm=!!(s0.ach&&s0.ach.master),own=s0.own,nm=own?(P.name||'Player'):(s0.name||'Player');
+  const {V,A}=cardBase(x,W,H,gm?'#e0ad1f':null);
+  const a=aggr(s0.sm,pLen,pMode),rate=a.g?Math.round(a.w/a.g*100):0,xi=lvInfo(s0.xp);
+  // name (gold + crown for grandmasters)
+  let fs=100;x.font=`700 ${fs}px Goldman, system-ui, sans-serif`;
+  while(x.measureText(nm).width>(gm?780:900)&&fs>44){fs-=4;x.font=`700 ${fs}px Goldman, system-ui, sans-serif`}
+  const nw=x.measureText(nm).width,cs=fs*.82,sx=(W-(nw+(gm?cs+22:0)))/2;
+  x.textAlign='left';
+  if(gm){const g2=x.createLinearGradient(sx,0,sx+nw,0);g2.addColorStop(0,'#e0ad1f');g2.addColorStop(.5,'#fff0b8');g2.addColorStop(1,'#d9a02a');x.fillStyle=g2}else x.fillStyle=V('--text');
+  x.fillText(nm,sx,300);
+  if(gm){x.save();x.translate(sx+nw+22,300-cs*.9);x.scale(cs/24,cs/24);x.fillStyle='#f2c14e';x.shadowColor='rgba(242,193,78,.6)';x.shadowBlur=14;crownPath().forEach(p=>x.fill(p));x.restore()}
+  // level + xp bar
+  x.textAlign='center';x.fillStyle=gm?'#f2c14e':V('--g');x.font='700 40px Goldman, system-ui, sans-serif';x.fillText('LEVEL '+xi.L,W/2,378);
+  rr(x,(W-560)/2,402,560,16,8,A(V('--mut'),.28));rr(x,(W-560)/2,402,Math.max(16,560*xi.pct),16,8,gm?'#f2c14e':V('--g'));
+  x.fillStyle=V('--mut');x.font='500 26px system-ui, sans-serif';x.fillText(xi.cur+' / '+xi.next+' XP',W/2,458);
+  x.font='500 32px system-ui, sans-serif';x.fillText((pMode=='all'?'All modes':MN[pMode])+' \u00b7 '+(pLen=='all'?'All word lengths':pLen+' letters'),W/2,516);
+  // stat tiles
+  const tiles=own?[[a.g,'Games'],[a.w,'Wins'],[rate+'%','Win rate'],[a.sk,'Streak'],[a.b,'Best streak'],[dsNow(),'Daily streak']]:[[a.g,'Games'],[a.w,'Wins'],[rate+'%','Win rate'],[a.b,'Best streak']];
+  const tw2=300,th=124,tg=24;
+  tiles.forEach(([v,l],i)=>{
+    const row=Math.floor(i/3),inRow=Math.min(3,tiles.length-row*3),col=i%3,x0=(W-(inRow*tw2+(inRow-1)*tg))/2,a0=x0+col*(tw2+tg),b0=568+row*(th+tg);
+    rr(x,a0,b0,tw2,th,22,V('--panel'));x.strokeStyle=V('--line');x.lineWidth=2;x.stroke();
+    x.fillStyle=V('--text');x.font='700 58px Goldman, system-ui, sans-serif';x.fillText(String(v),a0+tw2/2,b0+70);
+    x.fillStyle=V('--mut');x.font='500 26px system-ui, sans-serif';x.fillText(l,a0+tw2/2,b0+106)});
+  // guesses per win
+  const top=Math.max(pLen=='all'?7:+pLen+1,...Object.keys(a.d).map(Number)),mx=Math.max(1,...Object.values(a.d)),BC=['#f2c14e','#c5d24a','#8fcf55','#35b777','#2a9d68','#228657','#1b7048'];
+  x.fillStyle=V('--mut');x.font='700 28px system-ui, sans-serif';x.textAlign='left';x.fillText('GUESSES PER WIN',150,916);
+  const rh=38;
+  for(let i=1;i<=top;i++){const n=a.d[i]||0,y=940+(i-1)*rh,w=n?Math.max(56,n/mx*690):24;
+    x.fillStyle=V('--mut');x.font='700 24px system-ui, sans-serif';x.textAlign='center';x.fillText(String(i),166,y+25);
+    rr(x,200,y+2,w,30,8,n?BC[Math.min(i,7)-1]:A(V('--mut'),.25));
+    if(n){x.fillStyle=i>=6?'#fff':'#0e0f12';x.font='700 22px system-ui, sans-serif';x.textAlign='right';x.fillText(String(n),200+w-12,y+25)}}
+  // achievements
+  const got=ACH.filter(q=>s0.ach&&s0.ach[q.id]).length;
+  rr(x,220,1218,640,66,18,V('--panel'));x.strokeStyle=V('--line');x.lineWidth=2;x.stroke();
+  rr(x,244,1266,592,8,4,A(V('--mut'),.28));rr(x,244,1266,Math.max(8,592*got/ACH.length),8,4,gm?'#f2c14e':V('--g'));
+  x.textAlign='left';x.fillStyle=V('--mut');x.font='500 26px system-ui, sans-serif';x.fillText('Achievements',244,1252);
+  x.textAlign='right';x.fillStyle=V('--text');x.font='700 30px Goldman, system-ui, sans-serif';x.fillText(got+' / '+ACH.length,836,1254);
+  cardFoot(x,W,V);return c}
+function profileText(s0){
+  const a=aggr(s0.sm,pLen,pMode),rate=a.g?Math.round(a.w/a.g*100):0,nm=s0.own?(P.name||'Player'):(s0.name||'Player'),f=[pMode=='all'?'':MN[pMode],pLen=='all'?'':pLen+' letters'].filter(Boolean).join(', ');
+  return `wordbox stats \u00b7 ${nm}${f?' ('+f+')':''}\nLevel ${lvInfo(s0.xp).L} \u00b7 ${a.g} games \u00b7 ${a.w} wins (${rate}%)\nBest streak ${a.b}`+(s0.own&&dsNow()?` \u00b7 ${dsNow()}-day daily streak`:'')+`\n\n${location.origin+location.pathname}`}
+$('#pSh').onclick=()=>{const s0=subj();openShare({draw:()=>drawProfileCard(s0),text:()=>profileText(s0),file:'wordbox-stats.png',alt:'Your wordbox stats card'})};
+// ----- speedrun result card -----
+async function drawSpeedCard(c){
+  try{await document.fonts.load('700 40px Goldman')}catch{}
+  const W=1080,H=1350,cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');
+  const st=c.st,g=c.cfg,rs=c.res,n=rs.length,pbx=st.newPb||st.first;
+  const {V,A}=cardBase(x,W,H,pbx?'#e0ad1f':(st.perfect?null:V0('--y')));
+  x.textAlign='center';x.fillStyle=V('--mut');x.font='700 34px system-ui, sans-serif';x.fillText(st.perfect?'SPEEDRUN COMPLETE':'SPEEDRUN FINISHED',W/2,254);
+  let fs=176;x.font=`700 ${fs}px Goldman, system-ui, sans-serif`;const tt=fmtSp(st.tot);while(x.measureText(tt).width>940&&fs>90){fs-=6;x.font=`700 ${fs}px Goldman, system-ui, sans-serif`}
+  x.fillStyle=st.perfect?V('--g'):V('--text');x.fillText(tt,W/2,254+fs*.92);
+  x.fillStyle=V('--mut');x.font='500 36px system-ui, sans-serif';x.fillText(n+(n==1?' word':' words')+' \u00b7 '+srLn(g.L)+' \u00b7 '+MN[g.m],W/2,494);
+  if(pbx){const lab=st.newPb?'NEW PERSONAL BEST':'FIRST RECORD';x.font='800 26px system-ui, sans-serif';const w=x.measureText(lab).width+56;rr(x,(W-w)/2,516,w,48,24,'#e0ad1f');x.fillStyle='#1a1200';x.fillText(lab,W/2,550)}
+  const chips=[['Solved',st.solved+'/'+n],['Average',spSec(st.avg)],['Fastest',st.solved?spSec(st.best):'-'],['Slowest',st.solved?spSec(st.worst):'-']],cw=230,cg=20,cx=(W-(4*cw+3*cg))/2;
+  chips.forEach(([l,v],i)=>{const a0=cx+i*(cw+cg);rr(x,a0,596,cw,108,22,V('--panel'));x.strokeStyle=V('--line');x.lineWidth=2;x.stroke();
+    x.fillStyle=V('--text');x.font='700 44px Goldman, system-ui, sans-serif';x.fillText(v,a0+cw/2,652);x.fillStyle=V('--mut');x.font='500 24px system-ui, sans-serif';x.fillText(l,a0+cw/2,688)});
+  // splits, drawn like the in-game word log
+  const ref=spRef(rs),mx=Math.max(1,...rs.map(r=>r.t)),two=n>12,per=two?Math.ceil(n/2):n,area=520,rh=Math.min(58,Math.floor(area/per)),y0=738,mono='ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
+  let cum=0;
+  rs.forEach((r,i)=>{
+    cum+=r.t;const colI=two?(i<per?0:1):0,row=two?(i%per):i,x0=two?(colI?556:64):64,y=y0+row*rh,bh=Math.round(rh*.74),fz=Math.max(16,Math.round(rh*.48));
+    const wordX=two?x0:x0+44,barX=two?x0+150:x0+250,maxW=two?(W/2-64-150-12):(W-64-barX-150),bw=Math.max(two?80:110,r.t/mx*maxW);
+    x.textBaseline='middle';x.textAlign='left';
+    if(!two){x.fillStyle=V('--mut');x.font=`700 ${fz-4}px system-ui, sans-serif`;x.fillText(String(i+1),x0,y+bh/2)}
+    x.fillStyle=V('--text');x.font=`700 ${fz}px ${mono}`;x.fillText(r.w.toUpperCase(),wordX,y+bh/2);
+    rr(x,barX,y,bw,bh,Math.min(10,bh/3),r.won?`hsl(${Math.round(spHue(r.t,ref))},62%,34%)`:'#8a3140');
+    x.fillStyle='#fff';x.font=`700 ${fz-2}px system-ui, sans-serif`;x.fillText((r.won?'':'\u2715 ')+spSec(r.t),barX+14,y+bh/2+1);
+    if(!two){x.textAlign='right';x.fillStyle=V('--mut');x.font=`500 ${fz-4}px system-ui, sans-serif`;x.fillText(fmtSp(cum),W-64,y+bh/2+1)}
+    x.textBaseline='alphabetic'});
+  cardFoot(x,W,V);return cv}
+const V0=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 
 // ---- daily spin ----
 const SPINS=[{x:10,w:30},{x:20,w:25},{x:30,w:18},{x:50,w:12},{x:75,w:8},{x:100,w:4},{x:200,w:2},{x:500,w:1}];
@@ -1853,7 +1952,7 @@ function renderProfile(){
   const s0=subj(),own=s0.own,j=!!P.name,acc=own&&j,busy2=!own&&(s0.loading||s0.fail);navLabel();
   $('#pBack').hidden=own;
   {const pt=$('#pT'),nm=own?(j?P.name:'Profile'):(s0.name||'Player'),gm=!busy2&&!!s0.ach&&!!s0.ach.master&&(!own||j);pt.textContent='';const sp=document.createElement('span');sp.textContent=nm;if(gm)sp.className='gmn';pt.append(sp);if(gm)pt.insertAdjacentHTML('beforeend',CROWN(20))}
-  const xi=lvInfo(s0.xp);$('#pLv').textContent='Lv '+xi.L;$('#pLv').hidden=busy2;
+  const xi=lvInfo(s0.xp);$('#pLv').textContent='Lv '+xi.L;$('#pLv').hidden=busy2;$('#pSh').hidden=busy2;
   $('#pSub').hidden=!own||j;
   const form=own&&!j;
   $('#jf').hidden=!form;$('#rcl').hidden=!form;$('#rl').hidden=!form||!DB;if(!form)$('#rf').hidden=true;
