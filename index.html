@@ -575,6 +575,23 @@ html[data-theme="paper"] .gmn{background-image:linear-gradient(100deg,#9a6a08 0%
 .acca .hbtn{color:var(--text)}
 
 
+/* Discord */
+a.hbtn{display:inline-flex;align-items:center;text-decoration:none;flex:none}
+.wbdisc{display:none}
+@media(min-width:1366px){
+  /* sits in the free space beside the game, 16px off the card edge, bottom-aligned with the footer; colours follow the theme accent */
+  .wbdisc{display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:10px;row-gap:7px;position:fixed;right:max(8px,calc((100vw - 980px)/2 - 192px));bottom:20px;width:176px;padding:11px 12px 10px;text-decoration:none;color:var(--text);
+    background:var(--panel);border:1px solid var(--line);border-radius:12px;z-index:5;transition:border-color .15s,background .15s,transform .15s}
+  @supports (background:color-mix(in srgb,red 10%,blue)){
+    .wbdisc{background:color-mix(in srgb,var(--g) 7%,var(--panel));border-color:color-mix(in srgb,var(--g) 38%,var(--line))}
+    .wbdisc:hover{background:color-mix(in srgb,var(--g) 13%,var(--panel))}}
+  .wbdisc .wdi{width:30px;height:30px;border-radius:9px;background:var(--g);display:grid;place-items:center}
+  .wbdisc svg{width:18px;height:18px;fill:var(--og)}
+  .wbdisc b{font-size:13px;font-weight:700;line-height:1.2;white-space:nowrap}
+  .wbdisc small{grid-column:1/-1;font-size:11px;line-height:1.3;color:var(--mut)}
+  .wbdisc:hover{border-color:var(--g);transform:translateY(-2px)}
+  .wbdisc:focus-visible{outline:2px solid var(--g);outline-offset:2px}
+}
 /* ===== mobile layout: compact the chrome so the board gets the space (phones), bigger keys (tablets) ===== */
 .fts{display:none}
 @media(max-width:620px){
@@ -720,7 +737,7 @@ html[data-theme="paper"] .gmn{background-image:linear-gradient(100deg,#9a6a08 0%
     </div>
   </div></div>
 </section>
-<footer class="ft"><span class="ftl">Fan-made, not affiliated with The New York Times or Wordle. Play the word of the day on the <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank" rel="noopener noreferrer">original Wordle</a>, then come back for more. </span><span class="fts">Fan-made, not affiliated with NYT or Wordle. </span><button type="button" id="dcl">Disclaimer</button></footer>
+<footer class="ft"><span class="ftl">Fan-made, not affiliated with The New York Times or Wordle. Play the word of the day on the <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank" rel="noopener noreferrer">original Wordle</a>, then come back for more. </span><span class="fts">Fan-made, not affiliated with NYT or Wordle. </span><button type="button" id="dcl">Disclaimer</button><span class="ftl"> &middot; <a href="https://discord.gg/yaeqysrN4" target="_blank" rel="noopener noreferrer">Join our Discord</a></span></footer>
 </div>
 <div id="toast"></div>
 <div id="end" hidden><div class="card"><h2 id="eT"></h2><p id="eS"></p><div class="words" id="eW"></div><div id="eD" hidden><div class="dh"><b id="dW"></b><span id="dP"></span><button class="dA" id="dA" type="button" aria-label="Hear the word"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button></div><p id="dM"></p><small>Definitions: Wiktionary</small></div><div id="eX" hidden><div class="xpl" id="xpH"><b id="xpN"></b><span id="xpD"></span></div><div class="xlv"><b id="xpL"></b><span id="xpT"></span></div><div class="xbar"><i id="xpF"></i></div><div class="lvup" id="xpU" hidden></div><div id="xpA"></div></div><div id="eN" hidden></div><div id="eC" hidden></div><div class="btns"><button class="btn alt" id="eShare">Share</button><button class="btn" id="eB"></button></div><div class="elinks"><button class="lnk" id="eView">View board</button><span class="sp">|</span><button class="lnk" id="eMore" type="button">Your stats</button></div></div></div>
@@ -740,8 +757,10 @@ html[data-theme="paper"] .gmn{background-image:linear-gradient(100deg,#9a6a08 0%
 <div class="srow"><div><b>Instant mode</b><span>No animations. Results show instantly.</span></div><button class="sw" id="swF" type="button" role="switch" aria-checked="false" aria-label="Instant mode"></button></div>
 <div class="srow"><div><b>Hide on-screen keyboard</b><span>Type with your device keyboard. Tiles get bigger.</span></div><button class="sw" id="swK" type="button" role="switch" aria-checked="false" aria-label="Hide on-screen keyboard"></button></div>
 <div class="srow" id="rEk"><div><b>Enter button</b><span>Side of the bottom keyboard row</span></div><div class="ekg" id="ekg" role="group" aria-label="Enter button side"><button type="button" data-e="l">Left</button><button type="button" data-e="r">Right</button></div></div>
+<div class="srow"><div><b>Community</b><span>Join our Discord to report bugs or find players.</span></div><a class="hbtn" href="https://discord.gg/yaeqysrN4" target="_blank" rel="noopener noreferrer">Join</a></div>
 <div class="srow col"><div><b>Board theme</b><span id="thT">Classic</span></div><div class="sws" id="sws"></div></div>
 <button class="btn" id="stX" type="button" style="width:100%;margin-top:16px">Done</button></div></div>
+<a class="wbdisc" href="https://discord.gg/yaeqysrN4" target="_blank" rel="noopener noreferrer" aria-label="Join our Discord to report bugs or find players"><span class="wdi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg></span><b>Join our Discord</b><small>Report bugs or find players</small></a>
 <div id="cfm" hidden><div class="card cfc"><h2 id="cfT"></h2><p id="cfP"></p><div class="btns" style="margin-top:18px"><button class="btn alt" id="cfN" type="button">Cancel</button><button class="btn" id="cfY" type="button">OK</button></div></div></div>
 <div id="dcm" hidden><div class="card dcc"><h2>About wordbox</h2>
 <p>wordbox is an independent, fan-made word game. It is not affiliated with, endorsed by or connected to The New York Times Company or Wordle. Wordle is a trademark of The New York Times Company, and all other names belong to their owners.</p>
@@ -1224,6 +1243,7 @@ async function finish(won,g,A,sk){
   q.g++;q.ts=Date.now();
   if(won){dsf=dsWin();q.w++;q.streak++;if(q.streak>q.best)q.best=q.streak;q.dist[n]=(q.dist[n]||0)+1;gain=winXp(S.L,n,S.G,q.streak,paid,S.mode||'n');P.xp+=gain.total;confetti();SFX.win()}else{q.streak=0;SFX.lose()}
   P.cnt.last=won?'w':'l';
+  if(won&&!S.cu){const tw=sum('w');if((tw==1&&!P.bm)||(tw>=5&&P.bm===1))bmDue=true}
   const w0=S.ans[0],dp=lookup(w0).catch(()=>null);$('#eD').hidden=true;
   trackRun(ctx);
   const got=evalAch(ctx),lv1=lvInfo(P.xp),th=won?themeCheck():[];
@@ -1255,7 +1275,7 @@ async function finish(won,g,A,sk){
   dp.then(d=>{if(S&&S.ans[0]==w0)renderDef(w0,d)});
   $('#end').hidden=false;$('#eB').focus();
 }
-function next(){$('#end').hidden=true;$('#after').hidden=true;$('#kb').hidden=false;focusNk();if(S&&S.cu){cuNext();return}newGame()}
+function next(){$('#end').hidden=true;$('#after').hidden=true;$('#kb').hidden=false;focusNk();if(bmDue){bmDue=false;setTimeout(bmAsk,450)}if(S&&S.cu){cuNext();return}newGame()}
 function viewBoard(){$('#end').hidden=true;$('#kb').hidden=true;$('#after').hidden=false;$('#aNext').textContent=$('#eB').textContent;$('#aShare').hidden=$('#eShare').hidden;fit();$('#aNext').focus()}
 $('#eView').onclick=viewBoard;$('#aNext').onclick=next;
 $('#end').addEventListener('click',e=>{if(e.target.id=='end')viewBoard()});
@@ -1382,9 +1402,16 @@ $('#nH').onclick=openHow;$('#how').addEventListener('click',e=>{if(e.target.id==
 $('#lg').onclick=()=>{location.hash='';view('play')};
 
 // ---- sound ----
-let AC=null;
-function ac(){if(P.snd===0)return null;if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)()}catch{return null}}if(AC.state=='suspended')AC.resume();return AC}
-function tone(f,t0,d,type,v,f2){const a=ac();if(!a)return;const t=a.currentTime+t0,o=a.createOscillator(),g=a.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+d);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(Math.max(.0001,(v||.07)*(P.vol==null?1:P.vol)),t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+d+.03)}
+let AC=null,MG=null;
+// Master volume stage: every sound goes through MG (volume) and then a soft clipper, so 100% is loud and clear and never crackles.
+// The slider uses a squared curve (50% = about half as loud to the ear) on top of a fixed boost, because the sounds are synthesized quietly.
+const VBOOST=10;
+const mvol=()=>{const v=P.vol==null?1:P.vol;return v*v*VBOOST/2};
+function ac(){if(P.snd===0)return null;if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)();
+  const sh=AC.createWaveShaper(),cv=new Float32Array(1024);for(let i=0;i<1024;i++)cv[i]=.95*Math.tanh(i*4/1023-2);sh.curve=cv;sh.oversample='2x';
+  MG=AC.createGain();MG.connect(sh);sh.connect(AC.destination)}catch{AC=null;MG=null;return null}}
+  if(AC.state=='suspended')AC.resume();return AC}
+function tone(f,t0,d,type,v,f2){const a=ac();if(!a)return;MG.gain.value=mvol();const t=a.currentTime+t0,o=a.createOscillator(),g=a.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+d);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(Math.max(.0001,v||.07),t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(MG);o.start(t);o.stop(t+d+.03)}
 const SC=[523.25,587.33,659.25,783.99,880,987.77,1174.66];
 const SFX={
   key(){tone(640+Math.random()*80,0,.05,'triangle',.07,420);tone(110,0,.06,'sine',.06,70)},
@@ -1417,7 +1444,20 @@ $('#nG').onclick=openSet;$('#stX').onclick=closeSet;$('#set').addEventListener('
 const openDcm=()=>{$('#dcm').hidden=false},closeDcm=()=>{$('#dcm').hidden=true};
 $('#dcl').onclick=openDcm;$('#dcX').onclick=closeDcm;$('#dcm').addEventListener('click',e=>{if(e.target.id=='dcm')closeDcm()});
 let cfmRes=null;
-function askConfirm(t,p,ok,danger){return new Promise(res=>{$('#cfT').textContent=t;$('#cfP').textContent=p;const y=$('#cfY');y.textContent=ok;y.classList.toggle('dng',!!danger);$('#cfm').hidden=false;$('#cfN').focus();cfmRes=res})}
+function askConfirm(t,p,ok,danger,no){return new Promise(res=>{$('#cfT').textContent=t;$('#cfP').textContent=p;$('#cfN').textContent=no||'Cancel';const y=$('#cfY');y.textContent=ok;y.classList.toggle('dng',!!danger);$('#cfm').hidden=false;$('#cfN').focus();cfmRes=res})}
+// ---- bookmark prompt: shown after the first win (and once more at 5 wins if they said "Not now") ----
+// Browsers do not let a website add a bookmark by itself, so "Bookmark it" shows the exact shortcut for the player's device.
+let bmDue=false;
+function bmHelp(){const ua=navigator.userAgent||'',pl=navigator.platform||'',ios=/iPad|iPhone|iPod/.test(ua)||(pl=='MacIntel'&&navigator.maxTouchPoints>1);
+  if(ios)return 'Tap the Share button, then Add Bookmark.';
+  if(/Android/i.test(ua))return 'Tap the \u22EE menu, then the star to bookmark.';
+  if(/Mac/i.test(pl||ua))return 'Press \u2318 + D to bookmark this page.';
+  return 'Press Ctrl + D to bookmark this page.'}
+async function bmAsk(){
+  if(!$('#cfm').hidden)return;
+  const again=P.bm===1;
+  const ok=await askConfirm('Bookmark wordbox?',again?"Enjoying wordbox? Bookmark it so it's always one click away.":"Nice first win! Bookmark wordbox so it's one click away whenever you want to play.",'Bookmark it',false,'Not now');
+  if(ok){P.bm=2;save();toast(bmHelp(),6000)}else{P.bm=again?2:1;save()}}
 function cfmDone(v){if(!cfmRes)return;$('#cfm').hidden=true;const r=cfmRes;cfmRes=null;r(v)}
 $('#cfN').onclick=()=>cfmDone(false);$('#cfY').onclick=()=>cfmDone(true);$('#cfm').addEventListener('click',e=>{if(e.target.id=='cfm')cfmDone(false)});
 
