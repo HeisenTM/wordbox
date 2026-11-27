@@ -556,6 +556,14 @@ html[data-theme="paper"] .gmn{background-image:linear-gradient(100deg,#9a6a08 0%
 .ph{flex-wrap:wrap}
 #shi:not([src]){display:block;width:min(100%,calc(58dvh*.8));aspect-ratio:4/5;visibility:hidden;margin:0 auto 16px}
 
+/* ===== v11: cloud save ===== */
+.accc,#accX{margin-top:4px}
+.acck{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:12px}
+.acck span{color:var(--mut);font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.acck code{font:700 15px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.06em;color:var(--text)}
+.acca{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.acca .hbtn{color:var(--text)}
+
 </style>
 </head>
 <body>
@@ -634,15 +642,15 @@ html[data-theme="paper"] .gmn{background-image:linear-gradient(100deg,#9a6a08 0%
   <div id="pf"><div class="lbw">
     <button class="lnk2" id="pBack" type="button" hidden>&larr; Back to leaderboard</button>
     <div class="ph"><h1 id="pT">Profile</h1><span class="lvb" id="pLv" hidden></span><button class="hbtn pshare" id="pSh" type="button" hidden aria-label="Share stats as an image"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M8 7l4-4 4 4"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>Share</button></div>
-    <p class="note" id="pSub">Pick a unique name to join the leaderboard.</p>
+    <p class="note" id="pSub">Pick a name to save your progress online and join the leaderboard.</p>
     <form class="join" id="jf" autocomplete="off">
       <input id="nm" maxlength="16" placeholder="Pick a unique name" aria-label="Name">
       <button class="btn" type="submit">Join</button>
     </form>
-    <label class="chk" id="rcl"><input type="checkbox" id="rcb" checked> Get a recovery code, so I can restore this name if I lose my data</label>
+    <label class="chk" id="rcl"><input type="checkbox" id="rcb" checked> Create a recovery code so my streaks and progress can follow me to any device</label>
     <p class="note" id="msg"></p>
-    <div class="rc" id="rc" hidden><p>Your recovery code. Save it now, it will not be shown again.</p><div class="rcr"><code id="rcv"></code><button class="btn alt" id="rcc" type="button">Copy</button></div></div>
-    <button class="lnk2" id="rl" type="button">Lost your data? Restore your name</button>
+    <div class="rc" id="rc" hidden><p>Your recovery code. It is also kept in your Account tab, where you can make a transfer link for a new device.</p><div class="rcr"><code id="rcv"></code><button class="btn alt" id="rcc" type="button">Copy</button></div></div>
+    <button class="lnk2" id="rl" type="button">New device? Bring your progress over</button>
     <form class="join" id="rf" hidden autocomplete="off"><input id="rn" maxlength="16" placeholder="Your name" aria-label="Name"><input id="rk" maxlength="20" placeholder="Recovery code" aria-label="Recovery code" autocapitalize="characters"><button class="btn" type="submit">Restore</button></form>
     <div id="pX"></div>
     <div class="tabs" id="ptabs"><button data-p="stats" class="on">Stats</button><button data-p="ach">Achievements</button><button data-p="th">Themes</button><button data-p="acc">Account</button></div>
@@ -650,7 +658,8 @@ html[data-theme="paper"] .gmn{background-image:linear-gradient(100deg,#9a6a08 0%
     <div id="pAch" hidden></div>
     <div id="pTh" hidden></div>
     <div id="pAcc" hidden><p class="note" id="accT"></p>
-    <button class="lnk2" id="mk" type="button" hidden>Create a recovery code for this name</button>
+    <button class="lnk2" id="mk" type="button" hidden>Create my recovery code</button>
+    <div id="accX"></div>
     </div>
   </div></div>
 </section>
@@ -948,7 +957,23 @@ function mergeDs(pr,quiet){
   if(typeof pr.th=='string'&&(!P.th||P.th=='classic')&&THEMES.some(x=>x.id==pr.th))P.th=pr.th;
   if(quiet)THEMES.forEach(x=>{if(x.r&&thOk(x)&&!P.tu[x.id])P.tu[x.id]=Date.now()});
   applyTheme(P.th||'classic',false);dsUi()}
-if(DB&&P.name)fetch(`${DB}/profiles/${P.name.toLowerCase()}.json`).then(r=>r.ok?r.json():null).then(pr=>{if(pr){mergeDs(pr);save()}}).catch(()=>{});
+// ---- cloud save: pull before push, so an out-of-date device can never overwrite the saved copy ----
+let synced=false,syncing=null,lastPull=0;
+async function syncPull(){
+  if(!DB||!P.name)return false;
+  if(syncing)return syncing;
+  syncing=(async()=>{
+    try{
+      const r=await fetch(`${DB}/profiles/${P.name.toLowerCase()}.json`,{cache:'no-store'});
+      if(!r.ok)return false;
+      const pr=await r.json();
+      if(pr&&typeof pr=='object')mergeRemote({},pr);
+      synced=true;lastPull=Date.now();save();stats();dsUi();themeUi();navLabel();
+      const pv=$('#prs');if(pv&&!pv.hidden&&!PV)renderProfile();
+      return true
+    }catch{return false}finally{syncing=null}})();
+  return syncing}
+if(DB&&P.name)syncPull();
 setInterval(dsUi,60000);
 applyTheme(P.th||'classic',false);dsUi();
 
@@ -1026,7 +1051,7 @@ function keys(){
   document.querySelectorAll('.k[data-k]').forEach(k=>{k.classList.remove('g','y','a');const s=m[k.dataset.k];if(s)k.classList.add(s)})}
 function stats(){const q=stM(P.mode,P.L),x=lvInfo(P.xp);$('#st').textContent=q.streak;$('#bs').textContent=q.best;$('#lvn').textContent='Lv '+x.L;$('#lvx').textContent=x.cur+' / '+x.next;$('#lvf').style.width=Math.round(x.pct*100)+'%';dsUi()}
 
-function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('s');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('s'),1200)}
+function toast(t,ms){const e=$('#toast');e.textContent=t;e.classList.add('s');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('s'),ms||1200)}
 function bad(msg){SFX.bad();toast(msg);navigator.vibrate&&navigator.vibrate(20);const r=S.gs.length;
   act().forEach(b=>{const row=boardEl(b).children[r];row.classList.remove('shake');void row.offsetWidth;row.classList.add('shake')})}
 
@@ -1137,7 +1162,7 @@ async function finish(won,g,A,sk){
   S.ans.forEach((a,b)=>boardEl(b).classList.toggle('done',solveIdx(b)>=0));
   A.filter(b=>S.ans[b]==g).forEach(b=>{for(let c=0;c<S.L;c++){const t=tile(b,S.gs.length-1,c);t.style.setProperty('--i',c);t.classList.remove('flip');t.classList.add('bounce')}});
   const n=S.gs.length,q=stM(S.mode||'n',S.L),ctx={won,n,G:S.G,L:S.L,prevLoss:P.cnt.last=='l',hinted:(S.hn||0)>0,m:S.mode||'n',sec:S.t0?(Date.now()-S.t0)/1000:null,hr:new Date().getHours()},paid=S.hn||0,lv0=lvInfo(P.xp);let gain=null,dsf=false;
-  q.g++;
+  q.g++;q.ts=Date.now();
   if(won){dsf=dsWin();q.w++;q.streak++;if(q.streak>q.best)q.best=q.streak;q.dist[n]=(q.dist[n]||0)+1;gain=winXp(S.L,n,S.G,q.streak,paid,S.mode||'n');P.xp+=gain.total;confetti();SFX.win()}else{q.streak=0;SFX.lose()}
   P.cnt.last=won?'w':'l';
   const w0=S.ans[0],dp=lookup(w0).catch(()=>null);$('#eD').hidden=true;
@@ -1150,7 +1175,7 @@ async function finish(won,g,A,sk){
   $('#eS').textContent=((S.mode||'n')!='n'?MN[S.mode]+' mode \u00b7 ':'')+(won?(q.streak==1?'Streak started.':'Streak: '+q.streak):'Your streak reset to 0.');
   $('#eW').innerHTML='';
   S.ans.forEach(a=>{const s=document.createElement('span');s.textContent=a;if(S.gs.includes(a))s.className='ok';$('#eW').appendChild(s)});
-  $('#eB').textContent=won?'Next word':'Try again';dailyRow(won,dsf,th);
+  $('#eB').textContent=won?'Next word':'Try again';dailyRow(won,dsf,th);if(won)tipOnce();
   const X=$('#eX');X.hidden=!(gain||got.length);
   if(!X.hidden){
     $('#xpH').hidden=!gain;
@@ -1811,6 +1836,69 @@ async function drawSpeedCard(c){
   cardFoot(x,W,V);return cv}
 const V0=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 
+// ---- cloud save: restore everything, transfer link, friendly prompts ----
+function mergeExtra(pr){
+  const fin=Number.isFinite,cap=(v,m=1e7)=>fin(+v)?Math.max(0,Math.min(m,Math.floor(+v))):0,g=pr.pg;
+  if(g&&typeof g=='object'){
+    const c=g.cnt;
+    if(c&&typeof c=='object')Object.keys(P.cnt).forEach(k=>{if(typeof P.cnt[k]=='number'&&typeof c[k]=='number')P.cnt[k]=Math.max(P.cnt[k],cap(c[k]))});
+    if(g.cd&&typeof g.cd=='object'){P.cd=P.cd||{};Object.keys(g.cd).slice(0,200).forEach(k=>{if(/^[A-Za-z0-9]{3,10}$/.test(k))P.cd[k]=1});const ks=Object.keys(P.cd);while(ks.length>200)delete P.cd[ks.shift()]}
+    if(Array.isArray(g.ch)){const have=new Set((P.ch||[]).map(x=>x.c));P.ch=(P.ch||[]).concat(g.ch.filter(x=>x&&typeof x.c=='string'&&/^[A-Za-z0-9]{3,10}$/.test(x.c)&&!have.has(x.c)).map(x=>({c:x.c,n:cap(x.n,6)}))).slice(0,20)}
+    if(g.tu&&typeof g.tu=='object')Object.keys(g.tu).forEach(k=>{if(THEMES.some(t=>t.id==k)&&!P.tu[k])P.tu[k]=1});
+    if(typeof g.spin=='string'&&/^\d{4}-\d{1,2}-\d{1,2}$/.test(g.spin)){const n=s=>{const a=s.split('-').map(Number);return a[0]*10000+a[1]*100+a[2]};if(!P.spin||n(g.spin)>n(P.spin))P.spin=g.spin}}
+  const r=pr.sr;
+  if(r&&typeof r=='object'){
+    if(Array.isArray(r.runs)){const have=new Set(P.sr.runs.map(x=>x.t));P.sr.runs=P.sr.runs.concat(r.runs.filter(x=>x&&fin(+x.t)&&!have.has(+x.t)&&fin(+x.tot)&&fin(+x.n)).map(x=>({t:+x.t,n:cap(x.n,25),L:String(x.L||'5').slice(0,1),m:MODES.includes(x.m)?x.m:'n',s:cap(x.s,25),tot:cap(x.tot,36e6)}))).sort((a,b)=>b.t-a.t).slice(0,12)}
+    if(Array.isArray(r.hist)){const have=new Set(P.sr.hist.map(x=>x[0]+'|'+x[1]));P.sr.hist=P.sr.hist.concat(r.hist.filter(x=>Array.isArray(x)&&typeof x[0]=='string'&&/^[a-z]{4,6}$/.test(x[0])&&fin(+x[1])&&!have.has(x[0]+'|'+x[1])).map(x=>[x[0],cap(x[1],36e6)])).slice(0,100)}}}
+async function doRestore(n,c){
+  if(!DB)return{err:'The online board is not connected yet.'};
+  if(!/^[A-Za-z0-9_]{3,16}$/.test(n)||c.length!=12)return{err:'Enter your name and the 12-character code.'};
+  try{
+    const k=n.toLowerCase(),r=await fetch(`${DB}/keys/${k}/${c}.json`);
+    if(r.status==401||r.status==403)return{err:'Recovery is not switched on yet. Update the database rules.'};
+    if(!r.ok)throw 0;
+    if(await r.json()!==true)return{err:'Hmm, that name and code do not match. Check for typos and try again.'};
+    const s=await(await fetch(`${DB}/scores/${k}.json`,{cache:'no-store'})).json(),pr=await(await fetch(`${DB}/profiles/${k}.json`,{cache:'no-store'})).json();
+    P.name=(s&&s.name)||n;P.rc=1;P.rcv=c;mergeRemote(s,pr);synced=true;lastPull=Date.now();
+    save();stats();dsUi();themeUi();navLabel();pushScore();
+    return{ok:1}
+  }catch{return{err:'Could not reach the board. Try again in a moment.'}}}
+$('#rf').addEventListener('submit',async e=>{
+  e.preventDefault();const m=$('#msg'),n=$('#rn').value.trim(),c=normCode($('#rk').value);
+  m.className='note';m.textContent='Finding your progress...';
+  const res=await doRestore(n,c);
+  if(res.err){m.className='note err';m.textContent=res.err;return}
+  $('#rf').hidden=true;m.textContent='Welcome back, '+P.name+'! Your streaks and progress are here.';renderProfile()});
+// a transfer link looks like  /#restore=NAME~CODE
+async function linkRestore(n,c){
+  if(P.name&&P.name.toLowerCase()!=n.toLowerCase()){
+    if(!await askConfirm('Switch to '+n+'?','This device is signed in as '+P.name+'. Switching brings in '+n+'\u2019s progress. '+P.name+'\u2019s progress stays safe online.','Switch'))return;
+    ['wb_p','wb_g','wb_cg'].forEach(k=>LS.del(k));try{sessionStorage.setItem('wb_lr',n+'~'+c)}catch{}location.reload();return}
+  goProfile();toast('Bringing your progress over...',2500);
+  const res=await doRestore(n,c);
+  renderProfile();
+  toast(res.err?res.err:'Welcome back, '+P.name+'! Your streaks and progress are here.',4000)}
+const rcFmt=c=>c.match(/.{4}/g).join('-');
+const xferLink=()=>location.origin+location.pathname+'#restore='+P.name+'~'+P.rcv;
+function accUi(){
+  const b=$('#accX');if(!b)return;
+  if(!P.rc||!P.name){b.innerHTML='';return}
+  b.innerHTML=P.rcv
+    ?`<div class="acck"><span>Your recovery code</span><code>${rcFmt(P.rcv)}</code></div><div class="acca"><button class="hbtn" type="button" data-acc="code">Copy code</button><button class="hbtn" type="button" data-acc="link">Copy transfer link</button><button class="hbtn" type="button" data-acc="share">Share link</button></div><p class="note">Open the transfer link on your new phone or computer and your streaks, stats and badges come right along. Keep it to yourself, since anyone with the link can load your progress.</p>`
+    :`<p class="note">Your recovery code was shown when you created it. On a new device, open Profile, choose &ldquo;New device? Bring your progress over&rdquo; and enter your name and code.</p>`}
+$('#accX').addEventListener('click',async e=>{
+  const b=e.target.closest('[data-acc]');if(!b||!P.rcv)return;const k=b.dataset.acc,link=xferLink();
+  try{
+    if(k=='code'){await navigator.clipboard.writeText(P.rcv);toast('Code copied')}
+    else if(k=='share'&&navigator.share)await navigator.share({title:'wordbox',text:'Open this on your other device to bring your wordbox progress over.',url:link});
+    else{await navigator.clipboard.writeText(link);toast('Transfer link copied')}}catch{}});
+// one gentle, one-time tip. Never a warning.
+function tipOnce(){
+  if(P.tip||!DB)return;const w=sum('w');
+  if(P.name&&!P.rc&&w>=3){P.tip=1;save();setTimeout(()=>toast('Tip: add a recovery code in Profile, then Account, and your streaks follow you to any device',5000),900)}
+  else if(!P.name&&w>=5){P.tip=1;save();setTimeout(()=>toast('Tip: pick a name in Profile to save your progress online',5000),900)}}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&P.name&&Date.now()-lastPull>12e4)syncPull()});
+
 // ---- daily spin ----
 const SPINS=[{x:10,w:30},{x:20,w:25},{x:30,w:18},{x:50,w:12},{x:75,w:8},{x:100,w:4},{x:200,w:2},{x:500,w:1}];
 const SCOL=['#2b3039','#323843','#1b7048','#228657','#2a9d68','#35b777','#c5d24a','#f2c14e'];
@@ -1878,47 +1966,33 @@ $('#nPr').onclick=goProfile;$('#lvc').onclick=goProfile;$('#cb').onclick=goProfi
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function pushScore(){
   if(!DB||!P.name)return;
+  if(!synced){syncPull().then(ok=>{if(ok)pushScore()});return}
   const k=P.name.toLowerCase(),mb=maxBest(),o={name:P.name,best:mb,wins:Math.max(sum('w'),mb),xp:P.xp,t:Date.now()};if(P.ach.master)o.bd=1;
   LENS.forEach(L=>{const b=bL(L);o['b'+L]=b;o['w'+L]=Math.max(wL(L),b)});
   MODES.forEach(m=>{let bm=0,wm=0;LENS.forEach(L=>{const q=stM(m,L),w=Math.max(q.w,q.best);o['b'+m+L]=q.best;o['w'+m+L]=w;bm=Math.max(bm,q.best);wm+=w});o['b'+m]=bm;o['w'+m]=wm});
   fetch(`${DB}/scores/${k}.json`,{method:'PUT',body:JSON.stringify(o)}).catch(()=>{});
-  fetch(`${DB}/profiles/${k}.json`,{method:'PUT',body:JSON.stringify({name:P.name,xp:P.xp,sm:P.sm,ach:P.ach,ds:P.ds,th:P.th||'classic',sr:{pb:P.sr.pb,c:P.sr.c},t:Date.now()})}).catch(()=>{});
+  fetch(`${DB}/profiles/${k}.json`,{method:'PUT',body:JSON.stringify({name:P.name,xp:P.xp,sm:P.sm,ach:P.ach,ds:P.ds,th:P.th||'classic',sr:{pb:P.sr.pb,c:P.sr.c,runs:P.sr.runs,hist:P.sr.hist},pg:{cnt:P.cnt,cd:P.cd||{},ch:P.ch||[],tu:P.tu,spin:P.spin||''},t:Date.now()})}).catch(()=>{});
 }
 function mergeRemote(s,pr){
   s=s||{};pr=pr||{};
   const rm=pr.sm||(pr.st?{n:pr.st}:null);
-  if(rm){MODES.forEach(m=>LENS.forEach(L=>{const r=rm[m]&&rm[m][L];if(!r)return;const l=stM(m,L);l.g=Math.max(l.g,r.g||0);if((r.w||0)>l.w){l.w=r.w;l.dist=r.dist||l.dist}l.best=Math.max(l.best,r.best||0)}))}
+  if(rm){MODES.forEach(m=>LENS.forEach(L=>{const r=rm[m]&&rm[m][L];if(!r)return;const l=stM(m,L);l.g=Math.max(l.g,r.g||0);if((r.w||0)>l.w){l.w=r.w;l.dist=r.dist||l.dist}l.best=Math.max(l.best,r.best||0);const rt=+r.ts||0,lt=+l.ts||0,rs=Math.max(0,Math.min(1e5,Math.floor(+r.streak||0)));if(rt>lt){l.streak=rs;l.ts=rt}else if(rt==lt)l.streak=Math.max(l.streak||0,rs);l.best=Math.max(l.best,l.streak||0)}))}
   else{const w=Math.max(s.wins||0,s.best||0),l=stM('n',5);l.w=Math.max(l.w,w);l.best=Math.max(l.best,s.best||0)}
   MODES.forEach(m=>LENS.forEach(L=>{const l=stM(m,L);l.w=Math.max(l.w,l.best);l.g=Math.max(l.g,l.w)}));
   P.xp=Math.max(P.xp,pr.xp||s.xp||0);
   Object.entries(pr.ach||{}).forEach(([k,v])=>{if(!P.ach[k])P.ach[k]=v});
-  mergeDs(pr,true);evalAch(null)}
+  mergeDs(pr,true);mergeExtra(pr);evalAch(null)}
 const mkCode=()=>{const a='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';return [...crypto.getRandomValues(new Uint8Array(12))].map(x=>a[x%32]).join('')};
 const normCode=c=>c.toUpperCase().replace(/[^A-Z0-9]/g,'');
 async function saveCode(){
   const c=mkCode();
   const r=await fetch(`${DB}/keys/${P.name.toLowerCase()}/${c}.json`,{method:'PUT',body:'true'});
   if(!r.ok)return false;
-  P.rc=1;save();ev2(null);$('#rcv').textContent=c.match(/.{4}/g).join('-');$('#rc').hidden=false;return true}
+  P.rc=1;P.rcv=c;save();ev2(null);$('#rcv').textContent=c.match(/.{4}/g).join('-');$('#rc').hidden=false;return true}
 $('#rcc').onclick=()=>{navigator.clipboard.writeText($('#rcv').textContent).then(()=>toast('Code copied')).catch(()=>{})};
 $('#mk').onclick=async()=>{const m=$('#msg');m.className='note';m.textContent='';
   try{if(await saveCode())renderProfile();else{m.className='note err';m.textContent='Could not create a code. Check the database rules.'}}catch{m.className='note err';m.textContent='Could not reach the board. Try again.'}};
 $('#rl').onclick=()=>{$('#rf').hidden=!$('#rf').hidden};
-$('#rf').addEventListener('submit',async e=>{
-  e.preventDefault();const m=$('#msg'),n=$('#rn').value.trim(),c=normCode($('#rk').value),bad=t=>{m.className='note err';m.textContent=t};
-  m.className='note';
-  if(!DB)return bad('Online board is not connected yet.');
-  if(!/^[A-Za-z0-9_]{3,16}$/.test(n)||c.length!=12)return bad('Enter your name and the 12-character code.');
-  m.textContent='Checking...';
-  try{
-    const k=n.toLowerCase(),r=await fetch(`${DB}/keys/${k}/${c}.json`);
-    if(r.status==401||r.status==403)return bad('Recovery is not enabled yet. Update the database rules.');
-    if(!r.ok)throw 0;
-    if(await r.json()!==true)return bad('That name and code do not match.');
-    const s=await(await fetch(`${DB}/scores/${k}.json`)).json(),pr=await(await fetch(`${DB}/profiles/${k}.json`)).json();
-    P.name=(s&&s.name)||n;P.rc=1;mergeRemote(s,pr);
-    save();stats();pushScore();$('#rf').hidden=true;m.textContent='Welcome back, '+P.name+'.';renderProfile();
-  }catch{bad('Could not reach the board. Try again.')}});
 let pTab='stats',pLen='5',pMode='all',PV=null;
 const navLabel=()=>{const n=$('#nPr');n.textContent=P.name||'Profile';if(P.name&&P.ach.master)n.insertAdjacentHTML('beforeend',CROWN(13))};
 function subj(){
@@ -1963,7 +2037,7 @@ function renderProfile(){
   document.querySelectorAll('#ptabs button').forEach(b=>b.classList.toggle('on',b.dataset.p==pTab));
   $('#pStats').hidden=pTab!='stats';$('#pAch').hidden=pTab!='ach';$('#pAcc').hidden=!(acc&&pTab=='acc');$('#pTh').hidden=pTab!='th';
   $('#mk').hidden=!(acc&&DB&&!P.rc);
-  $('#accT').textContent=P.rc?'Recovery code created. Keep it safe, it can restore this name on any device.':(DB?'No recovery code yet. Create one so you can restore this name if you lose your data.':'');
+  $('#accT').textContent=P.rc?'Your progress is saved online. Use your recovery code or a transfer link to pick it up on any device.':(DB?'Create a recovery code and your streaks, stats and badges can follow you to any phone or computer.':'');accUi();
   if(s0.loading){$('#pStats').innerHTML='<p class="note" style="margin-top:16px">Loading...</p>';$('#pAch').innerHTML='';return}
   if(s0.fail){$('#pStats').innerHTML='<p class="note err" style="margin-top:16px">Could not load this profile.</p>';$('#pAch').innerHTML='';return}
   $('#pStats').innerHTML=statsHtml(s0);$('#pAch').innerHTML=achHtml(s0);$('#pTh').innerHTML=own?thHtml():'';
@@ -2047,6 +2121,10 @@ function restoreNormal(){
   if(g&&g.ans&&g.L==P.L&&g.N==1&&g.G==g.L+1&&(g.mode||'n')==P.mode&&g.ans.every(a=>a.length==g.L)){g.cur=Array(g.L).fill('');g.pos=0;g.hn=g.hn||0;if(g.hp==null)g.hp=-1;S=g;render()}else newGame()}
 (function init(){
   P.N=1;if(![4,5,6].includes(+P.L))P.L=5;if(!MODES.includes(P.mode))P.mode='n';
+  let lkn=null,lkc=null;
+  {let s0=null;try{s0=sessionStorage.getItem('wb_lr');sessionStorage.removeItem('wb_lr')}catch{}
+   const mm=location.hash.match(/^#restore=([A-Za-z0-9_]{3,16})~([A-Za-z0-9]{12})$/)||(s0&&s0.match(/^([A-Za-z0-9_]{3,16})~([A-Za-z0-9]{12})$/));
+   if(mm){lkn=mm[1];lkc=mm[2].toUpperCase();history.replaceState(null,'',location.pathname+location.search)}}
   const cg=LS.get('wb_cg',null);
   if(cg&&cg.cu&&cg.cu.sp&&!cg.cu.fin){LS.del('wb_cg');restoreNormal();setTimeout(()=>toast('Your speedrun was cancelled when the page reloaded'),700)}
   else if(cg&&cg.cu&&cg.cu.words&&cg.ans){S=cg;S.cur=Array(S.L).fill('');S.pos=0;if(S.cu.fin)cuResults();else if(S.over)cuNext();else render()}
@@ -2055,7 +2133,7 @@ function restoreNormal(){
   if(P.mig){evalAch(null);delete P.mig;save();stats();if(P.xp>0)setTimeout(()=>toast('Your past games earned '+P.xp+' XP'),700)}
   if(location.hash=='#leaderboard')view('leaderboard');else if(location.hash=='#profile')view('profile');else if(location.hash=='#custom')view('custom');else if(location.hash=='#speedrun')view('speedrun');
   const qc=new URLSearchParams(location.search).get('c');if(qc&&/^[A-Za-z0-9]{5}$/.test(qc))openChallenge(qc.toUpperCase());
-  if(P.name)pushScore();
+  if(lkn)linkRestore(lkn,lkc);else if(P.name)pushScore();
 })();
 </script>
 </body>
