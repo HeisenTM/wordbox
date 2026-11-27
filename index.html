@@ -574,6 +574,52 @@ html[data-theme="paper"] .gmn{background-image:linear-gradient(100deg,#9a6a08 0%
 .acca{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .acca .hbtn{color:var(--text)}
 
+
+/* ===== mobile layout: compact the chrome so the board gets the space (phones), bigger keys (tablets) ===== */
+.fts{display:none}
+@media(max-width:620px){
+  #app{padding-left:8px;padding-right:8px}
+  header{padding:6px 2px 4px;row-gap:4px}
+  .logo{font-size:20px;gap:7px}.logo i{width:18px;height:18px}
+  .tools{margin-left:8px;gap:5px}
+  #nF{height:32px;padding:0 10px 0 8px;font-size:14px}
+  #nH,#nS,#nD,#nG{width:32px;height:32px}
+  nav{gap:2px}
+  nav button{padding:6px 1px;font-size:13px}
+  .bar{grid-template-columns:minmax(max-content,1fr) auto minmax(max-content,1fr);gap:6px;padding:6px 2px 6px}
+  .lvc{grid-column:1;grid-row:1;min-width:0;padding:5px 9px 7px}
+  .lvt{margin-bottom:5px}.lvt b{font-size:15px}.lvt em{display:none}
+  .seg{grid-column:2;grid-row:1;justify-self:center}
+  .seg div{padding:3px;border-radius:12px}
+  .seg button{min-width:32px;height:32px;font-size:16px}
+  .stats{grid-column:3;grid-row:1;gap:5px;justify-self:end}
+  .stat{min-width:0;padding:4px 7px}
+  .stat b{font-size:16px}.stat span{font-size:10px}
+  .mrow{padding:0 0 6px}
+  .mseg button{height:26px;min-width:0;padding:0 13px;font-size:12.5px}
+  .hrow{padding:0 0 6px;gap:6px}
+  .hbtn{padding:3px 12px;font-size:12.5px}
+  #kb{padding:4px 0 6px;gap:5px}
+  .kr{gap:4px}
+  .k{height:48px;border-radius:8px}
+  .k.w{flex:1.5;font-size:11px}
+  .ft{padding:2px 4px 4px;font-size:10px;line-height:1.3}
+  .ftl{display:none}.fts{display:inline}
+}
+@media(max-width:359px){.seg button{min-width:30px}.stat{padding:4px 5px}.stats{gap:4px}.lvc{padding:5px 7px 7px}.bar{gap:4px}}
+@media(max-width:620px) and (max-height:600px){.k{height:40px}}
+@media(max-width:620px) and (max-height:680px){
+  .k{height:42px}
+  header{padding:4px 2px 2px}
+  .bar{padding:4px 2px 4px}
+  .mrow,.hrow{padding-bottom:4px}
+}
+@media(min-width:621px) and (min-height:700px) and (pointer:coarse){
+  #kb{gap:8px;padding:10px 0 16px}
+  .kr{gap:7px}
+  .k{max-width:64px;height:60px;font-size:19px;border-radius:11px}
+  .k.w{max-width:100px;font-size:14px}
+}
 </style>
 </head>
 <body>
@@ -674,7 +720,7 @@ html[data-theme="paper"] .gmn{background-image:linear-gradient(100deg,#9a6a08 0%
     </div>
   </div></div>
 </section>
-<footer class="ft">Fan-made, not affiliated with The New York Times or Wordle. Play the word of the day on the <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank" rel="noopener noreferrer">original Wordle</a>, then come back for more. <button type="button" id="dcl">Disclaimer</button></footer>
+<footer class="ft"><span class="ftl">Fan-made, not affiliated with The New York Times or Wordle. Play the word of the day on the <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank" rel="noopener noreferrer">original Wordle</a>, then come back for more. </span><span class="fts">Fan-made, not affiliated with NYT or Wordle. </span><button type="button" id="dcl">Disclaimer</button></footer>
 </div>
 <div id="toast"></div>
 <div id="end" hidden><div class="card"><h2 id="eT"></h2><p id="eS"></p><div class="words" id="eW"></div><div id="eD" hidden><div class="dh"><b id="dW"></b><span id="dP"></span><button class="dA" id="dA" type="button" aria-label="Hear the word"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button></div><p id="dM"></p><small>Definitions: Wiktionary</small></div><div id="eX" hidden><div class="xpl" id="xpH"><b id="xpN"></b><span id="xpD"></span></div><div class="xlv"><b id="xpL"></b><span id="xpT"></span></div><div class="xbar"><i id="xpF"></i></div><div class="lvup" id="xpU" hidden></div><div id="xpA"></div></div><div id="eN" hidden></div><div id="eC" hidden></div><div class="btns"><button class="btn alt" id="eShare">Share</button><button class="btn" id="eB"></button></div><div class="elinks"><button class="lnk" id="eView">View board</button><span class="sp">|</span><button class="lnk" id="eMore" type="button">Your stats</button></div></div></div>
@@ -1049,7 +1095,7 @@ function fit(){
   const W=el.clientWidth,H=el.clientHeight,{N,L,G}=S;
   const cols=N==1?1:N==2?2:N==3?(W>620?3:2):(W>840?4:2),rows=Math.ceil(N/cols);
   const t1=((W-(cols-1)*14)/cols-(L-1)*4)/L,t2=((H-8-(rows-1)*14)/rows-(G-1)*4)/G;
-  let t=Math.max(14,Math.floor(Math.min(P.nk?76:58,t1,t2)));
+  let t=Math.max(14,Math.floor(Math.min(P.nk?76:(innerWidth<=620?64:matchMedia('(pointer:coarse)').matches?72:58),t1,t2)));
   el.style.setProperty('--t',t+'px');el.style.setProperty('--L',L);
   el.style.gridTemplateColumns=`repeat(${cols},auto)`;
   while(t>14&&(el.scrollHeight>el.clientHeight+1||el.scrollWidth>el.clientWidth+1)){t-=2;el.style.setProperty('--t',t+'px')}
