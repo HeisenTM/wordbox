@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#161819">
 <script>try{var __t=JSON.parse(localStorage.getItem("wb_p")).th;if(__t&&__t!="classic")document.documentElement.setAttribute("data-theme",__t)}catch(e){}</script>
-<script>try{var __p=JSON.parse(localStorage.getItem("wb_p"))||{};if(__p.nk)document.documentElement.classList.add("nokb");if(__p.ek=="l")document.documentElement.classList.add("ekl")}catch(e){}</script>
+<script>try{var __p=JSON.parse(localStorage.getItem("wb_p"))||{};if(__p.nk)document.documentElement.classList.add("nokb");if(__p.ek=="l")document.documentElement.classList.add("ekl");if(__p.qw)document.documentElement.classList.add("qwon")}catch(e){}</script>
 <title>wordbox - endless word streak</title>
 <meta name="description" content="Pick your word length, play as much as you like and chase the longest streak.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2335b777'/%3E%3Crect x='8' y='8' width='16' height='16' rx='3' fill='%2313151a'/%3E%3C/svg%3E">
@@ -575,6 +575,62 @@ html[data-theme="paper"] .gmn{background-image:linear-gradient(100deg,#9a6a08 0%
 .acca .hbtn{color:var(--text)}
 
 
+/* ===== Quick Words: side panel on wide screens, bottom drawer on phones/tablets ===== */
+#qwp,#qwb,#qwo{display:none}
+html.qwon.qwplay #qwo{display:inline-flex;align-items:center;gap:7px}
+#qwo b{font-size:11px;font-weight:700;background:var(--a);color:var(--text);border-radius:999px;padding:0 6px;min-width:18px;line-height:18px;text-align:center}#qwo b:empty{display:none}
+#qwp{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px 14px 14px;z-index:5}
+.qwh{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.qwh h3{margin:0 0 2px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+#qwt{font-size:14px;font-weight:700}
+.qwclose{display:none;width:34px;height:34px;border-radius:10px;font-size:22px;line-height:1;color:var(--mut);background:var(--a)}
+.qwclose:hover{color:var(--text)}
+.qwgrip{display:none;width:38px;height:4px;border-radius:99px;background:var(--line);margin:0 auto 4px}
+.qwf{display:flex;gap:6px}
+.qwf input{flex:1;min-width:0;background:var(--a);border:1px solid var(--line);border-radius:10px;padding:9px 11px;color:var(--text);font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase;transition:border-color .15s}
+.qwf input::placeholder{text-transform:none;letter-spacing:0;font-weight:500;color:var(--mut)}
+.qwf input:focus{outline:none;border-color:var(--g)}
+.qwf input.no{animation:qwno .3s}
+@keyframes qwno{20%{transform:translateX(-5px)}60%{transform:translateX(5px)}}
+.qwadd{width:40px;flex:none;border-radius:10px;background:var(--g);color:var(--og);font-size:22px;font-weight:800;line-height:1;transition:transform .08s,filter .15s}
+.qwadd:hover{filter:brightness(1.08)}.qwadd:active{transform:scale(.92)}
+.qwm{font-size:12.5px;line-height:1.4;color:var(--mut)}.qwm:empty{display:none}
+.qwm.ok{color:var(--g)}.qwm.err{color:#ef7b7b}
+.qwm button{margin-left:8px;text-decoration:underline;color:var(--text);font-weight:700}
+.qwl{display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;overflow:auto;min-height:44px;padding:2px;scrollbar-width:thin;scrollbar-color:var(--key) transparent}
+.qwe{margin:0;color:var(--mut);font-size:13px;line-height:1.5}
+.qwc{display:inline-flex;align-items:stretch;background:var(--a);border:1px solid var(--line);border-radius:10px;overflow:hidden;transition:border-color .15s,transform .08s,opacity .15s}
+.qwc:hover{border-color:var(--bt)}
+.qww{padding:7px 4px 7px 11px;font-weight:800;font-size:13.5px;letter-spacing:.06em;text-transform:uppercase;transition:background .12s}
+.qww:hover{background:var(--key)}
+.qww:active{transform:scale(.95)}
+.qwr{padding:0 9px;color:var(--mut);font-size:16px;line-height:1;transition:color .12s}
+.qwr:hover{color:#ef7b7b}
+.qwc.used{opacity:.5}.qwc.used .qww{text-decoration:line-through}
+.qwc.new{animation:qwnew .9s ease-out}
+@keyframes qwnew{0%{box-shadow:0 0 0 0 var(--g);transform:scale(.85)}40%{transform:scale(1.06)}100%{box-shadow:0 0 0 10px transparent;transform:none}}
+.qwq{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12.5px;color:var(--mut);background:var(--a);border-radius:9px;padding:6px 10px}
+.qwq button{text-decoration:underline;color:var(--text);font-weight:700}
+.qwa{display:flex;gap:8px;align-items:center}
+.qwa .btn{flex:1;padding:10px 14px;font-size:14px}
+.qwa .hbtn{flex:none;padding:8px 13px}
+.qwother{margin:0;font-size:12px;color:var(--mut)}.qwother:empty{display:none}
+.tile.qg{border-style:dashed;border-color:var(--bf);color:var(--mut);opacity:.7}
+@media(min-width:1100px){
+  html.qwon.qwplay #qwp{display:flex;flex-direction:column;gap:10px;position:fixed;top:168px;right:calc(50% + 290px);width:230px;max-height:calc(100dvh - 210px)}
+  html.qwon.qwplay #qwo{display:none}
+}
+@media(max-width:1099px){
+  html.qwon.qwplay #qwp{display:flex;flex-direction:column;gap:10px;position:fixed;left:50%;bottom:0;width:min(520px,100%);max-height:78dvh;border-radius:20px 20px 0 0;border-bottom:0;padding:10px 16px calc(16px + env(safe-area-inset-bottom));z-index:7;
+    transform:translate(-50%,104%);visibility:hidden;transition:transform .27s cubic-bezier(.2,.8,.2,1),visibility 0s .27s;box-shadow:0 -18px 50px rgba(0,0,0,.45)}
+  html.qwon.qwplay #qwp.open{transform:translate(-50%,0);visibility:visible;transition:transform .27s cubic-bezier(.2,.8,.2,1),visibility 0s}
+  html.qwon.qwplay #qwb:not([hidden]){display:block;position:fixed;inset:0;background:var(--ov);z-index:6}
+  .qwgrip,.qwclose{display:block}
+  .qwclose{display:grid;place-items:center}
+  .qww{padding:11px 4px 11px 14px;font-size:14.5px}.qwr{padding:0 13px;font-size:18px}
+  .qwf input{font-size:16px;padding:11px 12px}.qwadd{width:46px}
+  .qwa .btn{padding:13px 14px;font-size:15px}.qwa .hbtn{padding:11px 15px;font-size:13.5px}
+}
 /* Discord */
 a.hbtn{display:inline-flex;align-items:center;text-decoration:none;flex:none}
 .wbdisc{display:none}
@@ -654,7 +710,7 @@ a.hbtn{display:inline-flex;align-items:center;text-decoration:none;flex:none}
     <div class="stats"><div class="stat" id="stc"><b id="st">0</b><span>Streak</span></div><div class="stat"><b id="bs">0</b><span>Best</span></div></div>
   </div>
   <div class="mrow" id="mr"><div class="mseg" id="sM"></div></div>
-  <div class="hrow" id="hr"><button class="hbtn" id="hBtn" type="button" title="A letter first, then the meaning. Each hint costs 25% of the XP for a win.">Hint</button><button class="hbtn" id="sBtn" type="button" title="Counts as a loss: no XP and your streak resets.">Skip</button><button class="hbtn" id="qBtn" type="button" hidden>Quit challenge</button></div>
+  <div class="hrow" id="hr"><button class="hbtn" id="hBtn" type="button" title="A letter first, then the meaning. Each hint costs 25% of the XP for a win.">Hint</button><button class="hbtn" id="sBtn" type="button" title="Counts as a loss: no XP and your streak resets.">Skip</button><button class="hbtn" id="qwo" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="qwp">Quick Words<b id="qwn"></b></button><button class="hbtn" id="qBtn" type="button" hidden>Quit challenge</button></div>
   <div class="hb" id="cub" hidden></div>
   <div class="clue" id="clue" hidden></div>
   <div class="spbar" id="spbar" hidden><div class="spt"><div><small>TOTAL</small><b id="spTot">0:00.0</b></div><div><small>WORD</small><b id="spWrd">0:00.0</b></div><div><small>PROGRESS</small><b id="spN2">1/10</b></div></div><div class="spsl" id="spsl"></div></div>
@@ -757,9 +813,21 @@ a.hbtn{display:inline-flex;align-items:center;text-decoration:none;flex:none}
 <div class="srow"><div><b>Instant mode</b><span>No animations. Results show instantly.</span></div><button class="sw" id="swF" type="button" role="switch" aria-checked="false" aria-label="Instant mode"></button></div>
 <div class="srow"><div><b>Hide on-screen keyboard</b><span>Type with your device keyboard. Tiles get bigger.</span></div><button class="sw" id="swK" type="button" role="switch" aria-checked="false" aria-label="Hide on-screen keyboard"></button></div>
 <div class="srow" id="rEk"><div><b>Enter button</b><span>Side of the bottom keyboard row</span></div><div class="ekg" id="ekg" role="group" aria-label="Enter button side"><button type="button" data-e="l">Left</button><button type="button" data-e="r">Right</button></div></div>
+<div class="srow"><div><b>Quick Words</b><span>Save words you like and drop them into your guess in one tap.</span></div><button class="sw" id="swQ" type="button" role="switch" aria-checked="false" aria-label="Quick Words"></button></div>
 <div class="srow"><div><b>Community</b><span>Join our Discord to report bugs or find players.</span></div><a class="hbtn" href="https://discord.gg/yaeqysrN4" target="_blank" rel="noopener noreferrer">Join</a></div>
 <div class="srow col"><div><b>Board theme</b><span id="thT">Classic</span></div><div class="sws" id="sws"></div></div>
 <button class="btn" id="stX" type="button" style="width:100%;margin-top:16px">Done</button></div></div>
+<aside id="qwp" tabindex="-1" aria-label="Quick Words">
+  <span class="qwgrip" aria-hidden="true"></span>
+  <div class="qwh"><div><h3>Quick Words</h3><span id="qwt">5-letter words</span></div><button id="qwclose" class="qwclose" type="button" aria-label="Close Quick Words">&times;</button></div>
+  <form id="qwf" class="qwf" autocomplete="off"><input id="qwi" type="text" maxlength="6" placeholder="Add a word" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" enterkeyhint="done" aria-label="Add a word to Quick Words"><button class="qwadd" type="submit" aria-label="Save word">+</button></form>
+  <div id="qwm" class="qwm" role="status" aria-live="polite"></div>
+  <div id="qwl" class="qwl"></div>
+  <div id="qwq" class="qwq" hidden><span></span><button id="qwcl" type="button">Clear</button></div>
+  <div class="qwa"><button id="qwfa" class="btn" type="button" disabled>Fill all</button><button id="qwsv" class="hbtn" type="button" disabled>Save row</button></div>
+  <p id="qwother" class="qwother"></p>
+</aside>
+<div id="qwb" hidden></div>
 <a class="wbdisc" href="https://discord.gg/yaeqysrN4" target="_blank" rel="noopener noreferrer" aria-label="Join our Discord to report bugs or find players"><span class="wdi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg></span><b>Join our Discord</b><small>Report bugs or find players</small></a>
 <div id="cfm" hidden><div class="card cfc"><h2 id="cfT"></h2><p id="cfP"></p><div class="btns" style="margin-top:18px"><button class="btn alt" id="cfN" type="button">Cancel</button><button class="btn" id="cfY" type="button">OK</button></div></div></div>
 <div id="dcm" hidden><div class="card dcc"><h2>About wordbox</h2>
@@ -1104,7 +1172,8 @@ function paint(b,r,g,anim){
     if(anim){t.style.setProperty('--i',c);t.classList.add('flip');const F=P.fast;setTimeout(()=>{t.classList.add(ev[c]);if(!F)SFX.flip(ev[c],c)},F?0:c*130+275);if(F)setTimeout(()=>SFX.flip(ev[c],c),c*45)}
     else t.classList.add(ev[c])}
 }
-function showCur(){
+function showCur(){showCur0();qwHook()}
+function showCur0(){
   const r=S.gs.length;if(r>=S.G)return;
   act().forEach(b=>{for(let c=0;c<S.L;c++){const t=tile(b,r,c);const gh=!S.cur[c]&&S.hn>=1&&c==S.hp&&!S.over;t.textContent=S.cur[c]||(gh?S.hl:'');t.classList.toggle('gh',gh);t.classList.add('ed');t.classList.toggle('f',!!S.cur[c]);t.classList.toggle('sel',c==S.pos&&!S.over&&!hintPick);t.classList.toggle('pk',!!hintPick&&!S.cur[c]&&!S.over)}})}
 function setPos(p){if(busy||S.over)return;S.pos=Math.max(0,Math.min(S.L,p));showCur()}
@@ -1132,6 +1201,109 @@ function stats(){const q=stM(P.mode,P.L),x=lvInfo(P.xp);$('#st').textContent=q.s
 function toast(t,ms){const e=$('#toast');e.textContent=t;e.classList.add('s');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('s'),ms||1200)}
 function bad(msg){SFX.bad();toast(msg);navigator.vibrate&&navigator.vibrate(20);const r=S.gs.length;
   act().forEach(b=>{const row=boardEl(b).children[r];row.classList.remove('shake');void row.offsetWidth;row.classList.add('shake')})}
+
+// ===== Quick Words =====
+// Save words, tap one to drop it into the current guess, or "Fill all" to line them up in the rows (press Enter to guess each one).
+const QWMAX=30,QW={q:[],gid:null,sid:null,n:-1,l:0,tm:0};
+const qwE=id=>document.getElementById(id);
+const qwList=()=>Array.isArray(P.qwl)?[...new Set(P.qwl.filter(w=>typeof w=='string'&&/^[a-z]{4,6}$/.test(w)))]:[];
+const qwDrawer=()=>matchMedia('(max-width:1099px)').matches;
+function qwOk(w){const L=w.length;if(!lists[L]||!DICT[L])return false;if(lists[L].includes(w))return true;if(!dicts[L])dicts[L]=new Set(DICT[L].split(' '));return dicts[L].has(w)}
+function qwMsg(t,kind,undo){
+  const m=qwE('qwm');clearTimeout(QW.tm);m.className='qwm'+(kind?' '+kind:'');m.textContent='';if(!t)return;
+  const s=document.createElement('span');s.textContent=t;m.appendChild(s);
+  if(undo){const b=document.createElement('button');b.type='button';b.textContent='Undo';b.onclick=undo;m.appendChild(b)}
+  QW.tm=setTimeout(()=>{m.textContent='';m.className='qwm'},6500)}
+function qwChips(){
+  const box=qwE('qwl'),L=S?S.L:P.L,all=qwList(),mine=all.filter(w=>w.length==L);
+  box.textContent='';
+  if(!mine.length){const p=document.createElement('p');p.className='qwe';
+    p.textContent=all.length?'No saved '+L+'-letter words yet. Your other words are safe and will appear on their own boards.':'Nothing saved yet. Add a word you like to open with, then tap it any time to drop it into your guess.';box.appendChild(p)}
+  mine.forEach(w=>{const used=!!S&&S.gs.includes(w),c=document.createElement('span');c.className='qwc'+(used?' used':'');c.dataset.w=w;
+    c.innerHTML='<button type="button" class="qww" data-w="'+w+'" aria-label="'+(used?'Already guessed ':'Use ')+w.toUpperCase()+'">'+w+'</button><button type="button" class="qwr" data-x="'+w+'" aria-label="Remove '+w.toUpperCase()+'">&times;</button>';
+    box.appendChild(c)});
+  qwE('qwt').textContent=L+'-letter words';qwE('qwn').textContent=mine.length||'';
+  const other=all.length-mine.length;qwE('qwother').textContent=other?other+' more saved for other word lengths.':'';
+  qwBtns()}
+function qwBtns(){
+  const fa=qwE('qwfa'),sv=qwE('qwsv'),qq=qwE('qwq'),list=qwList(),live=!!S&&!S.over,L=S?S.L:0;
+  const ws=live?list.filter(w=>w.length==L&&!S.gs.includes(w)):[],rows=live?S.G-S.gs.length:0,n=Math.min(ws.length,rows);
+  fa.disabled=!n;fa.textContent=n>1?'Fill all ('+n+')':'Fill all';
+  const w=live?S.cur.join(''):'',full=live&&S.cur.every(Boolean),saved=full&&list.includes(w),ok=full&&qwOk(w);
+  sv.disabled=!(ok&&!saved);sv.textContent=saved?'Saved':ok?'Save '+w.toUpperCase():'Save row';
+  const qn=live&&QW.gid===S?QW.q.length:0;qq.hidden=!qn;if(qn)qq.firstElementChild.textContent=qn+(qn>1?' more rows':' more row')+' lined up'}
+// lined-up words are drawn as faint dashed tiles in the rows below the current guess
+function qwPaint(anim){
+  if(!S)return;
+  document.querySelectorAll('#boards .tile.qg').forEach(t=>{const r=+t.parentNode.dataset.r;t.classList.remove('qg');if(r>S.gs.length)t.textContent=''});
+  if(!P.qw||QW.gid!==S||S.over||!QW.q.length)return;
+  const r0=S.gs.length;
+  QW.q.forEach((w,i)=>{const r=r0+1+i;if(r>=S.G)return;
+    act().forEach(b=>{for(let c=0;c<S.L;c++){const t=tile(b,r,c);t.textContent=w[c]||'';t.classList.add('qg');
+      if(anim){const d=(i+1)*110+c*35;t.style.animation='pop .22s ease-out both';t.style.animationDelay=d+'ms';setTimeout(()=>{t.style.animation='';t.style.animationDelay=''},d+450)}}})})}
+function qwHook(){
+  if(!S)return;
+  if(S.over&&QW.q.length)QW.q=[];
+  if(!P.qw){if(document.querySelector('#boards .tile.qg'))qwPaint();return}
+  if(QW.sid!==S||QW.n!==S.gs.length||QW.l!==S.L){QW.sid=S;QW.n=S.gs.length;QW.l=S.L;qwChips()}
+  qwPaint();qwBtns()}
+// after a guess is submitted, the next lined-up word moves into the new current row
+function qwNext(){
+  if(!P.qw||QW.gid!==S||!QW.q.length||S.over)return;
+  let skip=0,w=null;
+  while(QW.q.length){const c=QW.q.shift();if(S.gs.includes(c)||(S.mode=='h'&&hardErr(c))){skip++;continue}w=c;break}
+  if(w){S.cur=w.split('');S.pos=S.L}
+  if(skip)toast(skip+(skip>1?' lined-up words were':' lined-up word was')+' skipped'+(S.mode=='h'?' (not allowed in Hard mode)':' (already guessed)'),2600)}
+function qwPop(r){act().forEach(b=>{for(let c=0;c<S.L;c++){const t=tile(b,r,c);t.classList.remove('f');t.style.animationDelay=c*35+'ms';void t.offsetWidth;t.classList.add('f');setTimeout(()=>{t.style.animationDelay=''},700)}})}
+function qwPick(w){
+  if(!S||S.over||busy||w.length!==S.L)return;
+  if(S.gs.includes(w)){toast('You already guessed '+w.toUpperCase(),1800);return}
+  S.cur=w.split('');S.pos=S.L;SFX.key();navigator.vibrate&&navigator.vibrate(8);
+  showCur();qwPop(S.gs.length);
+  if(qwDrawer()){qwClose(true);focusNk()}else qwMsg(w.toUpperCase()+' is in your guess. Press Enter to try it.','ok')}
+function qwFillAll(){
+  if(!S||S.over||busy)return;
+  const ws=qwList().filter(w=>w.length==S.L&&!S.gs.includes(w)),rows=S.G-S.gs.length;
+  if(!ws.length){qwMsg('No saved '+S.L+'-letter words to fill with yet.','err');return}
+  const use=ws.slice(0,rows),extra=ws.length-use.length;
+  if(S.mode=='h'){const i=use.findIndex(w=>!hardErr(w));if(i>0)use.unshift(use.splice(i,1)[0])}
+  QW.gid=S;QW.q=use.slice(1);
+  S.cur=use[0].split('');S.pos=S.L;SFX.hint();navigator.vibrate&&navigator.vibrate(12);
+  showCur();qwPop(S.gs.length);qwPaint(true);qwBtns();
+  const msg='Filled '+use.length+(use.length>1?' rows':' row')+'. Press Enter to guess the first.'+(extra?' ('+extra+' more did not fit.)':'');
+  if(qwDrawer()){qwClose(true);focusNk();toast(use.length>1?'Rows filled. Press Enter to guess.':'Word filled. Press Enter to guess.',2200)}else qwMsg(msg,'ok')}
+function qwPulse(w,scroll){const c=document.querySelector('.qwc[data-w="'+w+'"]');if(!c)return;if(scroll)c.scrollIntoView({block:'nearest'});c.classList.remove('new');void c.offsetWidth;c.classList.add('new');setTimeout(()=>c.classList.remove('new'),1000)}
+function qwNo(){const i=qwE('qwi');i.classList.remove('no');void i.offsetWidth;i.classList.add('no');try{i.select()}catch{}navigator.vibrate&&navigator.vibrate(20)}
+function qwAdd(raw){
+  const w=String(raw||'').trim().toLowerCase(),inp=qwE('qwi');
+  if(!w)return;
+  if(!/^[a-z]{4,6}$/.test(w)){qwMsg('Use 4 to 6 letters, A to Z only.','err');qwNo();return}
+  const list=qwList();
+  if(list.includes(w)){qwMsg(w.toUpperCase()+' is already saved.','err');qwPulse(w,true);return}
+  if(list.length>=QWMAX){qwMsg('Your list is full ('+QWMAX+'). Remove a word to add another.','err');qwNo();return}
+  if(!qwOk(w)){qwMsg(w.toUpperCase()+' is not in the word list.','err');qwNo();return}
+  list.push(w);P.qwl=list;save();SFX.hint();inp.value='';qwChips();qwPulse(w,true);
+  qwMsg(w.length==(S?S.L:P.L)?'Saved '+w.toUpperCase()+'.':'Saved '+w.toUpperCase()+'. It will show up on '+w.length+'-letter boards.','ok')}
+function qwRemove(w){
+  const list=qwList(),i=list.indexOf(w);if(i<0)return;
+  P.qwl=list.filter(x=>x!=w);save();SFX.del();qwChips();
+  qwMsg('Removed '+w.toUpperCase()+'.','',()=>{const l=qwList();if(l.includes(w))return;l.splice(Math.min(i,l.length),0,w);P.qwl=l;save();qwChips();qwPulse(w);qwMsg('Restored '+w.toUpperCase()+'.','ok')})}
+function qwClear(){QW.q=[];QW.gid=null;qwPaint();qwBtns()}
+function qwOpen(){if(!P.qw||!qwDrawer())return;const p=qwE('qwp');p.classList.add('open');p.setAttribute('role','dialog');p.setAttribute('aria-modal','true');qwE('qwb').hidden=false;qwE('qwo').setAttribute('aria-expanded','true');p.focus({preventScroll:true})}
+function qwClose(noFocus){const p=qwE('qwp');if(!p.classList.contains('open'))return;p.classList.remove('open');p.removeAttribute('role');p.removeAttribute('aria-modal');qwE('qwb').hidden=true;const o=qwE('qwo');o.setAttribute('aria-expanded','false');if(!noFocus)o.focus({preventScroll:true})}
+function qwApply(){document.documentElement.classList.toggle('qwon',!!P.qw);if(!P.qw){qwClose(true);QW.q=[];QW.gid=null;qwPaint()}qwChips()}
+qwE('qwf').addEventListener('submit',e=>{e.preventDefault();qwAdd(qwE('qwi').value)});
+qwE('qwl').addEventListener('click',e=>{const r=e.target.closest('.qwr'),w=e.target.closest('.qww');if(r)qwRemove(r.dataset.x);else if(w)qwPick(w.dataset.w)});
+qwE('qwfa').addEventListener('click',qwFillAll);
+qwE('qwsv').addEventListener('click',()=>{if(S&&!S.over&&S.cur.every(Boolean))qwAdd(S.cur.join(''))});
+qwE('qwcl').addEventListener('click',()=>{qwClear();qwMsg('Cleared the lined-up rows. Your current guess stays.','')});
+qwE('qwo').addEventListener('click',()=>qwE('qwp').classList.contains('open')?qwClose():qwOpen());
+qwE('qwclose').addEventListener('click',()=>qwClose());
+qwE('qwb').addEventListener('click',()=>qwClose());
+addEventListener('keydown',e=>{if(e.key=='Escape'&&qwE('qwp').classList.contains('open')){e.preventDefault();e.stopPropagation();qwClose()}},true);
+matchMedia('(max-width:1099px)').addEventListener('change',()=>qwClose(true));
+const qwPlay=()=>{const on=!$('#play').hidden;document.documentElement.classList.toggle('qwplay',on);if(!on)qwClose(true)};
+new MutationObserver(qwPlay).observe($('#play'),{attributes:true,attributeFilter:['hidden']});qwPlay();
 
 function type(ch){
   if(busy||S.over||S.pos>=S.L)return;
@@ -1168,7 +1340,7 @@ async function submit(){
   await sleep(P.fast?40:S.L*130+420);
   keys();
   const won=S.ans.every(a=>S.gs.includes(a));
-  if(won||S.gs.length>=S.G)await(S.cu?cuFinish(won):finish(won,g,A));else{persist();showCur()}
+  if(won||S.gs.length>=S.G)await(S.cu?cuFinish(won):finish(won,g,A));else{persist();qwNext();showCur()}
   busy=false;
 }
 
@@ -1433,7 +1605,9 @@ function setUi(){
   const hk=!!P.nk,el=P.ek=='l'?'l':'r';
   $('#swK').setAttribute('aria-checked',hk);$('#rEk').classList.toggle('off',hk);
   document.querySelectorAll('#ekg button').forEach(b=>b.classList.toggle('on',b.dataset.e==el));
-  document.documentElement.classList.toggle('nokb',hk);document.documentElement.classList.toggle('ekl',el=='l')}
+  document.documentElement.classList.toggle('nokb',hk);document.documentElement.classList.toggle('ekl',el=='l');
+  $('#swQ').setAttribute('aria-checked',!!P.qw);qwApply()}
+$('#swQ').onclick=()=>{P.qw=P.qw?0:1;save();setUi();toast(P.qw?(qwDrawer()?'Quick Words is on. Tap the Quick Words button under the board.':'Quick Words is on. It sits to the left of the board.'):'Quick Words is off. Your saved words are kept.',3600)};
 $('#swK').onclick=()=>{P.nk=P.nk?0:1;save();setUi();if(S)fit();if(P.nk)toast('Keyboard hidden. Tap the board to type.',3500)};
 $('#ekg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;P.ek=b.dataset.e=='l'?'l':'r';save();setUi()});
 $('#swS').onclick=()=>{P.snd=P.snd===0?1:0;save();setUi();if(P.snd!==0){SFX.flip('g',2);setTimeout(()=>SFX.flip('g',4),90)}};
@@ -1465,7 +1639,7 @@ $('#cfN').onclick=()=>cfmDone(false);$('#cfY').onclick=()=>cfmDone(true);$('#cfm
 let hintBusy=false,hintPick=false;
 const maskWord=(m,w)=>m.replace(new RegExp(w,'ig'),'_____');
 function hintUi(){
-  if(!S)return;
+  if(!S)return;qwHook();
   const cu=!!S.cu;$('#hBtn').hidden=cu;$('#qBtn').hidden=!cu;$('#mr').hidden=cu;$('#boards').classList.toggle('blind',S.mode=='b'&&!S.over);
   const cb=$('#cub'),cvis=cu&&!S.over&&!S.cu.sp,cwas=!cb.hidden;
   if(cu){const c=S.cu;cb.innerHTML='Custom challenge by <b>'+esc(c.by)+'</b>'+(cuRd(c).m!='n'?' &middot; '+MN[cuRd(c).m]:'')+' &middot; Word '+(c.i+1)+' of '+c.words.length+(c.dl?'<span id="cut"></span>':'')}
